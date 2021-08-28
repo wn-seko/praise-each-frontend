@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "typeRoots": ["./src/typings", "node_modules/@types"],
+    "rootDirs": ["src"],
+    "outDir": "./build/",
+    "sourceMap": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "composite": true,
+    "module": "es6",
+    "moduleResolution": "node",
+    "target": "es2019",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules", "build", "scripts"]
+}

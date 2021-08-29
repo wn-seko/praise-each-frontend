@@ -1,5 +1,5 @@
 {
-  "name": "proots-attendance-frontend",
+  "name": "praise-each-frontend",
   "version": "0.1.0",
   "description": "勤怠",
   "main": "index.js",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gepuro/proots-attendance-frontend.git"
+    "url": "git+https://github.com/gepuro/praise-each-frontend.git"
   },
-  "author": "proots",
+  "author": "wn-seko",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/gepuro/proots-attendance-frontend/issues"
+    "url": "https://github.com/gepuro/praise-each-frontend/issues"
   },
-  "homepage": "https://github.com/gepuro/proots-attendance-frontend#readme",
+  "homepage": "https://github.com/gepuro/praise-each-frontend#readme",
   "devDependencies": {
     "@types/jwt-decode": "^2.2.1",
     "@types/lodash-es": "^4.17.3",

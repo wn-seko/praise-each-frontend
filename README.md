@@ -1,4 +1,4 @@
-# proots-attendance-frontend
+# praise-each-frontend
 
 ## 開発環境
 

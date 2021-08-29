@@ -82,6 +82,12 @@ module.exports = {
       },
     ],
   },
+  resolve: {
+    alias: {
+      '~': path.resolve(__dirname, '/src'),
+    },
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+  },
   plugins: [
     new HtmlPlugin({
       template: './src/index.html',
@@ -92,10 +98,11 @@ module.exports = {
         { from: 'node_modules/normalize.css/normalize.css', to: 'assets/' },
         { from: 'node_modules/semantic-ui-css/semantic.min.css', to: 'assets/' },
         { from: 'node_modules/semantic-ui-css/themes/default/assets/', to: 'assets/themes/default/assets/' },
+        { from: 'node_modules/react-dropdown/style.css', to: 'assets/react-dropdown.css' },
       ],
     }),
     new HtmlWebpackTagsPlugin({
-      tags: ['assets/normalize.css', 'assets/semantic.min.css'],
+      tags: ['assets/normalize.css', 'assets/semantic.min.css', 'assets/react-dropdown.css'],
       append: true,
     }),
     new MiniCssExtractPlugin({ filename: '[name].css' }),

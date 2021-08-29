@@ -64,6 +64,8 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
     "axios": "^0.19.2",
     "connected-react-router": "^6.8.0",
     "dayjs": "^1.10.4",
@@ -72,9 +74,11 @@
     "normalizr": "^3.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-dropdown": "^1.9.2",
     "react-notification-system": "^0.4.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
+    "react-use": "^17.2.4",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.2"
   },

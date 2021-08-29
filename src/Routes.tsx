@@ -1,7 +1,7 @@
 // tslint:disable:jsx-no-lambda
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import TopPage from './pages/Top'
+import TopPage from '~/pages/Top'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 // import Notification from './pages/Notification'

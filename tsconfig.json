@@ -3,6 +3,10 @@
     "typeRoots": ["./src/typings", "node_modules/@types"],
     "rootDirs": ["src"],
     "outDir": "./build/",
+    "baseUrl": "./src",
+    "paths": {
+      "~/*": ["./*"]
+    },
     "sourceMap": true,
     "strict": true,
     "noUnusedLocals": true,

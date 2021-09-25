@@ -1,20 +1,12 @@
 import axios from 'axios';
 
 const client = axios.create({
-  baseURL: `${API_HOST}/api`,
+  baseURL: `${API_HOST}`,
+  headers: {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  },
 });
-
-client.interceptors.request.use(
-  (config) => {
-    // 共通ヘッダーなどを指定
-    config.headers['X-Requested-With'] = 'XMLHttpRequest';
-
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  },
-);
 
 client.interceptors.response.use(
   (response) => {

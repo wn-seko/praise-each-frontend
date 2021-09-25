@@ -12,7 +12,7 @@ module.exports = merge(common, {
   plugins: [
     new CleanWebpackPlugin(),
     new DefinePlugin({
-      API_HOST: `"/"`,
+      API_HOST: `"/api"`,
     }),
   ],
 });

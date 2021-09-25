@@ -1,13 +1,13 @@
-import { useEffect } from 'react'
-import { useAsyncFn } from 'react-use'
-import { fetchPraise as fetchPraiseApi } from '~/requests/praise'
+import { useEffect } from 'react';
+import { useAsyncFn } from 'react-use';
+import { fetchPraise as fetchPraiseApi } from '~/requests/praise';
 
 export const usePraise = () => {
-  const [{ loading, value }, fetchPraise] = useAsyncFn(() => fetchPraiseApi())
+  const [{ loading, value }, fetchPraise] = useAsyncFn(() => fetchPraiseApi());
 
   useEffect(() => {
-    fetchPraise()
-  }, [])
+    fetchPraise();
+  }, []);
 
-  return { loading, priases: value || [] }
-}
+  return { loading, priases: value || [] };
+};

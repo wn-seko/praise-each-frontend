@@ -1,16 +1,16 @@
-import React, { FC } from 'react'
-import { Card } from 'semantic-ui-react'
-import { parseMessage } from '~/domains/praise'
+import React, { FC } from 'react';
+import { Card } from 'semantic-ui-react';
+import { parseMessage } from '~/domains/praise';
 
 interface PraiseCardProps {
-  from: string
-  to: string
-  createdAt: string
-  message: string
+  from: string;
+  to: string;
+  createdAt: string;
+  message: string;
 }
 
 const PraiseCard: FC<PraiseCardProps> = ({ from, to, createdAt, message }) => {
-  const parsedMessage = parseMessage(message).parsed
+  const parsedMessage = parseMessage(message).parsed;
 
   return (
     <Card fluid={true}>
@@ -24,7 +24,7 @@ const PraiseCard: FC<PraiseCardProps> = ({ from, to, createdAt, message }) => {
         </Card.Description>
       </Card.Content>
     </Card>
-  )
-}
+  );
+};
 
-export default PraiseCard
+export default PraiseCard;

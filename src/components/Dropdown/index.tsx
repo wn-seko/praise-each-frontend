@@ -1,11 +1,11 @@
-import React, { FC } from 'react'
-import styled from '@emotion/styled'
-import { useDropdown } from './hooks'
+import React, { FC } from 'react';
+import styled from '@emotion/styled';
+import { useDropdown } from './hooks';
 
 const Container = styled.div`
   width: 100%;
   border-radius: 4px;
-`
+`;
 
 const Item = styled.div`
   background: #fff;
@@ -19,24 +19,24 @@ const Item = styled.div`
   &:hover {
     background: rgba(34, 36, 38, 0.07);
   }
-`
+`;
 
 interface Option {
-  key: string
-  value: string
-  text: string
+  key: string;
+  value: string;
+  text: string;
 }
 
 interface DropdownProps {
-  options: (string | Option)[]
-  onSelected?: (value: string) => void
+  options: (string | Option)[];
+  onSelected?: (value: string) => void;
 }
 
 const Dropdown: FC<DropdownProps> = ({ options: optionsProps, onSelected }) => {
   const { selected, options, hover, handleMouseEnter, handleMouseLeave, handleClick } = useDropdown(
     optionsProps,
     onSelected,
-  )
+  );
 
   return (
     <Container>
@@ -52,7 +52,7 @@ const Dropdown: FC<DropdownProps> = ({ options: optionsProps, onSelected }) => {
         </Item>
       ))}
     </Container>
-  )
-}
+  );
+};
 
-export default Dropdown
+export default Dropdown;

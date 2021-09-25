@@ -1,5 +1,5 @@
 // eslint-disable-next-line node/no-process-env
-const isPrecommit = process.env.LINT_ENV === 'precommit'
+const isPrecommit = process.env.LINT_ENV === 'precommit';
 
 const defaultConfig = {
   settings: {
@@ -7,7 +7,13 @@ const defaultConfig = {
       version: 'detect',
     },
   },
-  extends: ['eslint:recommended', 'plugin:node/recommended', 'plugin:react/recommended', 'plugin:prettier/recommended'],
+  extends: [
+    'eslint:recommended',
+    'plugin:node/recommended',
+    'eslint-config-prettier',
+    'plugin:react/recommended',
+    'plugin:prettier/recommended',
+  ],
   parser: '@typescript-eslint/parser',
   plugins: ['react'],
   env: {
@@ -21,15 +27,6 @@ const defaultConfig = {
     },
   },
   rules: {
-    'prettier/prettier': [
-      'error',
-      {
-        semi: false,
-        trailingComma: 'all',
-        arrowParens: 'always',
-        singleQuote: true,
-      },
-    ],
     'node/no-process-env': 'error',
     'node/no-unsupported-features/es-syntax': 'off',
     'node/no-unpublished-import': 'off',
@@ -47,7 +44,7 @@ const defaultConfig = {
       },
     ],
   },
-}
+};
 
 const tsConfig = {
   ...defaultConfig,
@@ -73,7 +70,7 @@ const tsConfig = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'react/prop-types': 'off',
   },
-}
+};
 
 module.exports = {
   ...defaultConfig,
@@ -101,4 +98,4 @@ module.exports = {
       },
     },
   ],
-}
+};

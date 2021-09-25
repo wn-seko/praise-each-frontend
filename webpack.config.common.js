@@ -1,17 +1,17 @@
 /* eslint-disable node/no-unpublished-require */
-const path = require('path')
-const HtmlPlugin = require('html-webpack-plugin')
-const Copy = require('copy-webpack-plugin')
-const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const postcssNested = require('postcss-nested')
-const autoprefixer = require('autoprefixer')
-const ForkTsChecker = require('fork-ts-checker-webpack-plugin')
+const path = require('path');
+const HtmlPlugin = require('html-webpack-plugin');
+const Copy = require('copy-webpack-plugin');
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const postcssNested = require('postcss-nested');
+const autoprefixer = require('autoprefixer');
+const ForkTsChecker = require('fork-ts-checker-webpack-plugin');
 
-const env = require('./env')
+const env = require('./env');
 
-const isProd = env.NODE_ENV === 'production'
-const localIdentName = isProd ? '' : '[path][name]---[local]---[hash:base64:5]'
+const isProd = env.NODE_ENV === 'production';
+const localIdentName = isProd ? '' : '[path][name]---[local]---[hash:base64:5]';
 
 module.exports = {
   mode: 'development',
@@ -52,7 +52,7 @@ module.exports = {
             loader: 'postcss-loader',
             options: {
               plugins() {
-                return [postcssNested, autoprefixer()]
+                return [postcssNested, autoprefixer()];
               },
             },
           },
@@ -112,4 +112,4 @@ module.exports = {
     maxEntrypointSize: 1000 * 1000,
     maxAssetSize: 800 * 1000,
   },
-}
+};

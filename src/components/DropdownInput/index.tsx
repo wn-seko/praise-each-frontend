@@ -1,14 +1,14 @@
-import React, { FC } from 'react'
-import { Input, Ref } from 'semantic-ui-react'
-import Dropdown from '~/components/Dropdown'
-import { useDropdownInput } from './hooks'
+import React, { FC } from 'react';
+import { Input, Ref } from 'semantic-ui-react';
+import Dropdown from '~/components/Dropdown';
+import { useDropdownInput } from './hooks';
 
 interface DropdownInputProps {
-  onChange?: (text: string) => void
+  onChange?: (text: string) => void;
 }
 
 const DropdownInput: FC<DropdownInputProps> = ({ onChange }) => {
-  const { ref, dropdown, handleChangeInput, handleSelectedWord, handleKeyPress } = useDropdownInput(onChange)
+  const { ref, dropdown, handleChangeInput, handleSelectedWord, handleKeyPress } = useDropdownInput(onChange);
 
   return (
     <>
@@ -17,7 +17,7 @@ const DropdownInput: FC<DropdownInputProps> = ({ onChange }) => {
       </Ref>
       {dropdown.length > 0 && <Dropdown options={dropdown} onSelected={handleSelectedWord} />}
     </>
-  )
-}
+  );
+};
 
-export default DropdownInput
+export default DropdownInput;

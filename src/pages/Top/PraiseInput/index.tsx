@@ -1,21 +1,21 @@
-import React, { FC } from 'react'
-import { useState } from 'react'
-import { Button, Grid } from 'semantic-ui-react'
-import DropdownInput from '~/components/DropdownInput'
-import { parseMessage } from '~/domains/praise'
-import { postPraise } from '~/requests/praise'
+import React, { FC } from 'react';
+import { useState } from 'react';
+import { Button, Grid } from 'semantic-ui-react';
+import DropdownInput from '~/components/DropdownInput';
+import { parseMessage } from '~/domains/praise';
+import { postPraise } from '~/requests/praise';
 
 const PraiseInput: FC = () => {
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState('');
 
   const handleChangeMessage = (message: string) => {
-    setMessage(message)
-  }
+    setMessage(message);
+  };
 
   const handleClickSend = () => {
-    const { to, body, tags } = parseMessage(message)
-    postPraise(to, body, tags)
-  }
+    const { to, body, tags } = parseMessage(message);
+    postPraise(to, body, tags);
+  };
 
   return (
     <Grid>
@@ -30,7 +30,7 @@ const PraiseInput: FC = () => {
         </Grid.Column>
       </Grid.Row>
     </Grid>
-  )
-}
+  );
+};
 
-export default PraiseInput
+export default PraiseInput;

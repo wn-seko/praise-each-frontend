@@ -1,6 +1,9 @@
+/* TODO: delete eslint-disable */
+/* eslint-disable react/display-name */
+
 import React, { FC } from 'react'
 import { Container, Divider, Loader, Segment, Tab } from 'semantic-ui-react'
-import PraiseCard from '../../components/PraiseCard'
+import PraiseCard from '~/components/PraiseCard'
 import { usePraise } from './hooks'
 import PraiseInput from './PraiseInput'
 

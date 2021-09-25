@@ -35,7 +35,7 @@ interface DropdownProps {
 const Dropdown: FC<DropdownProps> = ({ options: optionsProps, onSelected }) => {
   const { selected, options, hover, handleMouseEnter, handleMouseLeave, handleClick } = useDropdown(
     optionsProps,
-    onSelected
+    onSelected,
   )
 
   return (

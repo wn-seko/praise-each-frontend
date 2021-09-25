@@ -9,7 +9,7 @@ export const parseMessage = (text: string) => {
   const body = bodyWords.join(' ')
 
   const parsed: { type: 'tag' | 'text'; text: string }[] = bodyWords.map((word) =>
-    /#.+/.test(word) ? { type: 'tag', text: word } : { type: 'text', text: word }
+    /#.+/.test(word) ? { type: 'tag', text: word } : { type: 'text', text: word },
   )
 
   const tags = uniq(parsed.filter((word) => word.type === 'tag').map((word) => word.text))

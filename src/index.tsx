@@ -9,4 +9,4 @@ const render = (Component: React.ComponentType) => {
   ReactDOM.render(<Component />, document.getElementById('app'))
 }
 
-render(hot<any>(App))
+render(hot(App))

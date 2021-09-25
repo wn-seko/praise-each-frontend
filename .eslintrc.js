@@ -7,15 +7,9 @@ const defaultConfig = {
       version: 'detect',
     },
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:node/recommended',
-    'plugin:react/recommended',
-    'plugin:jsdoc/recommended',
-    'plugin:prettier/recommended',
-  ],
+  extends: ['eslint:recommended', 'plugin:node/recommended', 'plugin:react/recommended', 'plugin:prettier/recommended'],
   parser: '@typescript-eslint/parser',
-  plugins: ['react', 'jsdoc'],
+  plugins: ['react'],
   env: {
     browser: true,
     es6: true,
@@ -52,8 +46,6 @@ const defaultConfig = {
         message: 'deprecated: Use axios',
       },
     ],
-    'jsdoc/valid-types': 'off',
-    'react/prop-types': 'off',
   },
 }
 
@@ -64,15 +56,12 @@ const tsConfig = {
     'plugin:node/recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:jsdoc/recommended',
     'plugin:prettier/recommended',
     'prettier/@typescript-eslint',
   ],
-  plugins: ['@typescript-eslint', 'react', 'jsdoc'],
+  plugins: ['@typescript-eslint', 'react'],
   rules: {
     ...defaultConfig.rules,
-    'jsdoc/require-param-type': 'off',
-    'jsdoc/require-returns-type': 'off',
     '@typescript-eslint/ban-types': [
       'error',
       {
@@ -81,6 +70,8 @@ const tsConfig = {
         },
       },
     ],
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'react/prop-types': 'off',
   },
 }
 

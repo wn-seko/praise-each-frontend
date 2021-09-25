@@ -14,7 +14,6 @@ const PraiseInput: FC = () => {
 
   const handleClickSend = () => {
     const { to, body, tags } = parseMessage(message)
-    console.log({ to, body, tags })
     postPraise(to, body, tags)
   }
 

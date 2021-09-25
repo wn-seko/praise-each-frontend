@@ -1,3 +1,4 @@
+/* eslint-disable node/no-unpublished-require */
 const path = require('path')
 const HtmlPlugin = require('html-webpack-plugin')
 const Copy = require('copy-webpack-plugin')
@@ -7,7 +8,9 @@ const postcssNested = require('postcss-nested')
 const autoprefixer = require('autoprefixer')
 const ForkTsChecker = require('fork-ts-checker-webpack-plugin')
 
-const isProd = process.env.NODE_ENV === 'production'
+const env = require('./env')
+
+const isProd = env.NODE_ENV === 'production'
 const localIdentName = isProd ? '' : '[path][name]---[local]---[hash:base64:5]'
 
 module.exports = {
@@ -19,6 +22,9 @@ module.exports = {
     publicPath: '/',
   },
   resolve: {
+    alias: {
+      '~': path.resolve(__dirname, 'src'),
+    },
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
     extensions: ['.ts', '.tsx', '.js', '.css'],
   },
@@ -81,12 +87,6 @@ module.exports = {
         use: 'raw-loader',
       },
     ],
-  },
-  resolve: {
-    alias: {
-      '~': path.resolve(__dirname, '/src'),
-    },
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
   plugins: [
     new HtmlPlugin({

@@ -1,25 +1,21 @@
-const fs = require('fs')
-const webpack = require('webpack')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+/* eslint-disable node/no-process-env */
+/* eslint-disable node/no-unpublished-require */
+const { DefinePlugin, HotModuleReplacementPlugin } = require('webpack')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const merge = require('webpack-merge')
 const common = require('./webpack.config.common.js')
-const API_URL = 'http://localhost:5000'
 
-const stringToBoolean = (bool) => !!bool && bool !== 'false'
-
-const isAnalyze = stringToBoolean(process.env.ANALYZE)
-
-const isMock = stringToBoolean(process.env.MOCK_API)
+// validate env
+const env = require('./env')
 
 module.exports = merge(common, {
-  mode: isAnalyze ? 'production' : 'development',
+  mode: 'development',
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.DefinePlugin({
-      API_URL: `"${API_URL}"`,
-      MOCK_API: isMock,
+    new HotModuleReplacementPlugin(),
+    new DefinePlugin({
+      API_HOST: `"${env.API_HOST}"`,
     }),
-  ].concat(isAnalyze ? [new BundleAnalyzerPlugin()] : []),
+  ].concat(process.env.ANALYZE ? [new BundleAnalyzerPlugin()] : []),
   devServer: {
     historyApiFallback: true,
     hot: true,

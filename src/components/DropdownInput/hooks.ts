@@ -5,7 +5,7 @@ const addressList = ['@aaa', '@abc', '@bbb', '@bb8']
 
 const hashtagList = ['#test1', '#test2', '#test3']
 
-const diffInput = (prev: string = '', current: string) => {
+const diffInput = (prev = '', current: string) => {
   const prevValues = prev.split(' ')
   const currentValues = current.split(' ')
 
@@ -16,7 +16,7 @@ const diffInput = (prev: string = '', current: string) => {
   return currentValues.find((input, index) => input !== prevValues[index]) || ''
 }
 
-const replaceInput = (prev: string = '', current: string, word: string) => {
+const replaceInput = (prev = '', current: string, word: string) => {
   const prevValues = prev.split(' ')
   const currentValues = current.split(' ')
   const index = currentValues.findIndex((input, index) => input !== prevValues[index])
@@ -56,9 +56,9 @@ export const useDropdownInput = (onChange?: (text: string) => void) => {
   useEffect(() => {
     const inputWord = diffInput(input.prev, input.current)
 
-    if (/^\@.+/.test(inputWord)) {
+    if (/^@.+/.test(inputWord)) {
       setDropdown(filterWords(inputWord, addressList))
-    } else if (/^\#.+/.test(inputWord)) {
+    } else if (/^#.+/.test(inputWord)) {
       setDropdown(filterWords(inputWord, hashtagList))
     } else {
       setDropdown([])

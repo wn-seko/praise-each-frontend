@@ -29,7 +29,7 @@ export const useDropdown = (options: (string | Option)[], onSelected?: (value: s
   }
 
   useEffect(() => {
-    const handleKeydown: any = (event: KeyboardEvent) => {
+    const handleKeydown = (event: KeyboardEvent) => {
       event.stopPropagation()
 
       if (event.key === 'ArrowDown') {

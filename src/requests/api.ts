@@ -1,27 +1,27 @@
 import axios from 'axios'
 
 const client = axios.create({
-  baseURL: '',
+  baseURL: `${API_HOST}/api`,
 })
 
 client.interceptors.request.use(
-  function (config) {
+  (config) => {
     // 共通ヘッダーなどを指定
     config.headers['X-Requested-With'] = 'XMLHttpRequest'
 
     return config
   },
-  function (error) {
+  (error) => {
     return Promise.reject(error)
-  }
+  },
 )
 
 client.interceptors.response.use(
-  function (response) {
+  (response) => {
     return response.data
   },
-  function (error) {
+  (error) => {
     return Promise.reject(error)
-  }
+  },
 )
 export default client

@@ -1,26 +1,25 @@
 {
   "name": "praise-each-frontend",
   "version": "0.1.0",
-  "description": "勤怠",
+  "description": "Praise Each",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --config ./webpack.config.dev.js --host 0.0.0.0",
-    "start:mock": "MOCK_API=true yarn start",
+    "start": "cross-env NODE_ENV=development webpack-dev-server -r dotenv/config --config ./webpack.config.dev.js --host 0.0.0.0",
     "tcm": "tcm -p src/**/*.css && eslint src/**/*.d.ts --fix",
-    "build": "webpack --config ./webpack.config.prod.js",
+    "build": "cross-env NODE_ENV=production webpack -r dotenv/config --config ./webpack.config.prod.js",
     "eslint": "eslint --ext .js,.json,.ts,.tsx --ignore-path .eslintignore .",
     "typecheck": "tsc --project tsconfig.json --noEmit"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gepuro/praise-each-frontend.git"
+    "url": "git+https://github.com/wn-seko/praise-each-frontend.git"
   },
   "author": "wn-seko",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/gepuro/praise-each-frontend/issues"
+    "url": "https://github.com/wn-seko/praise-each-frontend/issues"
   },
-  "homepage": "https://github.com/gepuro/praise-each-frontend#readme",
+  "homepage": "https://github.com/wn-seko/praise-each-frontend#readme",
   "devDependencies": {
     "@types/jwt-decode": "^2.2.1",
     "@types/lodash-es": "^4.17.3",
@@ -33,7 +32,9 @@
     "autoprefixer": "^9.8.4",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.0.2",
+    "cross-env": "^7.0.3",
     "css-loader": "^3.6.0",
+    "dotenv": "^10.0.0",
     "eslint": "^7.3.1",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-jsdoc": "^28.5.1",

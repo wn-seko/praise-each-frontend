@@ -1,8 +1,9 @@
 import { Dayjs } from 'dayjs';
+import { User } from './user';
 
 export interface Praise {
-  from: string;
-  to: string;
+  from: User;
+  to: User;
   message: string;
   tags: string[];
   createdAt: Dayjs;

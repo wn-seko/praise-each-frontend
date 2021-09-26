@@ -1,11 +1,12 @@
 import dayjs from 'dayjs';
 import { Praise } from '~/domains/praise';
+import { User } from '~/domains/user';
 import { Failure, Result, Success } from '~/utils/result';
 import api from './api';
 
 interface PraiseResponse {
-  from: string;
-  to: string;
+  from: User;
+  to: User;
   message: string;
   tags: string[];
   createdAt: string;

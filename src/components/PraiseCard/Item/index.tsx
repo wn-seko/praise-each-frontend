@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
 import { Card } from 'semantic-ui-react';
 import { parseMessage } from '~/domains/praise';
+import { User } from '~/domains/user';
 
 interface PraiseCardProps {
-  from: string;
-  to: string;
+  from: User;
+  to: User;
   createdAt: string;
   message: string;
 }
@@ -16,7 +17,7 @@ const PraiseCard: FC<PraiseCardProps> = ({ from, to, createdAt, message }) => {
     <Card fluid={true}>
       <Card.Content>
         <Card.Header>
-          {from} → {to}
+          {from.name} → {to.name}
         </Card.Header>
         <Card.Meta>{createdAt}</Card.Meta>
         <Card.Description>

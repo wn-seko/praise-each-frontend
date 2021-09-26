@@ -3,12 +3,27 @@ import { Input, Ref } from 'semantic-ui-react';
 import Dropdown from '~/components/Dropdown';
 import { useDropdownInput } from './hooks';
 
-interface DropdownInputProps {
-  onChange?: (text: string) => void;
+interface DropdownItem {
+  key: string;
+  value: string;
+  text: string;
+  icon?: string;
 }
 
-const DropdownInput: FC<DropdownInputProps> = ({ onChange }) => {
-  const { ref, dropdown, handleChangeInput, handleSelectedWord, handleKeyPress } = useDropdownInput(onChange);
+interface DropdownInputProps {
+  addressList?: DropdownItem[];
+  hashtagList?: DropdownItem[];
+  onChange?: (text: string) => void;
+  onChangeWord?: (word: string) => void;
+}
+
+const DropdownInput: FC<DropdownInputProps> = ({ addressList = [], hashtagList = [], onChange, onChangeWord }) => {
+  const { ref, dropdown, handleChangeInput, handleSelectedWord, handleKeyPress } = useDropdownInput(
+    addressList,
+    hashtagList,
+    onChange,
+    onChangeWord,
+  );
 
   return (
     <>

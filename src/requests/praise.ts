@@ -1,14 +1,26 @@
+import dayjs from 'dayjs';
+import { Praise } from '~/domains/praise';
+import { Failure, Result, Success } from '~/utils/result';
 import api from './api';
 
-export interface Praise {
+interface PraiseResponse {
   from: string;
   to: string;
-  createdAt: string;
-  tags: string[];
   message: string;
+  tags: string[];
+  createdAt: string;
 }
 
-export const fetchPraise = (): Promise<Praise[]> => api.get<unknown, Praise[]>('/praises').then((response) => response);
+const responseToPraise = (response: PraiseResponse): Praise => ({
+  ...response,
+  createdAt: dayjs(response.createdAt),
+});
 
-export const postPraise = (to: string, message: string, tags: string[]): Promise<Praise> =>
-  api.post<unknown, Praise>('/praises', { from: '', to, message, tags }).then((response) => response);
+export const fetchPraise = (): Promise<Praise[]> =>
+  api.get<unknown, PraiseResponse[]>('/praises').then((response) => response.map(responseToPraise));
+
+export const postPraise = (to: string, message: string, tags: string[]): Promise<Result<Praise, {}>> =>
+  api
+    .post<unknown, PraiseResponse>('/praises', { from: '', to, message, tags })
+    .then((response) => new Success<Praise, {}>(responseToPraise(response)))
+    .catch(() => new Failure<Praise, {}>({}));

@@ -7,9 +7,9 @@ interface Option {
 }
 
 const convertOption = (option: Option | string, index: number) =>
-  typeof option === 'string' ? { key: index, value: option, text: option } : option;
+  typeof option === 'string' ? { key: String(index), value: option, text: option } : option;
 
-export const useDropdown = (options: (string | Option)[], onSelected?: (value: string) => void) => {
+export const useDropdown = (options: (string | Option)[], onSelected?: (option: Option) => void) => {
   const [hover, setHover] = useState(false);
   const [selected, setSelected] = useState(-1);
   const sanitizedOptions = options.map(convertOption);
@@ -22,9 +22,9 @@ export const useDropdown = (options: (string | Option)[], onSelected?: (value: s
     setHover(false);
   };
 
-  const handleClick = (value: string) => () => {
+  const handleClick = (option: Option) => () => {
     if (onSelected) {
-      onSelected(value);
+      onSelected(option);
     }
   };
 
@@ -39,7 +39,7 @@ export const useDropdown = (options: (string | Option)[], onSelected?: (value: s
         setSelected((prev) => Math.max(prev - 1, 0));
       }
       if (event.key === 'Enter' && onSelected) {
-        onSelected(sanitizedOptions[selected].value);
+        onSelected(sanitizedOptions[selected]);
       }
     };
 

@@ -1,3 +1,13 @@
+import { Dayjs } from 'dayjs';
+
+export interface Praise {
+  from: string;
+  to: string;
+  message: string;
+  tags: string[];
+  createdAt: Dayjs;
+}
+
 const uniq = (list: string[]) =>
   list.reduce(
     (memo, item) => (memo.find((memoItem) => memoItem === item) ? memo : memo.concat([item])),
@@ -7,7 +17,7 @@ const uniq = (list: string[]) =>
 export const parseMessage = (text: string) => {
   const words = text.split(' ');
 
-  const [to, bodyWords] = /@.+/.test(words[0]) ? [words[0], words.slice(1)] : ['', words];
+  const [to, bodyWords] = /@.+/.test(words[0]) ? [words[0].replace(/^@/, ''), words.slice(1)] : ['', words];
 
   const body = bodyWords.join(' ');
 

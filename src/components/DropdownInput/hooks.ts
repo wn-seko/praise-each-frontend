@@ -1,9 +1,12 @@
 import { useState, useRef, useEffect, KeyboardEvent } from 'react';
 import { InputOnChangeData } from 'semantic-ui-react';
 
-const addressList = ['@aaa', '@abc', '@bbb', '@bb8'];
-
-const hashtagList = ['#test1', '#test2', '#test3'];
+interface DropdownItem {
+  key: string;
+  value: string;
+  text: string;
+  icon?: string;
+}
 
 const diffInput = (prev = '', current: string) => {
   const prevValues = prev.split(' ');
@@ -24,11 +27,18 @@ const replaceInput = (prev = '', current: string, word: string) => {
   return currentValues.join(' ');
 };
 
-const filterWords = (inputText: string, words: string[]) => words.filter((word) => new RegExp(inputText).test(word));
+const filterItems = (inputText: string, list: DropdownItem[]) =>
+  list.filter((item) => new RegExp(inputText, 'i').test(item.text));
 
-export const useDropdownInput = (onChange?: (text: string) => void) => {
+export const useDropdownInput = (
+  addressList: DropdownItem[],
+  hashtagList: DropdownItem[],
+  onChange?: (text: string) => void,
+  onChangeWord?: (word: string) => void,
+) => {
   const [input, setInput] = useState({ prev: '', current: '' });
-  const [dropdown, setDropdown] = useState<string[]>([]);
+  const [inputWord, setInputWord] = useState('');
+  const [dropdown, setDropdown] = useState<DropdownItem[]>([]);
 
   const handleChangeInput = (_: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
     setInput({ prev: input.current, current: data.value });
@@ -36,11 +46,11 @@ export const useDropdownInput = (onChange?: (text: string) => void) => {
 
   const ref = useRef<HTMLDivElement>(null);
 
-  const handleSelectedWord = (value: string) => {
+  const handleSelectedWord = (item: DropdownItem) => {
     if (ref.current) {
       const inputElement = ref.current.querySelector('input');
       if (inputElement) {
-        const newText = replaceInput(input.prev, input.current, value);
+        const newText = replaceInput(input.prev, input.current, item.text);
         inputElement.value = newText + ' ';
         inputElement.focus();
         setInput({ prev: newText, current: newText + ' ' });
@@ -50,16 +60,19 @@ export const useDropdownInput = (onChange?: (text: string) => void) => {
   };
 
   const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
-    console.log(event.metaKey, event.key);
+    void event;
+    // console.log(event.metaKey, event.key);
   };
 
   useEffect(() => {
-    const inputWord = diffInput(input.prev, input.current);
+    const word = diffInput(input.prev, input.current);
 
-    if (/^@.+/.test(inputWord)) {
-      setDropdown(filterWords(inputWord, addressList));
-    } else if (/^#.+/.test(inputWord)) {
-      setDropdown(filterWords(inputWord, hashtagList));
+    setInputWord(word);
+
+    if (/^@.+/.test(word)) {
+      setDropdown(filterItems(word, addressList));
+    } else if (/^#.+/.test(word)) {
+      setDropdown(filterItems(word, hashtagList));
     } else {
       setDropdown([]);
     }
@@ -67,7 +80,13 @@ export const useDropdownInput = (onChange?: (text: string) => void) => {
     if (onChange) {
       onChange(input.current);
     }
-  }, [input]);
+  }, [input, addressList, hashtagList]);
+
+  useEffect(() => {
+    if (onChangeWord) {
+      onChangeWord(inputWord);
+    }
+  }, [inputWord]);
 
   return { ref, dropdown, handleChangeInput, handleSelectedWord, handleKeyPress };
 };

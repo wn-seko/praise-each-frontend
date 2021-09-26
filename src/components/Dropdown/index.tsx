@@ -29,7 +29,7 @@ interface Option {
 
 interface DropdownProps {
   options: (string | Option)[];
-  onSelected?: (value: string) => void;
+  onSelected?: (option: Option) => void;
 }
 
 const Dropdown: FC<DropdownProps> = ({ options: optionsProps, onSelected }) => {
@@ -44,7 +44,7 @@ const Dropdown: FC<DropdownProps> = ({ options: optionsProps, onSelected }) => {
         <Item
           key={option.key}
           data-selected={!hover && index === selected}
-          onClick={handleClick(option.value)}
+          onClick={handleClick(option)}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >

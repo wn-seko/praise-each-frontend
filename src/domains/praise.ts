@@ -2,10 +2,13 @@ import { Dayjs } from 'dayjs';
 import { User } from './user';
 
 export interface Praise {
+  id: string;
   from: User;
   to: User;
   message: string;
   tags: string[];
+  upVotes: User[];
+  likes: User[];
   createdAt: Dayjs;
 }
 

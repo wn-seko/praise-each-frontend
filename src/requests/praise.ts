@@ -5,10 +5,13 @@ import { Failure, Result, Success } from '~/utils/result';
 import api from './api';
 
 interface PraiseResponse {
+  id: string;
   from: User;
   to: User;
   message: string;
   tags: string[];
+  upVotes: User[];
+  likes: User[];
   createdAt: string;
 }
 
@@ -24,4 +27,28 @@ export const postPraise = (to: string, message: string, tags: string[]): Promise
   api
     .post<unknown, PraiseResponse>('/praises', { from: '', to, message, tags })
     .then((response) => new Success<Praise, {}>(responseToPraise(response)))
+    .catch(() => new Failure<Praise, {}>({}));
+
+export const postPraiseUpVote = (praiseId: string): Promise<Result<{}, {}>> =>
+  api
+    .post<unknown, void>(`/praises/${praiseId}/up_votes`)
+    .then(() => new Success<{}, {}>({}))
+    .catch(() => new Failure<Praise, {}>({}));
+
+export const deletePraiseUpVote = (praiseId: string): Promise<Result<{}, {}>> =>
+  api
+    .delete<unknown, void>(`/praises/${praiseId}/up_votes`)
+    .then(() => new Success<{}, {}>({}))
+    .catch(() => new Failure<Praise, {}>({}));
+
+export const postPraiseLike = (praiseId: string): Promise<Result<{}, {}>> =>
+  api
+    .post<unknown, void>(`/praises/${praiseId}/likes`)
+    .then(() => new Success<{}, {}>({}))
+    .catch(() => new Failure<Praise, {}>({}));
+
+export const deletePraiseLike = (praiseId: string): Promise<Result<{}, {}>> =>
+  api
+    .delete<unknown, void>(`/praises/${praiseId}/likes`)
+    .then(() => new Success<{}, {}>({}))
     .catch(() => new Failure<Praise, {}>({}));

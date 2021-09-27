@@ -1,15 +1,16 @@
 import React, { FC } from 'react';
 import { Card } from 'semantic-ui-react';
-import { parseMessage } from '~/domains/praise';
-import { User } from '~/domains/user';
+import { parseMessage, Praise } from '~/domains/praise';
 import Avatar from '~/components/Avatar';
 import styled from '@emotion/styled';
+import Reaction from '~/components/Reaction';
 
-interface PraiseCardProps {
-  from: User;
-  to: User;
+interface PraiseCardProps extends Omit<Praise, 'createdAt'> {
+  upVoted: boolean;
+  liked: boolean;
+  onClickUpVote?: () => void;
+  onClickLike: () => void;
   createdAt: string;
-  message: string;
 }
 
 const CardHeader = styled(Card.Header)`
@@ -29,7 +30,24 @@ const TagBlock = styled.div`
   margin-right: 12px;
 `;
 
-const PraiseCard: FC<PraiseCardProps> = ({ from, to, createdAt, message }) => {
+const ReactionBlock = styled.div`
+  > * {
+    margin-right: 1em;
+  }
+`;
+
+const PraiseCard: FC<PraiseCardProps> = ({
+  from,
+  to,
+  message,
+  createdAt,
+  upVotes,
+  likes,
+  upVoted,
+  liked,
+  onClickLike,
+  onClickUpVote,
+}) => {
   const parsedMessage = parseMessage(message).parsed;
 
   return (
@@ -52,6 +70,19 @@ const PraiseCard: FC<PraiseCardProps> = ({ from, to, createdAt, message }) => {
         <Card.Description>
           {parsedMessage.map((word) => (word.type === 'tag' ? <a>{word.text}</a> : word.text))}
         </Card.Description>
+      </Card.Content>
+      <Card.Content extra={true}>
+        <ReactionBlock>
+          <Reaction
+            title="賛同"
+            theme="blue"
+            icon="thumbs up outline"
+            active={upVoted}
+            users={upVotes}
+            onClick={onClickUpVote}
+          />
+          <Reaction title="いいね" theme="pink" icon="heart" active={liked} users={likes} onClick={onClickLike} />
+        </ReactionBlock>
       </Card.Content>
     </Card>
   );

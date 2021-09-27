@@ -4,6 +4,7 @@ interface Option {
   key: string;
   value: string;
   text: string;
+  icon?: string;
 }
 
 const convertOption = (option: Option | string, index: number) =>

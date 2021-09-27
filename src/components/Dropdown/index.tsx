@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import styled from '@emotion/styled';
 import { useDropdown } from './hooks';
+import Avatar from '~/components/Avatar';
 
 const Container = styled.div`
   width: 100%;
@@ -21,10 +22,17 @@ const Item = styled.div`
   }
 `;
 
+const Layout = styled.div`
+  > * {
+    margin-right: 0.5em !important;
+  }
+`;
+
 interface Option {
   key: string;
   value: string;
   text: string;
+  icon?: string;
 }
 
 interface DropdownProps {
@@ -48,7 +56,10 @@ const Dropdown: FC<DropdownProps> = ({ options: optionsProps, onSelected }) => {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          {option.text}
+          <Layout>
+            {option.icon && <Avatar src={option.icon} size="tiny" />}
+            <span>{option.text}</span>
+          </Layout>
         </Item>
       ))}
     </Container>

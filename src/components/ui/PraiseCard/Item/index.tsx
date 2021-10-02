@@ -8,6 +8,7 @@ import Reaction from '~/components/ui/Reaction';
 interface PraiseCardProps extends Omit<Praise, 'createdAt'> {
   upVoted: boolean;
   liked: boolean;
+  isMine: boolean;
   onClickUpVote?: () => void;
   onClickLike: () => void;
   createdAt: string;
@@ -45,6 +46,7 @@ const PraiseCard: FC<PraiseCardProps> = ({
   likes,
   upVoted,
   liked,
+  isMine,
   onClickLike,
   onClickUpVote,
 }) => {
@@ -79,7 +81,7 @@ const PraiseCard: FC<PraiseCardProps> = ({
             icon="thumbs up outline"
             active={upVoted}
             users={upVotes}
-            onClick={onClickUpVote}
+            onClick={!isMine ? onClickUpVote : undefined}
           />
           <Reaction title="いいね" theme="pink" icon="heart" active={liked} users={likes} onClick={onClickLike} />
         </ReactionBlock>

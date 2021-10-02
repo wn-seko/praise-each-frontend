@@ -32,6 +32,7 @@ const formatPraise = (praise: Praise, userId: string) => ({
   ...praise,
   upVoted: includesUser(userId, praise.upVotes),
   liked: includesUser(userId, praise.likes),
+  isMine: includesUser(userId, [praise.from, praise.to]),
   createdAt: praise.createdAt.format('YYYY/MM/DD HH:mm'),
   onClickUpVote: createClickUpVoteHandler(praise.id, userId, praise.upVotes),
   onClickLike: createClickLikeHandler(praise.id, userId, praise.likes),

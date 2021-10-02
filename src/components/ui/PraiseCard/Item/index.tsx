@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import { Card } from 'semantic-ui-react';
 import { parseMessage, Praise } from '~/domains/praise';
-import Avatar from '~/components/Avatar';
+import Avatar from '~/components/ui/Avatar';
 import styled from '@emotion/styled';
-import Reaction from '~/components/Reaction';
+import Reaction from '~/components/ui/Reaction';
 
 interface PraiseCardProps extends Omit<Praise, 'createdAt'> {
   upVoted: boolean;

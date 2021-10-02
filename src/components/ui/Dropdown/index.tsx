@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from '@emotion/styled';
 import { useDropdown } from './hooks';
-import Avatar from '~/components/Avatar';
+import Avatar from '~/components/ui/Avatar';
 
 const Container = styled.div`
   width: 100%;

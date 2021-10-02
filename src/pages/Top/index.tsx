@@ -2,7 +2,7 @@
 /* eslint-disable react/display-name */
 
 import React, { FC } from 'react';
-import { Container, Divider, Loader, Segment, Tab } from 'semantic-ui-react';
+import { Container, Divider, Loader, Tab } from 'semantic-ui-react';
 import PraiseCard from '~/components/ui/PraiseCard';
 import DefaultLayout from '~/layouts/default';
 import { usePraise } from './hooks';
@@ -13,9 +13,9 @@ const Pane: FC = () => {
 
   if (loading) {
     return (
-      <Segment height={500}>
-        <Loader>Loading...</Loader>
-      </Segment>
+      <Loader active={true} loading={true}>
+        Loading...
+      </Loader>
     );
   }
 

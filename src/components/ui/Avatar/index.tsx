@@ -4,11 +4,22 @@ import { Image, ImageProps } from 'semantic-ui-react';
 
 interface AvatarProps {
   src: string;
-  size: 'mini' | 'tiny';
+  size: 'medium' | 'mini' | 'tiny';
 }
 
 const AvatarImage = styled(Image)`
-  width: ${(props: ImageProps) => (props.size === 'mini' ? '2em' : '1.5em')} !important;
+  width: ${(props: ImageProps) => {
+    switch (props.size) {
+      case 'mini':
+        return '2em';
+      case 'tiny':
+        return '1.5em';
+      case 'medium':
+        return '3em';
+      default:
+        return '2em';
+    }
+  }} !important;
   height: auto !important;
 `;
 

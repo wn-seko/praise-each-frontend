@@ -3,7 +3,8 @@
 
 import React, { FC } from 'react';
 import { Container, Divider, Loader, Segment, Tab } from 'semantic-ui-react';
-import PraiseCard from '~/components/PraiseCard';
+import PraiseCard from '~/components/ui/PraiseCard';
+import DefaultLayout from '~/layouts/default';
 import { usePraise } from './hooks';
 import PraiseInput from './PraiseInput';
 
@@ -29,27 +30,29 @@ const Pane: FC = () => {
 
 const TopPage: FC = () => {
   return (
-    <Container>
-      <PraiseInput />
-      <Divider />
-      <Tab
-        menu={{ secondary: true, pointing: true }}
-        panes={[
-          {
-            menuItem: 'タイムライン',
-            render: () => <Pane />,
-          },
-          {
-            menuItem: '受け取った',
-            render: () => <Pane />,
-          },
-          {
-            menuItem: '送った',
-            render: () => <Pane />,
-          },
-        ]}
-      />
-    </Container>
+    <DefaultLayout>
+      <Container>
+        <PraiseInput />
+        <Divider />
+        <Tab
+          menu={{ secondary: true, pointing: true }}
+          panes={[
+            {
+              menuItem: 'タイムライン',
+              render: () => <Pane />,
+            },
+            {
+              menuItem: '受け取った',
+              render: () => <Pane />,
+            },
+            {
+              menuItem: '送った',
+              render: () => <Pane />,
+            },
+          ]}
+        />
+      </Container>
+    </DefaultLayout>
   );
 };
 

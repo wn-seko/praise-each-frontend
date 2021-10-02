@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Input, Ref } from 'semantic-ui-react';
-import Dropdown from '~/components/Dropdown';
+import Dropdown from '~/components/ui/Dropdown';
 import { useDropdownInput } from './hooks';
 
 interface DropdownItem {

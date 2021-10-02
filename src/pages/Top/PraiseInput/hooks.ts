@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import { parseMessage } from '~/domains/praise';
 import { User } from '~/domains/user';
 import { postPraise } from '~/requests/praise';
@@ -18,6 +19,7 @@ export const useMessage = () => {
 
     if (searchUsersResult.isFailure() || searchUsersResult.value.length === 0) {
       // TODO: show notification
+      toast.error('送信に失敗しました');
       return;
     }
 
@@ -25,8 +27,16 @@ export const useMessage = () => {
     const user = searchUsersResult.value[0];
 
     setSending(true);
-    await postPraise(user.id, body, tags);
-    setSending(false);
+
+    postPraise(user.id, body, tags).then((result) => {
+      setSending(false);
+
+      if (result.isSuccess()) {
+        toast.success('送信しました');
+      } else {
+        toast.error('送信に失敗しました');
+      }
+    });
   };
 
   return { sending, handleChangeMessage, handleClickSend };

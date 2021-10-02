@@ -99,10 +99,16 @@ module.exports = {
         { from: 'node_modules/semantic-ui-css/semantic.min.css', to: 'assets/' },
         { from: 'node_modules/semantic-ui-css/themes/default/assets/', to: 'assets/themes/default/assets/' },
         { from: 'node_modules/react-dropdown/style.css', to: 'assets/react-dropdown.css' },
+        { from: 'node_modules/react-toastify/dist/ReactToastify.css', to: 'assets/react-toastify.css' },
       ],
     }),
     new HtmlWebpackTagsPlugin({
-      tags: ['assets/normalize.css', 'assets/semantic.min.css', 'assets/react-dropdown.css'],
+      tags: [
+        'assets/normalize.css',
+        'assets/semantic.min.css',
+        'assets/react-dropdown.css',
+        'assets/react-toastify.css',
+      ],
       append: true,
     }),
     new MiniCssExtractPlugin({ filename: '[name].css' }),

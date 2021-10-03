@@ -15,13 +15,38 @@ interface PraiseResponse {
   createdAt: string;
 }
 
+interface PraiseQuery {
+  from?: string;
+  to?: string;
+  page: number;
+  limit: number;
+}
+
+interface PraiseRequestParams {
+  from?: string;
+  to?: string;
+  offset: number;
+  limit: number;
+}
+
+const queryToRequestParams = (query: PraiseQuery): PraiseRequestParams => ({
+  from: query.from,
+  to: query.to,
+  offset: query.page - 1,
+  limit: query.limit,
+});
+
 const responseToPraise = (response: PraiseResponse): Praise => ({
   ...response,
   createdAt: dayjs(response.createdAt),
 });
 
-export const fetchPraise = (): Promise<Praise[]> =>
-  api.get<unknown, PraiseResponse[]>('/praises').then((response) => response.map(responseToPraise));
+export const fetchPraise = (query: PraiseQuery): Promise<Praise[]> => {
+  const requestParams = queryToRequestParams(query);
+  return api
+    .get<unknown, PraiseResponse[]>('/praises', { params: requestParams })
+    .then((response) => response.map(responseToPraise));
+};
 
 export const postPraise = (to: string, message: string, tags: string[]): Promise<Result<Praise, {}>> =>
   api

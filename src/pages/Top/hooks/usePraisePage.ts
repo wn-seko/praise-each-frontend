@@ -9,6 +9,8 @@ import {
   postPraiseUpVote as postPraiseUpVoteApi,
 } from '~/requests/praise';
 
+type TabName = 'timeline' | 'fromMe' | 'toMe';
+
 // TODO: implements me
 const MY_USER_ID = '00000000-0000-0000-0000-000000000000';
 
@@ -21,12 +23,41 @@ export interface EnhancedPraise extends Omit<Praise, 'createdAt' | 'updatedAt'> 
   onClickUpVote: () => void;
 }
 
+interface PraiseQuery {
+  from?: string;
+  to?: string;
+  page: number;
+  limit: 20;
+}
+
+const tabState = atom<TabName>({
+  key: 'pages/top/tabState',
+  default: 'timeline',
+});
+
+const praiseQueryState = atom<PraiseQuery>({
+  key: 'pages/top/praiseQueryState',
+  default: selector<PraiseQuery>({
+    key: 'pages/top/praiseQueryState/Default',
+    get: ({ get }) => {
+      switch (get(tabState)) {
+        case 'timeline':
+          return { page: 1, limit: 20 };
+        case 'toMe':
+          return { to: MY_USER_ID, page: 1, limit: 20 };
+        case 'fromMe':
+          return { from: MY_USER_ID, page: 1, limit: 20 };
+      }
+    },
+  }),
+});
+
 export const praiseState = atom<Praise[]>({
   key: 'pages/top/praiseState',
   default: selector<Praise[]>({
     key: 'pages/top/praiseState/Default',
-    get: async () => {
-      return await fetchPraiseApi();
+    get: async ({ get }) => {
+      return await fetchPraiseApi(get(praiseQueryState));
     },
   }),
 });
@@ -77,7 +108,17 @@ const formatPraise = (praise: Praise, userId: string, updatePraise: (praise: Pra
   onClickLike: createClickLikeHandler(praise.id, userId, praise.likes, updatePraise),
 });
 
-export const usePraise = () => {
+export const useTab = () => {
+  const setTab = useSetRecoilState(tabState);
+
+  const handleChangeTab = (tabName: TabName) => {
+    setTab(tabName);
+  };
+
+  return { handleChangeTab };
+};
+
+export const usePraisePage = () => {
   const { state, contents } = useRecoilValueLoadable<Praise[]>(praiseState);
   const setPraises = useSetRecoilState(praiseState);
 

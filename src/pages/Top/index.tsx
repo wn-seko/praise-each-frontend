@@ -9,7 +9,7 @@ import { usePraise } from './hooks';
 import PraiseInput from './PraiseInput';
 
 const Pane: FC = () => {
-  const { loading, priases } = usePraise();
+  const { loading, praises } = usePraise();
 
   if (loading) {
     return (
@@ -21,7 +21,7 @@ const Pane: FC = () => {
 
   return (
     <PraiseCard>
-      {priases.map((item, index) => (
+      {praises.map((item, index) => (
         <PraiseCard.Card key={index} {...item} />
       ))}
     </PraiseCard>

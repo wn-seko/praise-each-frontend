@@ -29,26 +29,26 @@ export const postPraise = (to: string, message: string, tags: string[]): Promise
     .then((response) => new Success<Praise, {}>(responseToPraise(response)))
     .catch(() => new Failure<Praise, {}>({}));
 
-export const postPraiseUpVote = (praiseId: string): Promise<Result<{}, {}>> =>
+export const postPraiseUpVote = (praiseId: string): Promise<Result<Praise, {}>> =>
   api
-    .post<unknown, void>(`/praises/${praiseId}/up_votes`)
-    .then(() => new Success<{}, {}>({}))
+    .post<unknown, PraiseResponse>(`/praises/${praiseId}/up_votes`)
+    .then((response) => new Success<Praise, {}>(responseToPraise(response)))
     .catch(() => new Failure<Praise, {}>({}));
 
-export const deletePraiseUpVote = (praiseId: string): Promise<Result<{}, {}>> =>
+export const deletePraiseUpVote = (praiseId: string): Promise<Result<Praise, {}>> =>
   api
-    .delete<unknown, void>(`/praises/${praiseId}/up_votes`)
-    .then(() => new Success<{}, {}>({}))
+    .delete<unknown, PraiseResponse>(`/praises/${praiseId}/up_votes`)
+    .then((response) => new Success<Praise, {}>(responseToPraise(response)))
     .catch(() => new Failure<Praise, {}>({}));
 
-export const postPraiseLike = (praiseId: string): Promise<Result<{}, {}>> =>
+export const postPraiseLike = (praiseId: string): Promise<Result<Praise, {}>> =>
   api
-    .post<unknown, void>(`/praises/${praiseId}/likes`)
-    .then(() => new Success<{}, {}>({}))
+    .post<unknown, PraiseResponse>(`/praises/${praiseId}/likes`)
+    .then((response) => new Success<Praise, {}>(responseToPraise(response)))
     .catch(() => new Failure<Praise, {}>({}));
 
-export const deletePraiseLike = (praiseId: string): Promise<Result<{}, {}>> =>
+export const deletePraiseLike = (praiseId: string): Promise<Result<Praise, {}>> =>
   api
-    .delete<unknown, void>(`/praises/${praiseId}/likes`)
-    .then(() => new Success<{}, {}>({}))
+    .delete<unknown, PraiseResponse>(`/praises/${praiseId}/likes`)
+    .then((response) => new Success<Praise, {}>(responseToPraise(response)))
     .catch(() => new Failure<Praise, {}>({}));

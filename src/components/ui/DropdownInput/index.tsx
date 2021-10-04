@@ -11,6 +11,7 @@ interface DropdownItem {
 }
 
 interface DropdownInputProps {
+  placeholder?: string;
   addressList?: DropdownItem[];
   hashtagList?: DropdownItem[];
   onChange?: (text: string) => void;
@@ -18,7 +19,7 @@ interface DropdownInputProps {
 }
 
 const DropdownInput = forwardRef<HTMLElement, DropdownInputProps>(
-  ({ addressList = [], hashtagList = [], onChange, onChangeWord }, outerRef) => {
+  ({ placeholder = '', addressList = [], hashtagList = [], onChange, onChangeWord }, outerRef) => {
     const { ref, dropdown, handleChangeInput, handleSelectedWord, handleKeyPress } = useDropdownInput(
       addressList,
       hashtagList,
@@ -30,7 +31,7 @@ const DropdownInput = forwardRef<HTMLElement, DropdownInputProps>(
     return (
       <>
         <Ref innerRef={ref}>
-          <Input fluid={true} onChange={handleChangeInput} onKeyPress={handleKeyPress} />
+          <Input fluid={true} placeholder={placeholder} onChange={handleChangeInput} onKeyPress={handleKeyPress} />
         </Ref>
         {dropdown.length > 0 && <Dropdown options={dropdown} onSelected={handleSelectedWord} />}
       </>

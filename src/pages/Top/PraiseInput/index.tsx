@@ -18,6 +18,7 @@ const PraiseInput: FC<PraiseInputProps> = ({ refetchTimeline }) => {
         <Grid.Column width={14}>
           <DropdownInput
             ref={ref}
+            placeholder="@感謝を伝えたい人  感謝の気持ちを伝えましょう！ #ハッシュタグ１ #ハッシュタグ２..."
             addressList={addressList}
             hashtagList={hashtagList}
             onChange={handleChangeMessage}

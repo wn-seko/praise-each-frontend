@@ -1,14 +1,11 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { useResetRecoilState } from 'recoil';
 import { parseMessage } from '~/domains/praise';
 import { User } from '~/domains/user';
 import { postPraise } from '~/requests/praise';
 import { searchUser } from '~/requests/user';
-import { praiseState } from '../hooks/usePraisePage';
 
-export const useMessage = () => {
-  const refetchPraises = useResetRecoilState(praiseState);
+export const useMessage = (refetchTimeline: () => void) => {
   const [sending, setSending] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -36,7 +33,7 @@ export const useMessage = () => {
 
       if (result.isSuccess()) {
         toast.success('送信しました');
-        refetchPraises();
+        refetchTimeline();
       } else {
         toast.error('送信に失敗しました');
       }

@@ -3,8 +3,12 @@ import { Button, Grid } from 'semantic-ui-react';
 import DropdownInput from '~/components/ui/DropdownInput';
 import { useAddress, useHashtag, useMessage } from './hooks';
 
-const PraiseInput: FC = () => {
-  const { sending, handleChangeMessage, handleClickSend } = useMessage();
+interface PraiseInputProps {
+  refetchTimeline: () => void;
+}
+
+const PraiseInput: FC<PraiseInputProps> = ({ refetchTimeline }) => {
+  const { sending, handleChangeMessage, handleClickSend } = useMessage(refetchTimeline);
   const { addressList, handleChangeWord } = useAddress();
   const { hashtagList } = useHashtag();
 

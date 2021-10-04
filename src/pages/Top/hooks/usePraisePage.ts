@@ -1,4 +1,4 @@
-import { atom, selector, useRecoilValueLoadable, useSetRecoilState } from 'recoil';
+import { atom, selector, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from 'recoil';
 import { Praise } from '~/domains/praise';
 import { User } from '~/domains/user';
 import {
@@ -30,9 +30,9 @@ interface PraiseQuery {
   limit: 20;
 }
 
-const tabState = atom<TabName>({
+const tabState = atom<{ tab: TabName; timestamp: number }>({
   key: 'pages/top/tabState',
-  default: 'timeline',
+  default: { tab: 'timeline', timestamp: new Date().getTime() },
 });
 
 const praiseQueryState = atom<PraiseQuery>({
@@ -40,7 +40,7 @@ const praiseQueryState = atom<PraiseQuery>({
   default: selector<PraiseQuery>({
     key: 'pages/top/praiseQueryState/Default',
     get: ({ get }) => {
-      switch (get(tabState)) {
+      switch (get(tabState).tab) {
         case 'timeline':
           return { page: 1, limit: 20 };
         case 'toMe':
@@ -49,6 +49,7 @@ const praiseQueryState = atom<PraiseQuery>({
           return { from: MY_USER_ID, page: 1, limit: 20 };
       }
     },
+    cachePolicy_UNSTABLE: { eviction: 'most-recent' },
   }),
 });
 
@@ -112,7 +113,7 @@ export const useTab = () => {
   const setTab = useSetRecoilState(tabState);
 
   const handleChangeTab = (tabName: TabName) => {
-    setTab(tabName);
+    setTab({ tab: tabName, timestamp: new Date().getTime() });
   };
 
   return { handleChangeTab };
@@ -121,6 +122,12 @@ export const useTab = () => {
 export const usePraisePage = () => {
   const { state, contents } = useRecoilValueLoadable<Praise[]>(praiseState);
   const setPraises = useSetRecoilState(praiseState);
+  const setTab = useSetRecoilState(tabState);
+  const { tab: currentTab } = useRecoilValue(tabState);
+
+  const refetchTimeline = () => {
+    setTab({ tab: 'timeline', timestamp: new Date().getTime() });
+  };
 
   const updatePraise = (praise: Praise) => {
     setPraises((prevPraises) => prevPraises.map((p) => (p.id === praise.id ? praise : p)));
@@ -129,7 +136,9 @@ export const usePraisePage = () => {
   const praises = state === 'hasValue' ? (contents as Praise[]) : [];
 
   return {
+    currentTab,
     loading: state === 'loading',
     praises: praises.map((praise) => formatPraise(praise, MY_USER_ID, updatePraise)),
+    refetchTimeline,
   };
 };

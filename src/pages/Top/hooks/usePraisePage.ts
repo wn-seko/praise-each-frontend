@@ -9,7 +9,7 @@ import {
   postPraiseUpVote as postPraiseUpVoteApi,
 } from '~/requests/praise';
 
-type TabName = 'timeline' | 'fromMe' | 'toMe';
+type TabName = 'timeline' | 'sent' | 'received' | 'search';
 
 // TODO: implements me
 const MY_USER_ID = '00000000-0000-0000-0000-000000000000';
@@ -43,10 +43,12 @@ const praiseQueryState = atom<PraiseQuery>({
       switch (get(tabState).tab) {
         case 'timeline':
           return { page: 1, limit: 20 };
-        case 'toMe':
+        case 'received':
           return { to: MY_USER_ID, page: 1, limit: 20 };
-        case 'fromMe':
+        case 'sent':
           return { from: MY_USER_ID, page: 1, limit: 20 };
+        case 'search':
+          return { page: 1, limit: 20 };
       }
     },
     cachePolicy_UNSTABLE: { eviction: 'most-recent' },

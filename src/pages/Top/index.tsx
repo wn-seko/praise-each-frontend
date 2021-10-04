@@ -9,12 +9,15 @@ import { EnhancedPraise, usePraisePage, useTab } from './hooks/usePraisePage';
 import PraiseInput from './PraiseInput';
 
 interface PraisePaneProps {
-  active: boolean;
   loading: boolean;
   praises: EnhancedPraise[];
 }
 
-const PraisePane: FC<PraisePaneProps> = ({ active, loading, praises }) => {
+const SearchPane: FC<PraisePaneProps> = () => {
+  return <Tab.Pane as="div">Coming soon...</Tab.Pane>;
+};
+
+const PraisePane: FC<PraisePaneProps> = ({ loading, praises }) => {
   if (loading) {
     return <Loader active={true}>Loading...</Loader>;
   }
@@ -24,7 +27,7 @@ const PraisePane: FC<PraisePaneProps> = ({ active, loading, praises }) => {
   }
 
   return (
-    <Tab.Pane active={active || true} as="div">
+    <Tab.Pane as="div">
       <PraiseCard>
         {praises.map((item) => (
           <PraiseCard.Card key={item.id} {...item} />
@@ -37,7 +40,7 @@ const PraisePane: FC<PraisePaneProps> = ({ active, loading, praises }) => {
 const TopPage: FC = () => {
   const { currentTab, loading, praises, refetchTimeline } = usePraisePage();
   const { handleChangeTab } = useTab();
-  const activeTabIndex = ['timeline', 'toMe', 'fromMe'].findIndex((tab) => tab === currentTab);
+  const activeTabIndex = ['timeline', 'received', 'sent', 'search'].findIndex((tab) => tab === currentTab);
 
   const onTabChange = (_: React.MouseEvent<HTMLDivElement>, data: TabProps) => {
     switch (data.activeIndex || 0) {
@@ -45,10 +48,14 @@ const TopPage: FC = () => {
         handleChangeTab('timeline');
         break;
       case 1:
-        handleChangeTab('toMe');
+        handleChangeTab('received');
         break;
       case 2:
-        handleChangeTab('fromMe');
+        handleChangeTab('sent');
+        break;
+      case 3:
+        handleChangeTab('search');
+        break;
     }
   };
 
@@ -64,15 +71,19 @@ const TopPage: FC = () => {
           panes={[
             {
               menuItem: 'タイムライン',
-              render: () => <PraisePane active={currentTab === 'timeline'} loading={loading} praises={praises} />,
+              render: () => <PraisePane loading={loading} praises={praises} />,
             },
             {
               menuItem: '受け取った',
-              render: () => <PraisePane active={currentTab === 'toMe'} loading={loading} praises={praises} />,
+              render: () => <PraisePane loading={loading} praises={praises} />,
             },
             {
               menuItem: '送った',
-              render: () => <PraisePane active={currentTab === 'fromMe'} loading={loading} praises={praises} />,
+              render: () => <PraisePane loading={loading} praises={praises} />,
+            },
+            {
+              menuItem: '検索',
+              render: () => <SearchPane loading={loading} praises={praises} />,
             },
           ]}
         />

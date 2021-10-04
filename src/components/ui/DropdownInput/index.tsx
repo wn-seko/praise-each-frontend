@@ -18,25 +18,26 @@ interface DropdownInputProps {
   onChangeWord?: (word: string) => void;
 }
 
-const DropdownInput = forwardRef<HTMLElement, DropdownInputProps>(
-  ({ placeholder = '', addressList = [], hashtagList = [], onChange, onChangeWord }, outerRef) => {
-    const { ref, dropdown, handleChangeInput, handleSelectedWord, handleKeyPress } = useDropdownInput(
-      addressList,
-      hashtagList,
-      onChange,
-      onChangeWord,
-      outerRef as React.RefObject<HTMLElement>,
-    );
+const DropdownInput = forwardRef<HTMLElement, DropdownInputProps>(function DropdownItemInner(
+  { placeholder = '', addressList = [], hashtagList = [], onChange, onChangeWord },
+  outerRef,
+) {
+  const { ref, dropdown, handleChangeInput, handleSelectedWord, handleKeyPress } = useDropdownInput(
+    addressList,
+    hashtagList,
+    onChange,
+    onChangeWord,
+    outerRef as React.RefObject<HTMLElement>,
+  );
 
-    return (
-      <>
-        <Ref innerRef={ref}>
-          <Input fluid={true} placeholder={placeholder} onChange={handleChangeInput} onKeyPress={handleKeyPress} />
-        </Ref>
-        {dropdown.length > 0 && <Dropdown options={dropdown} onSelected={handleSelectedWord} />}
-      </>
-    );
-  },
-);
+  return (
+    <>
+      <Ref innerRef={ref}>
+        <Input fluid={true} placeholder={placeholder} onChange={handleChangeInput} onKeyPress={handleKeyPress} />
+      </Ref>
+      {dropdown.length > 0 && <Dropdown options={dropdown} onSelected={handleSelectedWord} />}
+    </>
+  );
+});
 
 export default DropdownInput;

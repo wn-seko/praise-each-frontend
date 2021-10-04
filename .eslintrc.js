@@ -29,6 +29,7 @@ const defaultConfig = {
   rules: {
     'node/no-process-env': 'error',
     'node/no-unsupported-features/es-syntax': 'off',
+    'node/no-unsupported-features/es-builtins': 'off',
     'node/no-unpublished-import': 'off',
     'node/no-missing-import': 'off',
     'node/no-extraneous-import': 'off',
@@ -54,7 +55,6 @@ const tsConfig = {
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
-    'prettier/@typescript-eslint',
   ],
   plugins: ['@typescript-eslint', 'react'],
   rules: {

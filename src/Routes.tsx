@@ -1,10 +1,8 @@
 // tslint:disable:jsx-no-lambda
 import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import TopPage from '~/pages/Top';
-import { BrowserRouter as Router } from 'react-router-dom';
-
-// import Notification from './pages/Notification'
+import StatisticsPage from './pages/Statistics';
 // import Login from './pages/Login'
 
 const Routes = () => {
@@ -12,12 +10,9 @@ const Routes = () => {
     <Router>
       <Switch>
         {/* <Route path="/login" component={Login} /> */}
-        {/* <Notification> */}
-        {/* <Switch> */}
         <Route exact={true} path="/" component={TopPage} />
+        <Route exact={true} path="/statistics" component={StatisticsPage} />
         <Route path="*" render={() => <Redirect to="/" />} />
-        {/* </Switch> */}
-        {/* </Notification> */}
         {/* <Route path="*" render={() => <Redirect to="/login" />} /> */}
       </Switch>
     </Router>

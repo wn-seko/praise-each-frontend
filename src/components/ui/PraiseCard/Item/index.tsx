@@ -70,7 +70,7 @@ const PraiseCard: FC<PraiseCardProps> = ({
         </CardHeader>
         <Card.Meta>{createdAt}</Card.Meta>
         <Card.Description>
-          {parsedMessage.map((word) => (word.type === 'tag' ? <a>{word.text}</a> : word.text))}
+          {parsedMessage.map((word, index) => (word.type === 'tag' ? <a key={index}>{` ${word.text}`}</a> : word.text))}
         </Card.Description>
       </Card.Content>
       <Card.Content extra={true}>

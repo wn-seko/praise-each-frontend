@@ -23,6 +23,6 @@ const AvatarImage = styled(Image)`
   height: auto !important;
 `;
 
-const Avatar: FC<AvatarProps> = ({ src, size }) => <AvatarImage avatarSize={size} src={src} avatar={true} />;
+const Avatar: FC<AvatarProps> = ({ src, size }) => <AvatarImage size={size} src={src} avatar={true} />;
 
 export default Avatar;

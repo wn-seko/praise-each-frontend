@@ -15,17 +15,13 @@ interface PraisePaneProps {
 
 const PraisePane: FC<PraisePaneProps> = ({ loading, praises }) => {
   if (loading) {
-    return (
-      <Loader active={true} loading={true}>
-        Loading...
-      </Loader>
-    );
+    return <Loader active={true}>Loading...</Loader>;
   }
 
   return (
     <PraiseCard>
-      {praises.map((item, index) => (
-        <PraiseCard.Card key={index} {...item} />
+      {praises.map((item) => (
+        <PraiseCard.Card key={item.id} {...item} />
       ))}
     </PraiseCard>
   );

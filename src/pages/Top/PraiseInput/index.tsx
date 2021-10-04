@@ -8,7 +8,7 @@ interface PraiseInputProps {
 }
 
 const PraiseInput: FC<PraiseInputProps> = ({ refetchTimeline }) => {
-  const { sending, handleChangeMessage, handleClickSend } = useMessage(refetchTimeline);
+  const { ref, sending, handleChangeMessage, handleClickSend } = useMessage(refetchTimeline);
   const { addressList, handleChangeWord } = useAddress();
   const { hashtagList } = useHashtag();
 
@@ -17,6 +17,7 @@ const PraiseInput: FC<PraiseInputProps> = ({ refetchTimeline }) => {
       <Grid.Row>
         <Grid.Column width={14}>
           <DropdownInput
+            ref={ref}
             addressList={addressList}
             hashtagList={hashtagList}
             onChange={handleChangeMessage}

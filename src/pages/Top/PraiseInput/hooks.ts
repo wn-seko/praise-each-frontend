@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { toast } from 'react-toastify';
 import { parseMessage } from '~/domains/praise';
 import { User } from '~/domains/user';
@@ -8,9 +8,17 @@ import { searchUser } from '~/requests/user';
 export const useMessage = (refetchTimeline: () => void) => {
   const [sending, setSending] = useState(false);
   const [message, setMessage] = useState('');
+  const ref = useRef<HTMLDivElement>(null);
 
   const handleChangeMessage = (message: string) => {
     setMessage(message);
+  };
+
+  const clearMessage = () => {
+    if (ref.current) {
+      const input = ref.current.querySelector('input') as HTMLInputElement;
+      input.value = '';
+    }
   };
 
   const handleClickSend = async () => {
@@ -33,6 +41,7 @@ export const useMessage = (refetchTimeline: () => void) => {
 
       if (result.isSuccess()) {
         toast.success('送信しました');
+        clearMessage();
         refetchTimeline();
       } else {
         toast.error('送信に失敗しました');
@@ -40,7 +49,7 @@ export const useMessage = (refetchTimeline: () => void) => {
     });
   };
 
-  return { sending, handleChangeMessage, handleClickSend };
+  return { ref, sending, handleChangeMessage, handleClickSend };
 };
 
 export const useAddress = () => {

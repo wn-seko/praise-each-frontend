@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, KeyboardEvent } from 'react';
+import React, { useState, useRef, useEffect, KeyboardEvent } from 'react';
 import { InputOnChangeData } from 'semantic-ui-react';
 
 interface DropdownItem {
@@ -35,6 +35,7 @@ export const useDropdownInput = (
   hashtagList: DropdownItem[],
   onChange?: (text: string) => void,
   onChangeWord?: (word: string) => void,
+  defaultRef?: React.RefObject<HTMLElement>,
 ) => {
   const [input, setInput] = useState({ prev: '', current: '' });
   const [inputWord, setInputWord] = useState('');
@@ -44,7 +45,7 @@ export const useDropdownInput = (
     setInput({ prev: input.current, current: data.value });
   };
 
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = defaultRef || useRef<HTMLDivElement>(null);
 
   const handleSelectedWord = (item: DropdownItem) => {
     if (ref.current) {

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { forwardRef } from 'react';
 import { Input, Ref } from 'semantic-ui-react';
 import Dropdown from '~/components/ui/Dropdown';
 import { useDropdownInput } from './hooks';
@@ -17,22 +17,25 @@ interface DropdownInputProps {
   onChangeWord?: (word: string) => void;
 }
 
-const DropdownInput: FC<DropdownInputProps> = ({ addressList = [], hashtagList = [], onChange, onChangeWord }) => {
-  const { ref, dropdown, handleChangeInput, handleSelectedWord, handleKeyPress } = useDropdownInput(
-    addressList,
-    hashtagList,
-    onChange,
-    onChangeWord,
-  );
+const DropdownInput = forwardRef<HTMLElement, DropdownInputProps>(
+  ({ addressList = [], hashtagList = [], onChange, onChangeWord }, outerRef) => {
+    const { ref, dropdown, handleChangeInput, handleSelectedWord, handleKeyPress } = useDropdownInput(
+      addressList,
+      hashtagList,
+      onChange,
+      onChangeWord,
+      outerRef as React.RefObject<HTMLElement>,
+    );
 
-  return (
-    <>
-      <Ref innerRef={ref}>
-        <Input fluid={true} onChange={handleChangeInput} onKeyPress={handleKeyPress} />
-      </Ref>
-      {dropdown.length > 0 && <Dropdown options={dropdown} onSelected={handleSelectedWord} />}
-    </>
-  );
-};
+    return (
+      <>
+        <Ref innerRef={ref}>
+          <Input fluid={true} onChange={handleChangeInput} onKeyPress={handleKeyPress} />
+        </Ref>
+        {dropdown.length > 0 && <Dropdown options={dropdown} onSelected={handleSelectedWord} />}
+      </>
+    );
+  },
+);
 
 export default DropdownInput;

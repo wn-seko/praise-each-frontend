@@ -4,6 +4,9 @@ const merge = require('webpack-merge');
 const common = require('./webpack.config.common.js');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
+// validate env
+const env = require('./env');
+
 module.exports = merge(common, {
   mode: 'production',
   output: {
@@ -13,6 +16,9 @@ module.exports = merge(common, {
     new CleanWebpackPlugin(),
     new DefinePlugin({
       API_HOST: `"/api"`,
+      OAUTH_LOGIN_URL: JSON.stringify({
+        github: env.OAUTH_GITHUB,
+      }),
     }),
   ],
 });

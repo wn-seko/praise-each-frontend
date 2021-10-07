@@ -1,8 +1,16 @@
 import { Failure, Result, Success } from '~/utils/result';
 import api from './api';
 
-export const githubOAuthLogin = (code: string): Promise<Result<{}, {}>> =>
+interface OAuthResponse {
+  token: string;
+}
+
+interface OAuthResult {
+  token: string;
+}
+
+export const githubOAuthLogin = (code: string): Promise<Result<OAuthResult, {}>> =>
   api
-    .post<unknown, {}>('/oauth/github', { code })
-    .then((response) => new Success<{}, {}>(response))
-    .catch(() => new Failure<{}, {}>({}));
+    .post<unknown, OAuthResponse>('/oauth/github', { code })
+    .then((response) => new Success<OAuthResult, {}>({ token: response.token }))
+    .catch(() => new Failure<OAuthResult, {}>({}));

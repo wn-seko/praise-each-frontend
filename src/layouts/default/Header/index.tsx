@@ -4,7 +4,7 @@ import Avatar from '~/components/ui/Avatar';
 import { useHeader } from './hooks';
 
 const Header: FC = () => {
-  const { createClickMenuHandler } = useHeader();
+  const { user, createClickMenuHandler } = useHeader();
 
   return (
     <Menu borderless={true} fixed="top">
@@ -16,7 +16,7 @@ const Header: FC = () => {
           統計
         </Menu.Item>
         <Menu.Item as="a" position="right">
-          <Avatar src="https://react.semantic-ui.com/images/avatar/large/steve.jpg" size="mini" />
+          <Avatar src={user?.icon} size="medium" />
         </Menu.Item>
       </Container>
     </Menu>

@@ -1,6 +1,7 @@
 import { atom, selector, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from 'recoil';
 import { Praise } from '~/domains/praise';
 import { User } from '~/domains/user';
+import { authUserState, useAuthUser } from '~/recoil/auth';
 import {
   deletePraiseLike as deletePraiseLikeApi,
   deletePraiseUpVote as deletePraiseUpVoteApi,
@@ -10,9 +11,6 @@ import {
 } from '~/requests/praise';
 
 type TabName = 'timeline' | 'sent' | 'received' | 'search';
-
-// TODO: implements me
-const MY_USER_ID = '00000000-0000-0000-0000-000000000000';
 
 export interface EnhancedPraise extends Omit<Praise, 'createdAt' | 'updatedAt'> {
   liked: boolean;
@@ -40,13 +38,15 @@ const praiseQueryState = atom<PraiseQuery>({
   default: selector<PraiseQuery>({
     key: 'pages/top/praiseQueryState/Default',
     get: ({ get }) => {
+      const authUser = get(authUserState);
+
       switch (get(tabState).tab) {
         case 'timeline':
           return { page: 1, limit: 20 };
         case 'received':
-          return { to: MY_USER_ID, page: 1, limit: 20 };
+          return { to: authUser?.id, page: 1, limit: 20 };
         case 'sent':
-          return { from: MY_USER_ID, page: 1, limit: 20 };
+          return { from: authUser?.id, page: 1, limit: 20 };
         case 'search':
           return { page: 1, limit: 20 };
       }
@@ -126,6 +126,7 @@ export const usePraisePage = () => {
   const setPraises = useSetRecoilState(praiseState);
   const setTab = useSetRecoilState(tabState);
   const { tab: currentTab } = useRecoilValue(tabState);
+  const { user } = useAuthUser();
 
   const refetchTimeline = () => {
     setTab({ tab: 'timeline', timestamp: new Date().getTime() });
@@ -140,7 +141,7 @@ export const usePraisePage = () => {
   return {
     currentTab,
     loading: state === 'loading',
-    praises: praises.map((praise) => formatPraise(praise, MY_USER_ID, updatePraise)),
+    praises: praises.map((praise) => formatPraise(praise, user?.id || '', updatePraise)),
     refetchTimeline,
   };
 };

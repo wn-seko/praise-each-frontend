@@ -15,7 +15,7 @@ const AvatarImage = styled(Image)`
       case 'tiny':
         return '1.5em';
       case 'medium':
-        return '3em';
+        return '2.5em';
       default:
         return '2em';
     }

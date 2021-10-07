@@ -14,8 +14,14 @@ const makeValidator = (validate, convert) => {
 };
 
 const toNodeEnv = makeValidator((v) => v === 'development' || v === 'production' || v === 'test');
+
 const toString = makeValidator((v) => typeof v === 'string');
-const toStringOrUndefined = makeValidator((v) => (typeof v === 'string' ? v : undefined));
+
+const toStringOrUndefined = makeValidator(
+  (v) => typeof v === 'string' || typeof v === 'undefined',
+  (v) => (typeof v === 'string' ? v : undefined),
+);
+
 const toNumberOrUndefined = makeValidator(
   (v) => typeof v === 'undefined' || !isNaN(Number(v)),
   (v) => (typeof v === 'undefined' ? undefined : Number(v)),

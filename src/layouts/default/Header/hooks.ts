@@ -1,8 +1,11 @@
 import { useHistory } from 'react-router';
+import { User } from '~/domains/user';
+import { useAuthUser } from '~/recoil/auth';
 
 type Page = 'top' | 'statistics';
 
 export const useHeader = () => {
+  const { user } = useAuthUser();
   const history = useHistory();
 
   const createClickMenuHandler = (page: Page) => () => {
@@ -16,5 +19,5 @@ export const useHeader = () => {
     }
   };
 
-  return { createClickMenuHandler };
+  return { user: user as User, createClickMenuHandler };
 };

@@ -2,11 +2,13 @@
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router';
 import { githubOAuthLogin } from '~/requests/oauth';
+import { useAuthToken } from '~/recoil/auth';
 
 export const UseGithubLogin = () => {
   const urlSearchParams = new URLSearchParams(location.search);
   const code = urlSearchParams.get('code') || '';
   const history = useHistory();
+  const { setToken } = useAuthToken();
 
   if (!code) {
     history.push('/login');
@@ -15,6 +17,7 @@ export const UseGithubLogin = () => {
 
   githubOAuthLogin(code).then((result) => {
     if (result.isSuccess()) {
+      setToken(result.value.token);
       history.push('/');
     } else {
       history.push('/login');

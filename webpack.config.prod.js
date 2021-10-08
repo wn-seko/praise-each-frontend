@@ -15,7 +15,7 @@ module.exports = merge(common, {
   plugins: [
     new CleanWebpackPlugin(),
     new DefinePlugin({
-      API_HOST: `"/api"`,
+      API_HOST: `"${env.API_HOST}"`,
       OAUTH_LOGIN_URL: JSON.stringify({
         github: env.OAUTH_GITHUB,
       }),

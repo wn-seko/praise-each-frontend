@@ -4,9 +4,8 @@
   "description": "Praise Each",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack-dev-server -r dotenv/config --config ./webpack.config.dev.js --host 0.0.0.0",
-    "tcm": "tcm -p src/**/*.css && eslint src/**/*.d.ts --fix",
-    "build": "cross-env NODE_ENV=production webpack -r dotenv/config --config ./webpack.config.prod.js",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack.config.dev.js --host 0.0.0.0",
+    "build": "cross-env NODE_ENV=production webpack --config ./webpack.config.prod.js",
     "eslint": "eslint --ext .js,.json,.ts,.tsx --ignore-path .eslintignore .",
     "typecheck": "tsc --project tsconfig.json --noEmit"
   },
@@ -34,7 +33,6 @@
     "copy-webpack-plugin": "^6.0.2",
     "cross-env": "^7.0.3",
     "css-loader": "^3.6.0",
-    "dotenv": "^10.0.0",
     "eslint": "^7.3.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-webpack": "^0.13.1",
@@ -71,6 +69,7 @@
     "@emotion/styled": "^11.3.0",
     "axios": "^0.19.2",
     "dayjs": "^1.10.4",
+    "dotenv": "^10.0.0",
     "jwt-decode": "^3.1.2",
     "lodash-es": "^4.17.15",
     "normalize.css": "^8.0.1",

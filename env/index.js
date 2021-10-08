@@ -1,3 +1,8 @@
+/* eslint-disable node/no-process-env */
+// eslint-disable-next-line node/no-extraneous-require
+const dotenv = require('dotenv');
+dotenv.config({ path: process.env.NODE_ENV === 'production' ? '.env.prod' : '.env.dev' });
+
 const { toNodeEnv, toString, toNumberOrUndefined, toStringOrUndefined } = require('./validator');
 
 const envValidators = {

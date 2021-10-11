@@ -50,7 +50,7 @@ export const fetchPraise = (query: PraiseQuery): Promise<Praise[]> => {
 
 export const postPraise = (to: string, message: string, tags: string[]): Promise<Result<Praise, {}>> =>
   api
-    .post<unknown, PraiseResponse>('/praises', { from: '', to, message, tags })
+    .post<unknown, PraiseResponse>('/praises', { to, message, tags })
     .then((response) => new Success<Praise, {}>(responseToPraise(response)))
     .catch(() => new Failure<Praise, {}>({}));
 

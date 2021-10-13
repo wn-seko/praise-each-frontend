@@ -23,7 +23,7 @@ export const useMessage = (refetchTimeline: () => void) => {
 
   const handleClickSend = async () => {
     const { to, body, tags } = parseMessage(message);
-    const searchUsersResult = await searchUser(to);
+    const searchUsersResult = await searchUser({ word: to });
 
     if (searchUsersResult.isFailure() || searchUsersResult.value.length === 0) {
       // TODO: show notification
@@ -68,7 +68,7 @@ export const useAddress = () => {
         setUserListCache((prev) => ({ ...prev, [char]: [] }));
 
         // 候補リストを取得
-        searchUser(char).then((result) => {
+        searchUser({ word: char }).then((result) => {
           if (result.isSuccess()) {
             setUserListCache((prev) => ({ ...prev, [char]: result.value }));
           } else {

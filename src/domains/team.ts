@@ -1,5 +1,8 @@
+import { User } from './user';
+
 export interface Team {
   id: string;
-  color: string;
   name: string;
+  color: string;
+  users: User[];
 }

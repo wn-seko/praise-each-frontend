@@ -2,7 +2,7 @@ import { useHistory } from 'react-router';
 import { User } from '~/domains/user';
 import { useAuthUser } from '~/recoil/auth';
 
-type Page = 'top' | 'users' | 'statistics';
+type Page = 'top' | 'users' | 'teams' | 'statistics';
 
 export const useHeader = () => {
   const { user } = useAuthUser();

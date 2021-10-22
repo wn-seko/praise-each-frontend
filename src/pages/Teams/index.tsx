@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
-import React, { FC } from 'react';
-import { Container, Message } from 'semantic-ui-react';
-import TeamList from '~/components/ui/TeamList';
+import React, { FC, useCallback } from 'react';
+import { Button, Container, Message } from 'semantic-ui-react';
+import TeamList from '~/components/domains/Team/TeamList';
+import TeamEditor from '~/components/domains/Team/TeamEditor';
 import DefaultLayout from '~/layouts/default';
-import CreateTeamModal from './CreateTeamModal';
-import { useTeams } from './hooks';
+import { useTeams, useRouting, useCreateTeam } from './hooks';
 
 const RightPositionContainer = styled.div`
   display: flex;
@@ -12,18 +12,33 @@ const RightPositionContainer = styled.div`
 `;
 
 const TeamsPage: FC = () => {
-  const { loading, teams } = useTeams();
+  const { fetching, teams } = useTeams();
+  const { creating, handleSave } = useCreateTeam();
+  const { redirect } = useRouting();
+
+  const createHandleClickTeam = useCallback(
+    (teamId: string) => () => {
+      redirect(teamId);
+    },
+    [],
+  );
 
   return (
-    <DefaultLayout loading={loading}>
+    <DefaultLayout loading={fetching}>
       <Container>
         <RightPositionContainer>
-          <CreateTeamModal />
+          <TeamEditor
+            loading={creating}
+            title="チームを作成"
+            trigger={<Button primary={true}>チームを作成</Button>}
+            saveButtonText="作成"
+            onSave={handleSave}
+          />
         </RightPositionContainer>
         {teams.length > 0 ? (
           <TeamList>
             {teams.map((team) => (
-              <TeamList.Item key={team.id} team={team} />
+              <TeamList.Item key={team.id} team={team} onClick={createHandleClickTeam(team.id)} />
             ))}
           </TeamList>
         ) : (

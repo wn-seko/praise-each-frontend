@@ -2,10 +2,11 @@ import styled from '@emotion/styled';
 import React, { FC } from 'react';
 import { Icon, List } from 'semantic-ui-react';
 import { Team } from '~/domains/team';
-import Box from '../../Box';
+import Box from '~/components/ui/Box';
 
 interface TeamItemProps {
   team: Team;
+  onClick?: () => void;
 }
 
 const HeaderContainer = styled.div`
@@ -29,11 +30,11 @@ const DescriptionContainer = styled.div`
   }
 `;
 
-const TeamItem: FC<TeamItemProps> = ({ team }) => {
+const TeamItem: FC<TeamItemProps> = ({ team, onClick }) => {
   return (
     <List.Item key={team.id}>
       <List.Content verticalAlign="middle">
-        <List.Header as="a">
+        <List.Header as="a" onClick={onClick}>
           <HeaderContainer>
             <Box size={15} color={team.color} />
             <span>{team.name}</span>

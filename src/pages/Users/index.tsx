@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Container } from 'semantic-ui-react';
-import UserList from '~/components/ui/UserList';
+import UserList from '~/components/domains/User/UserList';
 import DefaultLayout from '~/layouts/default';
 import { useUsers } from './hooks';
 

@@ -10,6 +10,7 @@ const envValidators = {
   API_HOST: toString,
   ANALYZE: toNumberOrUndefined,
   OAUTH_GITHUB: toStringOrUndefined,
+  OAUTH_GOOGLE: toStringOrUndefined,
 };
 
 const env = Object.fromEntries(Object.entries(envValidators).map(([k, v]) => [k, v(k)]));

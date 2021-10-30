@@ -1,7 +1,14 @@
+import styled from '@emotion/styled';
 import React, { FC } from 'react';
 import { Form, Grid, Header, Segment } from 'semantic-ui-react';
-import { GithubButton } from '~/components/ui/Button';
+import { GithubButton, GoogleButton } from '~/components/ui/Button';
 import LoginLayout from '~/layouts/login';
+
+const MarginedSegment = styled(Segment)`
+  > * {
+    margin-bottom: 1em !important;
+  }
+`;
 
 const LoginPage: FC = () => (
   <LoginLayout>
@@ -11,13 +18,18 @@ const LoginPage: FC = () => (
           Praise Each
         </Header>
         <Form size="large">
-          <Segment>
+          <MarginedSegment>
             {OAUTH_LOGIN_URL.github && (
               <GithubButton as="a" fluid size="large" href={OAUTH_LOGIN_URL.github}>
                 GitHub アカウントでログイン
               </GithubButton>
             )}
-          </Segment>
+            {OAUTH_LOGIN_URL.google && (
+              <GoogleButton as="a" fluid size="large" href={OAUTH_LOGIN_URL.google}>
+                Google アカウントでログイン
+              </GoogleButton>
+            )}
+          </MarginedSegment>
         </Form>
       </Grid.Column>
     </Grid>

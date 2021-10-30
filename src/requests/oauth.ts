@@ -14,3 +14,9 @@ export const githubOAuthLogin = (code: string): Promise<Result<OAuthResult, {}>>
     .post<unknown, OAuthResponse>('/oauth/github', { code })
     .then((response) => new Success<OAuthResult, {}>({ token: response.token }))
     .catch(() => new Failure<OAuthResult, {}>({}));
+
+export const googleOAuthLogin = (code: string): Promise<Result<OAuthResult, {}>> =>
+  api
+    .post<unknown, OAuthResponse>('/oauth/google', { code })
+    .then((response) => new Success<OAuthResult, {}>({ token: response.token }))
+    .catch(() => new Failure<OAuthResult, {}>({}));

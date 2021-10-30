@@ -16,6 +16,7 @@ module.exports = merge(common, {
       API_HOST: `"${env.API_HOST}"`,
       OAUTH_LOGIN_URL: JSON.stringify({
         github: env.OAUTH_GITHUB,
+        google: env.OAUTH_GOOGLE,
       }),
     }),
   ].concat(process.env.ANALYZE ? [new BundleAnalyzerPlugin()] : []),

@@ -5,7 +5,7 @@ import ColorPicker from '~/components/ui/ColorPicker';
 import { Team } from '~/domains/team';
 import { User } from '~/domains/user';
 import UserSelect from '../../User/UserSelecte';
-import { useField, useModal } from './hooks';
+import { useField, useModal, useUserSelect } from './hooks';
 
 interface TeamEditorProps {
   team?: Team;
@@ -18,10 +18,11 @@ interface TeamEditorProps {
 
 const TeamEditor: FC<TeamEditorProps> = ({ team, loading, title, trigger, saveButtonText, onSave }) => {
   const { isOpen, open, close } = useModal();
-  const { name, color, users, setName, setColor, setUsers } = useField(team);
+  const { name, color, setName, setColor } = useField(team);
+  const { selectedUsers, addUser, removeUser } = useUserSelect(team?.users);
 
   const handleSave = () => {
-    onSave(name, color, users, close);
+    onSave(name, color, selectedUsers, close);
   };
 
   const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
@@ -47,7 +48,7 @@ const TeamEditor: FC<TeamEditorProps> = ({ team, loading, title, trigger, saveBu
           </Form.Field>
           <Form.Field>
             <label>ユーザー</label>
-            <UserSelect onChange={setUsers} />
+            <UserSelect users={selectedUsers} addUser={addUser} removeUser={removeUser} />
           </Form.Field>
         </Form>
       </Modal.Content>

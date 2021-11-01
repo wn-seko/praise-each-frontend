@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { Form, Icon, Input, List } from 'semantic-ui-react';
 import Avatar from '~/components/ui/Avatar';
 import { User } from '~/domains/user';
-import { useUserList, useUserSelect } from './hooks';
+import { useUserList } from './hooks';
 
 const BothContainer = styled.div`
   display: inline-flex;
@@ -20,11 +20,12 @@ const MarginedAvatar = styled(Avatar)`
 `;
 
 interface UserSelectProps {
-  onChange?: (users: User[]) => void;
+  users: User[];
+  addUser: (user: User) => void;
+  removeUser: (user: User) => void;
 }
 
-const UserSelect: FC<UserSelectProps> = ({ onChange }) => {
-  const { selectedUsers, addUser, removeUser } = useUserSelect(onChange);
+const UserSelect: FC<UserSelectProps> = ({ users: selectedUsers, addUser, removeUser }) => {
   const { userList, handleChangeWord } = useUserList(selectedUsers);
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {

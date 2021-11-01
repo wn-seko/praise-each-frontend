@@ -1,26 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { User } from '~/domains/user';
 import { searchUser } from '~/requests/user';
-
-export const useUserSelect = (onChange?: (users: User[]) => void) => {
-  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
-
-  const addUser = (user: User) => {
-    setSelectedUsers((prev) => prev.concat([user]));
-  };
-
-  const removeUser = (user: User) => {
-    setSelectedUsers((prev) => prev.filter((prevUser) => prevUser.id !== user.id));
-  };
-
-  useEffect(() => {
-    if (onChange) {
-      onChange(selectedUsers);
-    }
-  }, [selectedUsers]);
-
-  return { selectedUsers, addUser, removeUser };
-};
 
 export const useUserList = (selected: User[]) => {
   const [input, setInput] = useState('');

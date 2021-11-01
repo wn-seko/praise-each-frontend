@@ -22,6 +22,7 @@
   "devDependencies": {
     "@types/jwt-decode": "^2.2.1",
     "@types/lodash-es": "^4.17.3",
+    "@types/react-color": "^3.0.5",
     "@types/react-dom": "^16.9.8",
     "@types/react-notification-system": "^0.2.40",
     "@types/react-router-dom": "^5.1.5",
@@ -75,6 +76,7 @@
     "normalize.css": "^8.0.1",
     "normalizr": "^3.6.0",
     "react": "^16.13.1",
+    "react-color": "^2.19.3",
     "react-dom": "^16.13.1",
     "react-dropdown": "^1.9.2",
     "react-router": "^5.2.0",

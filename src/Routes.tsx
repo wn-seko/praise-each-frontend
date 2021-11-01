@@ -6,6 +6,9 @@ import TopPage from '~/pages/Top';
 import StatisticsPage from '~/pages/Statistics';
 import LoginPage from '~/pages/Login';
 import OAuthCallbackPage from '~/pages/OauthCallback';
+import UsersPage from '~/pages/Users';
+import TeamsPage from '~/pages/Teams';
+import TeamPage from './pages/Team';
 
 const Routes = () => {
   return (
@@ -21,6 +24,9 @@ const Routes = () => {
       <Auth requireLogin={true}>
         <Switch>
           <Route exact={true} path="/" component={TopPage} />
+          <Route exact={true} path="/users" component={UsersPage} />
+          <Route exact={true} path="/teams" component={TeamsPage} />
+          <Route path="/teams/:teamId" component={TeamPage} />
           <Route exact={true} path="/statistics" component={StatisticsPage} />
           <Route path="*" render={() => <Redirect to="/" />} />
         </Switch>

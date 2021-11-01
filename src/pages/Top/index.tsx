@@ -3,7 +3,7 @@
 
 import React, { FC } from 'react';
 import { Container, Divider, Loader, Message, Tab, TabProps } from 'semantic-ui-react';
-import PraiseCard from '~/components/ui/PraiseCard';
+import PraiseCard from '~/components/domains/Praise/PraiseCard';
 import DefaultLayout from '~/layouts/default';
 import { EnhancedPraise, usePraisePage, useTab } from './hooks/usePraisePage';
 import PraiseInput from './PraiseInput';

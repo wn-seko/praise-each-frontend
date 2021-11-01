@@ -1,14 +1,10 @@
-import { useEffect } from 'react';
-import { useAsyncFn } from 'react-use';
+import { atomFamily } from 'recoil';
 import { fetchTeam as fetchTeamApi } from '~/requests/teams';
 
-export const useTeam = (teamId: string) => {
-  const [state, fetchTeam] = useAsyncFn(fetchTeamApi);
-  const team = state.value?.isSuccess() ? state.value.value : null;
-
-  useEffect(() => {
-    fetchTeam(teamId);
-  }, []);
-
-  return { loading: state.loading, team };
-};
+export const teamState = atomFamily({
+  key: 'pages/Teams/teams',
+  default: async (teamId: string) => {
+    const result = await fetchTeamApi(teamId);
+    return result.isSuccess() ? result.value : null;
+  },
+});

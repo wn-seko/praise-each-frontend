@@ -1,9 +1,12 @@
 import { toast } from 'react-toastify';
 import { useAsyncFn } from 'react-use';
+import { useSetRecoilState } from 'recoil';
 import { User } from '~/domains/user';
 import { putTeam as putTeamApi, updateTeamUser } from '~/requests/teams';
+import { teamState } from '../hooks';
 
 export const useUpdateTeam = (teamId: string) => {
+  const setTeam = useSetRecoilState(teamState(teamId));
   const [state, putTeam] = useAsyncFn(putTeamApi);
 
   const handleSave = async (name: string, color: string, users: User[], close: () => void) => {
@@ -24,6 +27,7 @@ export const useUpdateTeam = (teamId: string) => {
       return;
     }
 
+    setTeam(updateTeamUserResult.value);
     close();
   };
 

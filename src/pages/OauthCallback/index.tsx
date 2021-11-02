@@ -1,26 +1,15 @@
 import React, { FC } from 'react';
 import { Dimmer, Loader } from 'semantic-ui-react';
+import { OAuthType } from '~/domains/oauth';
 import LoginLayout from '~/layouts/login';
-import { UseGithubLogin, UseGoogleLogin } from './hooks';
-
-type OauthType = 'github' | 'google';
+import { useOauthCallback } from './hooks';
 
 interface OAuthCallbackPageProps {
-  type: OauthType;
+  type: OAuthType;
 }
 
-const getUseLoginHooks = (type: OauthType) => {
-  switch (type) {
-    case 'github':
-      return UseGithubLogin;
-    case 'google':
-      return UseGoogleLogin;
-  }
-};
-
 const OAuthCallbackPage: FC<OAuthCallbackPageProps> = ({ type }) => {
-  const useLogin = getUseLoginHooks(type);
-  useLogin();
+  useOauthCallback(type);
 
   return (
     <LoginLayout>

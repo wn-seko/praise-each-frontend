@@ -4,7 +4,7 @@ import { Button, Header, Icon, Input, Segment } from 'semantic-ui-react';
 import { GithubButton, GoogleButton } from '~/components/ui/Button';
 import SegmentContainer from '~/components/ui/SegmentContainer';
 import { User } from '~/domains/user';
-import { useField, useLogin } from './hooks';
+import { useField, useOAuthUpdateIconLinks } from './hooks';
 
 const MarginedSegment = styled.div`
   width: 20em;
@@ -32,7 +32,7 @@ interface GeneralSettingsProps {
 }
 
 const GeneralSettings: FC<GeneralSettingsProps> = ({ user }) => {
-  const { urls } = useLogin();
+  const { updateIconUrls } = useOAuthUpdateIconLinks();
   const { isEditName, edit, handleSaveName, nameInputValue, setNameInputValue } = useField(user);
 
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,13 +59,13 @@ const GeneralSettings: FC<GeneralSettingsProps> = ({ user }) => {
           )}
           <Header as="h4">アイコン</Header>
           <MarginedSegment>
-            {urls.github && (
-              <GithubButton fluid size="mini">
+            {updateIconUrls.github && (
+              <GithubButton as="a" fluid size="mini" href={updateIconUrls.github}>
                 GitHub アカウントのアイコンを使用
               </GithubButton>
             )}
-            {urls.google && (
-              <GoogleButton fluid size="mini">
+            {updateIconUrls.google && (
+              <GoogleButton as="a" fluid size="mini" href={updateIconUrls.google}>
                 Google アカウントのアイコンを使用
               </GoogleButton>
             )}

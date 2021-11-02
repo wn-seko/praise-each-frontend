@@ -2,22 +2,18 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useAsyncFn } from 'react-use';
 import { User } from '~/domains/user';
-import { getLoginUrls as getLoginUrlsApi } from '~/requests/oauth';
+import { fetchOAuthLinks as fetchOAuthLinksApi } from '~/requests/oauth';
 import { updateUser } from '~/requests/user';
 
-interface LoginUrl {
-  [name: string]: string;
-}
-
-export const useLogin = (): { loading: boolean; urls: LoginUrl } => {
-  const [state, getLoginUrls] = useAsyncFn(getLoginUrlsApi);
-  const urls = state.value?.isSuccess() ? state.value.value : {};
+export const useOAuthUpdateIconLinks = () => {
+  const [state, fetchOAuthLinks] = useAsyncFn(fetchOAuthLinksApi);
+  const updateIconUrls: { [type: string]: string } = state.value?.isSuccess() ? state.value.value : {};
 
   useEffect(() => {
-    getLoginUrls();
+    fetchOAuthLinks('update_icon');
   }, []);
 
-  return { loading: state.loading, urls };
+  return { loading: state.loading, updateIconUrls };
 };
 
 export const useField = (user: User) => {

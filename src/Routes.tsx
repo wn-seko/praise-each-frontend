@@ -14,11 +14,13 @@ import MyPage from './pages/MyPage';
 const Routes = () => {
   return (
     <Router>
+      <Switch>
+        <Route exact={true} path="/oauth/github/callback" render={() => <OAuthCallbackPage type="github" />} />
+        <Route exact={true} path="/oauth/google/callback" render={() => <OAuthCallbackPage type="google" />} />
+      </Switch>
       <Auth requireLogin={false}>
         <Switch>
           <Route exact={true} path="/login" component={LoginPage} />
-          <Route exact={true} path="/oauth/github/callback" render={() => <OAuthCallbackPage type="github" />} />
-          <Route exact={true} path="/oauth/google/callback" render={() => <OAuthCallbackPage type="google" />} />
           <Route path="*" render={() => <Redirect to="/login" />} />
         </Switch>
       </Auth>

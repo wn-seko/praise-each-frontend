@@ -11,3 +11,9 @@ export const searchUser = (params: SearchUserParams = {}): Promise<Result<User[]
     .get<unknown, User[]>('/users', { params })
     .then((response) => new Success<User[], {}>(response))
     .catch(() => new Failure<User[], {}>({}));
+
+export const updateUser = (name: string) =>
+  api
+    .put<unknown, User[]>('/users/me', { name })
+    .then((response) => new Success<User[], {}>(response))
+    .catch(() => new Failure<User[], {}>({}));

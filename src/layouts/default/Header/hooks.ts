@@ -1,16 +1,20 @@
 import { useHistory } from 'react-router';
 import { User } from '~/domains/user';
-import { useAuthUser } from '~/recoil/auth';
-
-type Page = 'top' | 'users' | 'teams' | 'statistics';
+import { useAuthUser, useAuthToken } from '~/recoil/auth';
 
 export const useHeader = () => {
+  const { unsetToken } = useAuthToken();
   const { user } = useAuthUser();
   const history = useHistory();
 
-  const createClickMenuHandler = (page: Page) => () => {
+  const createClickMenuHandler = (page: string) => () => {
     history.push(`/${page}`);
   };
 
-  return { user: user as User, createClickMenuHandler };
+  const logout = () => {
+    unsetToken();
+    history.push('/login');
+  };
+
+  return { user: user as User, createClickMenuHandler, logout };
 };

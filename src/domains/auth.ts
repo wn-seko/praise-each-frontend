@@ -48,6 +48,10 @@ export const getActiveToken = () => {
   }
 };
 
+export const unsetTokenFromLocalStorage = () => {
+  localStorage.removeItem('auth_token');
+};
+
 export const setTokenToLocalStorage = (token: string) => {
   if (!token) {
     return;

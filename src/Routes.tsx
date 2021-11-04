@@ -9,7 +9,7 @@ import OAuthCallbackPage from '~/pages/OauthCallback';
 import UsersPage from '~/pages/Users';
 import TeamsPage from '~/pages/Teams';
 import TeamPage from './pages/Team';
-import MyPage from './pages/MyPage';
+import MySettings from './pages/MySettings';
 
 const Routes = () => {
   return (
@@ -31,7 +31,7 @@ const Routes = () => {
           <Route exact={true} path="/teams" component={TeamsPage} />
           <Route path="/teams/:teamId" component={TeamPage} />
           <Route exact={true} path="/statistics" component={StatisticsPage} />
-          <Route exact={true} path="/mypage/settings" component={MyPage} />
+          <Route exact={true} path="/mypage/settings" component={MySettings} />
           <Route path="*" render={() => <Redirect to="/" />} />
         </Switch>
       </Auth>

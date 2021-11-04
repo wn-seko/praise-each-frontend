@@ -3,7 +3,7 @@ import { Loader } from 'semantic-ui-react';
 import DefaultLayout from '~/layouts/default';
 import Overview from './Overview';
 
-const MyPage: FC = () => {
+const MySettings: FC = () => {
   return (
     <DefaultLayout>
       <Suspense fallback={<Loader active={true}>Loading...</Loader>}>
@@ -13,4 +13,4 @@ const MyPage: FC = () => {
   );
 };
 
-export default MyPage;
+export default MySettings;

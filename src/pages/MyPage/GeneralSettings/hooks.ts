@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useAsyncFn } from 'react-use';
 import { User } from '~/domains/user';
+import { useAuthToken } from '~/recoil/auth';
 import { fetchOAuthLinks as fetchOAuthLinksApi } from '~/requests/oauth';
 import { updateUser } from '~/requests/user';
 
@@ -19,6 +20,7 @@ export const useOAuthUpdateIconLinks = () => {
 export const useField = (user: User) => {
   const [nameInputValue, setNameInputValue] = useState(user.name);
   const [isEditName, setIsEditName] = useState(false);
+  const { setToken } = useAuthToken();
 
   const edit = () => {
     setIsEditName(true);
@@ -32,6 +34,7 @@ export const useField = (user: User) => {
       return;
     }
 
+    setToken(updateUserResult.value.token);
     toast.success('更新しました');
     setIsEditName(false);
   };

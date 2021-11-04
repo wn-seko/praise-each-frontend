@@ -1,5 +1,10 @@
 import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
-import { getTokenFromLocalStorage, parseTokenToUser, setTokenToLocalStorage } from '~/domains/auth';
+import {
+  getTokenFromLocalStorage,
+  parseTokenToUser,
+  setTokenToLocalStorage,
+  unsetTokenFromLocalStorage,
+} from '~/domains/auth';
 import { User } from '~/domains/user';
 
 const authTokenState = atom<string>({
@@ -28,5 +33,10 @@ export const useAuthToken = () => {
     setTokenToLocalStorage(token);
   };
 
-  return { token, setToken };
+  const unsetToken = () => {
+    setRecoilToken('');
+    unsetTokenFromLocalStorage();
+  };
+
+  return { token, setToken, unsetToken };
 };

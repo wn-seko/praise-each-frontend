@@ -9,15 +9,18 @@ import OAuthCallbackPage from '~/pages/OauthCallback';
 import UsersPage from '~/pages/Users';
 import TeamsPage from '~/pages/Teams';
 import TeamPage from './pages/Team';
+import MySettings from './pages/MySettings';
 
 const Routes = () => {
   return (
     <Router>
+      <Switch>
+        <Route exact={true} path="/oauth/github/callback" render={() => <OAuthCallbackPage type="github" />} />
+        <Route exact={true} path="/oauth/google/callback" render={() => <OAuthCallbackPage type="google" />} />
+      </Switch>
       <Auth requireLogin={false}>
         <Switch>
           <Route exact={true} path="/login" component={LoginPage} />
-          <Route exact={true} path="/oauth/github/callback" render={() => <OAuthCallbackPage type="github" />} />
-          <Route exact={true} path="/oauth/google/callback" render={() => <OAuthCallbackPage type="google" />} />
           <Route path="*" render={() => <Redirect to="/login" />} />
         </Switch>
       </Auth>
@@ -28,6 +31,7 @@ const Routes = () => {
           <Route exact={true} path="/teams" component={TeamsPage} />
           <Route path="/teams/:teamId" component={TeamPage} />
           <Route exact={true} path="/statistics" component={StatisticsPage} />
+          <Route exact={true} path="/mypage/settings" component={MySettings} />
           <Route path="*" render={() => <Redirect to="/" />} />
         </Switch>
       </Auth>

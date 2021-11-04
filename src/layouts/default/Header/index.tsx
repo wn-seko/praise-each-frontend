@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
-import { Container, Menu } from 'semantic-ui-react';
+import { Container, Dropdown, Menu } from 'semantic-ui-react';
 import Avatar from '~/components/ui/Avatar';
 import { useHeader } from './hooks';
 
 const Header: FC = () => {
-  const { user, createClickMenuHandler } = useHeader();
+  const { user, createClickMenuHandler, logout } = useHeader();
 
   return (
     <Menu borderless={true} fixed="top">
@@ -22,7 +22,13 @@ const Header: FC = () => {
           統計
         </Menu.Item>
         <Menu.Item as="a" position="right">
-          <Avatar src={user?.icon} size="medium" />
+          <Dropdown trigger={<Avatar src={user?.icon} size="medium" />}>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={createClickMenuHandler('mypage/settings')}>ユーザー設定</Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item onClick={logout}>ログアウト</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </Menu.Item>
       </Container>
     </Menu>

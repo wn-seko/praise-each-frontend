@@ -1,4 +1,13 @@
-import { atom, selector, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from 'recoil';
+import {
+  atom,
+  atomFamily,
+  DefaultValue,
+  selector,
+  selectorFamily,
+  useRecoilValue,
+  useRecoilValueLoadable,
+  useSetRecoilState,
+} from 'recoil';
 import { Praise } from '~/domains/praise';
 import { User } from '~/domains/user';
 import { authUserState, useAuthUser } from '~/recoil/auth';
@@ -21,16 +30,16 @@ export interface EnhancedPraise extends Omit<Praise, 'createdAt' | 'updatedAt'> 
   onClickUpVote: () => void;
 }
 
-interface PraiseQuery {
+type PraiseQuery = Readonly<{
   from?: string;
   to?: string;
   page: number;
   limit: 20;
-}
+}>;
 
-const tabState = atom<{ tab: TabName; timestamp: number }>({
+const tabState = atom<TabName>({
   key: 'pages/top/tabState',
-  default: { tab: 'timeline', timestamp: new Date().getTime() },
+  default: 'timeline',
 });
 
 const praiseQueryState = atom<PraiseQuery>({
@@ -39,8 +48,9 @@ const praiseQueryState = atom<PraiseQuery>({
     key: 'pages/top/praiseQueryState/Default',
     get: ({ get }) => {
       const authUser = get(authUserState);
+      const tab = get(tabState);
 
-      switch (get(tabState).tab) {
+      switch (tab) {
         case 'timeline':
           return { page: 1, limit: 20 };
         case 'received':
@@ -55,14 +65,25 @@ const praiseQueryState = atom<PraiseQuery>({
   }),
 });
 
-export const praiseState = atom<Praise[]>({
-  key: 'pages/top/praiseState',
-  default: selector<Praise[]>({
-    key: 'pages/top/praiseState/Default',
-    get: async ({ get }) => {
-      return await fetchPraiseApi(get(praiseQueryState));
+const praisesState = atomFamily<Praise[], PraiseQuery>({
+  key: 'pages/top/praisesState',
+  default: async (query: PraiseQuery) => {
+    return await fetchPraiseApi(query);
+  },
+});
+
+export const praisesSelector = selectorFamily<Praise[], PraiseQuery>({
+  key: 'pages/top/praisesSelector',
+  get:
+    (query: PraiseQuery) =>
+    async ({ get }) => {
+      return get(praisesState(query));
     },
-  }),
+  set:
+    (query: PraiseQuery) =>
+    ({ set }, praises: Praise[] | DefaultValue) => {
+      set(praisesState(query), praises);
+    },
 });
 
 const includesUser = (userId: string, users: User[]) => users.findIndex((user) => user.id === userId) >= 0;
@@ -115,21 +136,21 @@ export const useTab = () => {
   const setTab = useSetRecoilState(tabState);
 
   const handleChangeTab = (tabName: TabName) => {
-    setTab({ tab: tabName, timestamp: new Date().getTime() });
+    setTab(tabName);
   };
 
   return { handleChangeTab };
 };
 
 export const usePraisePage = () => {
-  const { state, contents } = useRecoilValueLoadable<Praise[]>(praiseState);
-  const setPraises = useSetRecoilState(praiseState);
-  const setTab = useSetRecoilState(tabState);
-  const { tab: currentTab } = useRecoilValue(tabState);
+  const query = useRecoilValue<PraiseQuery>(praiseQueryState);
+  const { state, contents } = useRecoilValueLoadable<Praise[]>(praisesState(query));
+  const setPraises = useSetRecoilState(praisesState(query));
+  const currentTab = useRecoilValue(tabState);
   const { user } = useAuthUser();
 
-  const refetchTimeline = () => {
-    setTab({ tab: 'timeline', timestamp: new Date().getTime() });
+  const refetchTimeline = async () => {
+    setPraises(await fetchPraiseApi(query));
   };
 
   const updatePraise = (praise: Praise) => {

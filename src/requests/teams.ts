@@ -59,6 +59,12 @@ export const fetchTeam = (teamId: string): Promise<Result<Team, {}>> =>
     .then((response) => new Success<Team, {}>(responseToTeam(response)))
     .catch(() => new Failure<Team, {}>({}));
 
+export const fetchMyTeams = (): Promise<Result<Team[], {}>> =>
+  api
+    .get<unknown, TeamResponse[]>(`/teams/my`)
+    .then((response) => new Success<Team[], {}>(response.map(responseToTeam)))
+    .catch(() => new Failure<Team[], {}>({}));
+
 export const deleteTeam = (teamId: string): Promise<Result<{}, {}>> =>
   api
     .delete<unknown, TeamResponse>(`/teams/${teamId}`)

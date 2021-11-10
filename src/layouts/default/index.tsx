@@ -6,6 +6,7 @@ import Header from './Header';
 
 const PageContainer = styled.div`
   margin-top: 80px;
+  padding-bottom: 50px;
 `;
 
 interface DefaultLayoutProps {

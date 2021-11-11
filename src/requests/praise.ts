@@ -18,22 +18,21 @@ interface PraiseResponse {
 interface PraiseQuery {
   from?: string;
   to?: string;
-  page: number;
-  limit: number;
+  page?: number;
 }
 
 interface PraiseRequestParams {
   from?: string;
   to?: string;
-  offset: number;
+  page: number;
   limit: number;
 }
 
 const queryToRequestParams = (query: PraiseQuery): PraiseRequestParams => ({
   from: query.from,
   to: query.to,
-  offset: query.page - 1,
-  limit: query.limit,
+  page: query.page || 1,
+  limit: 20,
 });
 
 const responseToPraise = (response: PraiseResponse): Praise => ({

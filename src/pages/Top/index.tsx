@@ -1,11 +1,13 @@
 /* TODO: delete eslint-disable */
 /* eslint-disable react/display-name */
 
+import styled from '@emotion/styled';
 import React, { FC } from 'react';
 import { Container, Divider, Loader, Message, Tab, TabProps } from 'semantic-ui-react';
 import PraiseCard from '~/components/domains/Praise/PraiseCard';
+import ScrollLoader from '~/components/functional/ScrollLoader';
 import DefaultLayout from '~/layouts/default';
-import { EnhancedPraise, usePraisePage, useTab } from './hooks/usePraisePage';
+import { EnhancedPraise, usePraisePage, useScroll, useTab } from './hooks/usePraisePage';
 import PraiseInput from './PraiseInput';
 
 interface PraisePaneProps {
@@ -13,11 +15,17 @@ interface PraisePaneProps {
   praises: EnhancedPraise[];
 }
 
+const ScrollLoaderContainer = styled.div`
+  margin-top: 20px;
+`;
+
 const SearchPane: FC<PraisePaneProps> = () => {
   return <Tab.Pane as="div">Coming soon...</Tab.Pane>;
 };
 
 const PraisePane: FC<PraisePaneProps> = ({ loading, praises }) => {
+  const { loadOnScroll, onInRange } = useScroll();
+
   if (loading) {
     return <Loader active={true}>Loading...</Loader>;
   }
@@ -33,6 +41,9 @@ const PraisePane: FC<PraisePaneProps> = ({ loading, praises }) => {
           <PraiseCard.Card key={item.id} {...item} />
         ))}
       </PraiseCard>
+      <ScrollLoaderContainer>
+        <ScrollLoader loading={loadOnScroll} onInRange={onInRange} />
+      </ScrollLoaderContainer>
     </Tab.Pane>
   );
 };

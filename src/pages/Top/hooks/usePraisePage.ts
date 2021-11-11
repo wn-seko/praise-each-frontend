@@ -77,17 +77,6 @@ const praisesState = atomFamily<Praise[], PraiseQuery>({
   },
 });
 
-const praisesState2 = atom<Praise[]>({
-  key: 'pages/top/praisesState',
-  default: selector<Praise[]>({
-    key: 'pages/top/praisesState/Default',
-    get: async ({ get }) => {
-      const query = get(praiseQueryState);
-      return await fetchPraiseApi(query);
-    },
-  }),
-});
-
 export const praisesSelector = selectorFamily<Praise[], PraiseQuery>({
   key: 'pages/top/praisesSelector',
   get:
@@ -100,16 +89,6 @@ export const praisesSelector = selectorFamily<Praise[], PraiseQuery>({
     ({ set }, praises: Praise[] | DefaultValue) => {
       set(praisesState(query), praises);
     },
-});
-
-export const praisesSelector2 = selector<Praise[]>({
-  key: 'pages/top/praisesSelector',
-  get: async ({ get }) => {
-    return get(praisesState2);
-  },
-  set: ({ set }, praises: Praise[] | DefaultValue) => {
-    set(praisesState2, praises);
-  },
 });
 
 const includesUser = (userId: string, users: User[]) => users.findIndex((user) => user.id === userId) >= 0;

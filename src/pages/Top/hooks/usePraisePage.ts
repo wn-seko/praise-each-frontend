@@ -21,7 +21,12 @@ import {
   postPraiseUpVote as postPraiseUpVoteApi,
 } from '~/requests/praise';
 
-type TabName = 'timeline' | 'sent' | 'received' | 'search';
+export type TabType = 'timeline' | 'team' | 'sent' | 'received' | 'search';
+
+export interface TabState {
+  type: TabType;
+  id?: string;
+}
 
 export interface EnhancedPraise extends Omit<Praise, 'createdAt' | 'updatedAt'> {
   liked: boolean;
@@ -35,11 +40,12 @@ export interface EnhancedPraise extends Omit<Praise, 'createdAt' | 'updatedAt'> 
 type PraiseQuery = Readonly<{
   from?: string;
   to?: string;
+  teamId?: string;
 }>;
 
-const tabState = atom<TabName>({
+const tabState = atom<TabState>({
   key: 'pages/top/tabState',
-  default: 'timeline',
+  default: { type: 'timeline' },
 });
 
 const pageState = atom<{ page: number; isLast: boolean }>({
@@ -55,9 +61,11 @@ const praiseQueryState = atom<PraiseQuery>({
       const authUser = get(authUserState);
       const tab = get(tabState);
 
-      switch (tab) {
+      switch (tab.type) {
         case 'timeline':
           return {};
+        case 'team':
+          return { teamId: tab.id };
         case 'received':
           return { to: authUser?.id };
         case 'sent':
@@ -77,17 +85,6 @@ const praisesState = atomFamily<Praise[], PraiseQuery>({
   },
 });
 
-const praisesState2 = atom<Praise[]>({
-  key: 'pages/top/praisesState',
-  default: selector<Praise[]>({
-    key: 'pages/top/praisesState/Default',
-    get: async ({ get }) => {
-      const query = get(praiseQueryState);
-      return await fetchPraiseApi(query);
-    },
-  }),
-});
-
 export const praisesSelector = selectorFamily<Praise[], PraiseQuery>({
   key: 'pages/top/praisesSelector',
   get:
@@ -100,16 +97,6 @@ export const praisesSelector = selectorFamily<Praise[], PraiseQuery>({
     ({ set }, praises: Praise[] | DefaultValue) => {
       set(praisesState(query), praises);
     },
-});
-
-export const praisesSelector2 = selector<Praise[]>({
-  key: 'pages/top/praisesSelector',
-  get: async ({ get }) => {
-    return get(praisesState2);
-  },
-  set: ({ set }, praises: Praise[] | DefaultValue) => {
-    set(praisesState2, praises);
-  },
 });
 
 const includesUser = (userId: string, users: User[]) => users.findIndex((user) => user.id === userId) >= 0;
@@ -164,9 +151,9 @@ export const useTab = () => {
   const setTab = useSetRecoilState(tabState);
   const setPage = useSetRecoilState(pageState);
 
-  const handleChangeTab = async (tabName: TabName) => {
+  const handleChangeTab = async (tabType: TabType, id?: string) => {
     setPage({ page: 1, isLast: false });
-    setTab(tabName);
+    setTab({ type: tabType, id });
     setPraises(await fetchPraiseApi(query));
   };
 

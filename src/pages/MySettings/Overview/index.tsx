@@ -4,6 +4,7 @@ import { Container, Header } from 'semantic-ui-react';
 import Avatar from '~/components/ui/Avatar';
 import AccountSettings from '../AccountSettings';
 import GeneralSettings from '../GeneralSettings';
+import TeamPinSettings from '../TeamPinSettings';
 import { useUser } from './hooks';
 
 const HeaderContainer = styled.div`
@@ -28,6 +29,7 @@ const Overview: FC = () => {
           <Header as="h2">{user.name}</Header>
         </HeaderContainer>
         <GeneralSettings user={user} />
+        <TeamPinSettings />
         <AccountSettings />
       </Container>
     )

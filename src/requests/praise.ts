@@ -18,12 +18,14 @@ interface PraiseResponse {
 interface PraiseQuery {
   from?: string;
   to?: string;
+  teamId?: string;
   page?: number;
 }
 
 interface PraiseRequestParams {
   from?: string;
   to?: string;
+  teamId?: string;
   page: number;
   limit: number;
 }
@@ -31,6 +33,7 @@ interface PraiseRequestParams {
 const queryToRequestParams = (query: PraiseQuery): PraiseRequestParams => ({
   from: query.from,
   to: query.to,
+  teamId: query.teamId,
   page: query.page || 1,
   limit: 20,
 });

@@ -6,7 +6,7 @@ type TagList = {
   Item: typeof Item;
 };
 
-const TagList: FC & TagList = (props) => <List divided={true} size="small" {...props} />;
+const TagList: FC & TagList = (props) => <List divided={true} relaxed={true} size="small" {...props} />;
 
 TagList.Item = Item;
 

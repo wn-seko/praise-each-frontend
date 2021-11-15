@@ -9,9 +9,9 @@ export const postTag = (name: string): Promise<Result<Tag, {}>> =>
     .then((response) => new Success<Tag, {}>(response))
     .catch(() => new Failure<Tag, {}>({}));
 
-export const searchTags = (word?: string): Promise<Result<Pagination<Tag>, {}>> =>
+export const searchTags = (word?: string, page = 1, limit = 20): Promise<Result<Pagination<Tag>, {}>> =>
   api
-    .get<unknown, Pagination<Tag>>('/tags', { params: { word } })
+    .get<unknown, Pagination<Tag>>('/tags', { params: { word, page, limit } })
     .then((response) => new Success<Pagination<Tag>, {}>(response))
     .catch(() => new Failure<Pagination<Tag>, {}>({}));
 

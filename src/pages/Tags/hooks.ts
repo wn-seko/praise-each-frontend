@@ -24,5 +24,5 @@ export const useTags = () => {
     searchTags();
   }, []);
 
-  return { loading, tags: enhancedTags, pagination };
+  return { loading, tags: enhancedTags, pagination, refresh: searchTags };
 };

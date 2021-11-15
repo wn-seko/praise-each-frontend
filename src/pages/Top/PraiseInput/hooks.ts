@@ -109,7 +109,7 @@ export const useTag = () => {
         setTagListCache((prev) => ({ ...prev, [char]: [] }));
 
         // 候補リストを取得
-        searchTags(char).then((result) => {
+        searchTags(char, 1, 5).then((result) => {
           if (result.isSuccess()) {
             const { list } = result.value;
             setTagListCache((prev) => ({ ...prev, [char]: list }));

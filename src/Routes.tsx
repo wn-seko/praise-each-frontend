@@ -10,6 +10,7 @@ import UsersPage from '~/pages/Users';
 import TeamsPage from '~/pages/Teams';
 import TeamPage from './pages/Team';
 import MySettings from './pages/MySettings';
+import TagsPage from './pages/Tags';
 
 const Routes = () => {
   return (
@@ -27,6 +28,7 @@ const Routes = () => {
       <Auth requireLogin={true}>
         <Switch>
           <Route exact={true} path="/" component={TopPage} />
+          <Route exact={true} path="/tags" component={TagsPage} />
           <Route exact={true} path="/users" component={UsersPage} />
           <Route exact={true} path="/teams" component={TeamsPage} />
           <Route path="/teams/:teamId" component={TeamPage} />

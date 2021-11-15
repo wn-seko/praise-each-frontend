@@ -18,6 +18,9 @@ const Header: FC = () => {
         <Menu.Item as="a" onClick={createClickMenuHandler('teams')}>
           チーム
         </Menu.Item>
+        <Menu.Item as="a" onClick={createClickMenuHandler('tags')}>
+          タグ
+        </Menu.Item>
         <Menu.Item as="a" onClick={createClickMenuHandler('statistics')}>
           統計
         </Menu.Item>

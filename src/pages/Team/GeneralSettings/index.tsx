@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import React, { FC, useMemo } from 'react';
 import { ColoredLabel } from '~/components/ui/ColoredLabel';
 import { Button, Header, List, Message, Segment } from 'semantic-ui-react';
@@ -7,17 +6,11 @@ import { Team } from '~/domains/team';
 import Avatar from '~/components/ui/Avatar';
 import TeamEditor from '~/components/domains/Team/TeamEditor';
 import { useUpdateTeam } from './hooks';
+import { BothContainer } from '~/components/ui/Container';
 
 interface GeneralSettingsProps {
   team: Team;
 }
-
-const BothContainer = styled.div`
-  display: inline-flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-`;
 
 const GeneralSettings: FC<GeneralSettingsProps> = ({ team }) => {
   const { updating, handleSave } = useUpdateTeam(team.id);

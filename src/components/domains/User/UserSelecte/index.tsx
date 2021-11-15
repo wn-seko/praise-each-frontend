@@ -2,13 +2,9 @@ import styled from '@emotion/styled';
 import React, { FC } from 'react';
 import { Form, Icon, Input, List } from 'semantic-ui-react';
 import Avatar from '~/components/ui/Avatar';
+import { BothContainer } from '~/components/ui/Container';
 import { User } from '~/domains/user';
 import { useUserList } from './hooks';
-
-const BothContainer = styled.div`
-  display: inline-flex;
-  align-content: space-between;
-`;
 
 const PositionRightIcon = styled(Icon)`
   position: absolute;

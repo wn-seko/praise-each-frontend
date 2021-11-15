@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Button, Grid } from 'semantic-ui-react';
 import DropdownInput from '~/components/ui/DropdownInput';
-import { useAddress, useHashtag, useMessage } from './hooks';
+import { useAddress, useTag, useMessage } from './hooks';
 
 interface PraiseInputProps {
   refetchTimeline: () => void;
@@ -9,8 +9,12 @@ interface PraiseInputProps {
 
 const PraiseInput: FC<PraiseInputProps> = ({ refetchTimeline }) => {
   const { ref, sending, handleChangeMessage, handleClickSend } = useMessage(refetchTimeline);
-  const { addressList, handleChangeWord } = useAddress();
-  const { hashtagList } = useHashtag();
+  const { addressList, handleChangeWord: handleInputAddress } = useAddress();
+  const { tagList, handleChangeWord: handleInputTag } = useTag();
+  const handleChangeWord = (word: string) => {
+    handleInputAddress(word);
+    handleInputTag(word);
+  };
 
   return (
     <Grid>
@@ -20,7 +24,7 @@ const PraiseInput: FC<PraiseInputProps> = ({ refetchTimeline }) => {
             ref={ref}
             placeholder="@感謝を伝えたい人  感謝の気持ちを伝えましょう！ #ハッシュタグ１ #ハッシュタグ２..."
             addressList={addressList}
-            hashtagList={hashtagList}
+            hashtagList={tagList}
             onChange={handleChangeMessage}
             onChangeWord={handleChangeWord}
           />

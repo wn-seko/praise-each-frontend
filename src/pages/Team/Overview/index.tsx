@@ -33,7 +33,7 @@ const Overview: FC<OverviewProps> = ({ teamId }) => {
           <Header as="h2">{team.name}</Header>
         </HeaderContainer>
         <GeneralSettings team={team} />
-        <ExternalConnectionSettings />
+        <ExternalConnectionSettings teamId={team.id} />
         <DeleteTeam teamId={team.id} />
       </Container>
     )

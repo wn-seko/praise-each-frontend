@@ -1,8 +1,10 @@
 import { useState, useRef } from 'react';
 import { toast } from 'react-toastify';
 import { parseMessage } from '~/domains/praise';
+import { Tag } from '~/domains/tag';
 import { User } from '~/domains/user';
 import { postPraise } from '~/requests/praise';
+import { searchTags } from '~/requests/tag';
 import { searchUser } from '~/requests/user';
 
 export const useMessage = (refetchTimeline: () => void) => {
@@ -91,11 +93,41 @@ export const useAddress = () => {
   return { addressList, handleChangeWord };
 };
 
-export const useHashtag = () => {
-  const hashtagList = ['test1', 'test2', 'test3'].map((item) => ({
-    key: item,
-    value: item,
-    text: '#' + item,
+export const useTag = () => {
+  const [inputChar, setInputChar] = useState('');
+  const [tagListCache, setTagListCache] = useState<Record<string, Tag[]>>({});
+
+  const handleChangeWord = (word: string) => {
+    const firstCharMatched = word.match(/^#(.)/);
+
+    if (firstCharMatched) {
+      const char = firstCharMatched[1];
+      setInputChar(char);
+
+      if (!tagListCache[char]) {
+        // 読込中に再読み込みしないようキャッシュ
+        setTagListCache((prev) => ({ ...prev, [char]: [] }));
+
+        // 候補リストを取得
+        searchTags(char).then((result) => {
+          if (result.isSuccess()) {
+            const { list } = result.value;
+            setTagListCache((prev) => ({ ...prev, [char]: list }));
+          } else {
+            // 失敗した場合はキャッシュを削除する
+            const { [char]: _, ...rest } = tagListCache;
+            setTagListCache(rest);
+          }
+        });
+      }
+    }
+  };
+
+  const tagList = (tagListCache[inputChar] || []).map((tag) => ({
+    key: tag.id,
+    value: tag.id,
+    text: '#' + tag.name,
   }));
-  return { hashtagList };
+
+  return { tagList, handleChangeWord };
 };

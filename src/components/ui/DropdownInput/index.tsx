@@ -11,6 +11,7 @@ interface DropdownItem {
 }
 
 interface DropdownInputProps {
+  defaultInput?: string;
   placeholder?: string;
   addressList?: DropdownItem[];
   hashtagList?: DropdownItem[];
@@ -19,10 +20,11 @@ interface DropdownInputProps {
 }
 
 const DropdownInput = forwardRef<HTMLElement, DropdownInputProps>(function DropdownItemInner(
-  { placeholder = '', addressList = [], hashtagList = [], onChange, onChangeWord },
+  { defaultInput = '', placeholder = '', addressList = [], hashtagList = [], onChange, onChangeWord },
   outerRef,
 ) {
-  const { ref, dropdown, handleChangeInput, handleSelectedWord, handleKeyPress } = useDropdownInput(
+  const { ref, active, dropdown, handleChangeInput, handleSelectedWord } = useDropdownInput(
+    defaultInput,
     addressList,
     hashtagList,
     onChange,
@@ -33,9 +35,9 @@ const DropdownInput = forwardRef<HTMLElement, DropdownInputProps>(function Dropd
   return (
     <>
       <Ref innerRef={ref}>
-        <Input fluid={true} placeholder={placeholder} onChange={handleChangeInput} onKeyPress={handleKeyPress} />
+        <Input fluid={true} placeholder={placeholder} onChange={handleChangeInput} />
       </Ref>
-      {dropdown.length > 0 && <Dropdown options={dropdown} onSelected={handleSelectedWord} />}
+      {dropdown.length > 0 && <Dropdown active={active} options={dropdown} onSelected={handleSelectedWord} />}
     </>
   );
 });

@@ -32,9 +32,13 @@ export interface EnhancedPraise extends Omit<Praise, 'createdAt' | 'updatedAt'> 
   liked: boolean;
   upVoted: boolean;
   isMine: boolean;
+  isEdit: boolean;
   createdAt: string;
+  updatedAt: string;
   onClickLike: () => void;
   onClickUpVote: () => void;
+  onUpdate: (praise: Praise) => void;
+  onDelete: () => void;
 }
 
 type PraiseQuery = Readonly<{
@@ -135,14 +139,23 @@ const createClickLikeHandler =
     }
   };
 
-const formatPraise = (praise: Praise, userId: string, updatePraise: (praise: Praise) => void): EnhancedPraise => ({
+const formatPraise = (
+  praise: Praise,
+  userId: string,
+  updatePraise: (praise: Praise) => void,
+  deletePraise: (praiseId: string) => void,
+): EnhancedPraise => ({
   ...praise,
   upVoted: includesUser(userId, praise.upVotes),
   liked: includesUser(userId, praise.likes),
   isMine: includesUser(userId, [praise.from, praise.to]),
   createdAt: praise.createdAt.format('YYYY/MM/DD HH:mm'),
+  updatedAt: praise.updatedAt.format('YYYY/MM/DD HH:mm'),
+  isEdit: !praise.createdAt.isSame(praise.updatedAt),
   onClickUpVote: createClickUpVoteHandler(praise.id, userId, praise.upVotes, updatePraise),
   onClickLike: createClickLikeHandler(praise.id, userId, praise.likes, updatePraise),
+  onUpdate: updatePraise,
+  onDelete: () => deletePraise(praise.id),
 });
 
 export const useTab = () => {
@@ -175,12 +188,16 @@ export const usePraisePage = () => {
     setPraises((prevPraises) => prevPraises.map((p) => (p.id === praise.id ? praise : p)));
   };
 
+  const deletePraise = (praiseId: string) => {
+    setPraises((prevPraises) => prevPraises.filter((p) => p.id !== praiseId));
+  };
+
   const praises = state === 'hasValue' ? (contents as Praise[]) : [];
 
   return {
     currentTab,
     loading: state === 'loading',
-    praises: praises.map((praise) => formatPraise(praise, user?.id || '', updatePraise)),
+    praises: praises.map((praise) => formatPraise(praise, user?.id || '', updatePraise, deletePraise)),
     refetchTimeline,
   };
 };

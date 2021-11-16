@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, KeyboardEvent } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { InputOnChangeData } from 'semantic-ui-react';
 
 interface DropdownItem {
@@ -31,39 +31,48 @@ const filterItems = (inputText: string, list: DropdownItem[]) =>
   list.filter((item) => new RegExp(inputText, 'i').test(item.text));
 
 export const useDropdownInput = (
+  defaultInput: string,
   addressList: DropdownItem[],
   hashtagList: DropdownItem[],
   onChange?: (text: string) => void,
   onChangeWord?: (word: string) => void,
   defaultRef?: React.RefObject<HTMLElement>,
 ) => {
-  const [input, setInput] = useState({ prev: '', current: '' });
+  const [input, setInput] = useState({ prev: defaultInput, current: defaultInput });
   const [inputWord, setInputWord] = useState('');
   const [dropdown, setDropdown] = useState<DropdownItem[]>([]);
+  const [activeDocument, setActiveDocument] = useState<Element | null>(null);
 
   const handleChangeInput = (_: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
     setInput({ prev: input.current, current: data.value });
   };
 
   const ref = defaultRef || useRef<HTMLDivElement>(null);
+  const inputElement = ref.current ? ref.current.querySelector('input') : null;
+  const active = inputElement === activeDocument;
 
   const handleSelectedWord = (item: DropdownItem) => {
-    if (ref.current) {
-      const inputElement = ref.current.querySelector('input');
-      if (inputElement) {
-        const newText = replaceInput(input.prev, input.current, item.text);
-        inputElement.value = newText + ' ';
-        inputElement.focus();
-        setInput({ prev: newText, current: newText + ' ' });
-      }
+    if (inputElement) {
+      const newText = replaceInput(input.prev, input.current, item.text);
+      inputElement.value = newText + ' ';
+      inputElement.focus();
+      setInput({ prev: newText, current: newText + ' ' });
     }
     setDropdown([]);
   };
 
-  const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
-    void event;
-    // console.log(event.metaKey, event.key);
-  };
+  const handleKeyPress = useCallback(
+    (event: KeyboardEvent) => {
+      if (dropdown.length > 0 && inputElement && ['ArrowUp', 'ArrowDown'].includes(event.key)) {
+        inputElement.blur();
+      }
+    },
+    [inputElement, dropdown.length],
+  );
+
+  const handleFocus = useCallback(() => {
+    setActiveDocument(document.activeElement);
+  }, [ref.current]);
 
   useEffect(() => {
     const word = diffInput(input.prev, input.current);
@@ -89,5 +98,31 @@ export const useDropdownInput = (
     }
   }, [inputWord]);
 
-  return { ref, dropdown, handleChangeInput, handleSelectedWord, handleKeyPress };
+  useEffect(() => {
+    if (ref.current) {
+      const inputElement = ref.current.querySelector('input');
+
+      if (inputElement) {
+        inputElement.value = defaultInput;
+      }
+    }
+  }, [defaultInput, ref.current]);
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [handleKeyPress]);
+
+  useEffect(() => {
+    document.addEventListener('focusin', handleFocus);
+
+    return () => {
+      document.removeEventListener('focusin', handleFocus);
+    };
+  }, [inputElement, document.activeElement]);
+
+  return { ref, active, dropdown, handleChangeInput, handleSelectedWord };
 };

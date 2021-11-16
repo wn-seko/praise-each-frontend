@@ -13,6 +13,7 @@ interface PraiseResponse {
   upVotes: User[];
   likes: User[];
   createdAt: string;
+  updatedAt: string;
 }
 
 interface PraiseQuery {
@@ -41,6 +42,7 @@ const queryToRequestParams = (query: PraiseQuery): PraiseRequestParams => ({
 const responseToPraise = (response: PraiseResponse): Praise => ({
   ...response,
   createdAt: dayjs(response.createdAt),
+  updatedAt: dayjs(response.updatedAt),
 });
 
 export const fetchPraise = (query: PraiseQuery): Promise<Praise[]> => {
@@ -61,6 +63,18 @@ export const postPraiseUpVote = (praiseId: string): Promise<Result<Praise, {}>> 
     .post<unknown, PraiseResponse>(`/praises/${praiseId}/up_votes`)
     .then((response) => new Success<Praise, {}>(responseToPraise(response)))
     .catch(() => new Failure<Praise, {}>({}));
+
+export const putPraise = (praiseId: string, message: string, tags: string[]): Promise<Result<Praise, {}>> =>
+  api
+    .put<unknown, PraiseResponse>(`/praises/${praiseId}`, { message, tags })
+    .then((response) => new Success<Praise, {}>(responseToPraise(response)))
+    .catch(() => new Failure<Praise, {}>({}));
+
+export const deletePraise = (praiseId: string): Promise<Result<{}, {}>> =>
+  api
+    .delete<unknown, PraiseResponse>(`/praises/${praiseId}`)
+    .then(() => new Success<{}, {}>({}))
+    .catch(() => new Failure<{}, {}>({}));
 
 export const deletePraiseUpVote = (praiseId: string): Promise<Result<Praise, {}>> =>
   api

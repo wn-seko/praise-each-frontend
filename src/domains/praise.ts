@@ -10,6 +10,7 @@ export interface Praise {
   upVotes: User[];
   likes: User[];
   createdAt: Dayjs;
+  updatedAt: Dayjs;
 }
 
 const uniq = (list: string[]) =>
@@ -17,6 +18,11 @@ const uniq = (list: string[]) =>
     (memo, item) => (memo.find((memoItem) => memoItem === item) ? memo : memo.concat([item])),
     [] as string[],
   );
+
+export const extractTags = (text: string) => {
+  const words = text.split(' ');
+  return uniq(words.filter((word) => word.startsWith('#')));
+};
 
 export const parseMessage = (text: string) => {
   const words = text.split(' ');

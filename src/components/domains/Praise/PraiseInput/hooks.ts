@@ -1,58 +1,8 @@
-import { useState, useRef } from 'react';
-import { toast } from 'react-toastify';
-import { parseMessage } from '~/domains/praise';
+import { useState } from 'react';
 import { Tag } from '~/domains/tag';
 import { User } from '~/domains/user';
-import { postPraise } from '~/requests/praise';
 import { searchTags } from '~/requests/tag';
 import { searchUser } from '~/requests/user';
-
-export const useMessage = (refetchTimeline: () => void) => {
-  const [sending, setSending] = useState(false);
-  const [message, setMessage] = useState('');
-  const ref = useRef<HTMLDivElement>(null);
-
-  const handleChangeMessage = (message: string) => {
-    setMessage(message);
-  };
-
-  const clearMessage = () => {
-    if (ref.current) {
-      const input = ref.current.querySelector('input') as HTMLInputElement;
-      input.value = '';
-    }
-  };
-
-  const handleClickSend = async () => {
-    const { to, body, tags } = parseMessage(message);
-    const searchUsersResult = await searchUser({ word: to });
-
-    if (searchUsersResult.isFailure() || searchUsersResult.value.length === 0) {
-      // TODO: show notification
-      toast.error('送信に失敗しました');
-      return;
-    }
-
-    // TODO: show select dialog
-    const user = searchUsersResult.value[0];
-
-    setSending(true);
-
-    postPraise(user.id, body, tags).then((result) => {
-      setSending(false);
-
-      if (result.isSuccess()) {
-        toast.success('送信しました');
-        clearMessage();
-        refetchTimeline();
-      } else {
-        toast.error('送信に失敗しました');
-      }
-    });
-  };
-
-  return { ref, sending, handleChangeMessage, handleClickSend };
-};
 
 export const useAddress = () => {
   const [inputChar, setInputChar] = useState('');

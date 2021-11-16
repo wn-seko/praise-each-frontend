@@ -2,22 +2,23 @@ import React, { FC } from 'react';
 import { Segment, Button } from 'semantic-ui-react';
 import ConfirmModal from '~/components/ui/ConfirmModal';
 import SegmentContainer from '~/components/ui/SegmentContainer';
-import { useConfirmModal, useTeam } from './hooks';
+import { useModal } from '~/hooks/useModal';
+import { useTeam } from './hooks';
 
 interface DeleteTeamProps {
   teamId: string;
 }
 
 const DeleteTeam: FC<DeleteTeamProps> = ({ teamId }) => {
-  const { isOpen, openModal, closeModal } = useConfirmModal();
-  const { loading, handleConfirm } = useTeam(teamId, closeModal);
+  const { isOpen, open, close } = useModal();
+  const { loading, handleConfirm } = useTeam(teamId, close);
 
   return (
     <>
       <SegmentContainer title="チームを削除">
         <Segment.Group>
           <Segment>
-            <Button negative={true} onClick={openModal}>
+            <Button negative={true} onClick={open}>
               チームを削除
             </Button>
           </Segment>
@@ -31,7 +32,7 @@ const DeleteTeam: FC<DeleteTeamProps> = ({ teamId }) => {
         isOpen={isOpen}
         loading={loading}
         handleConfirm={handleConfirm}
-        handleClose={closeModal}
+        handleClose={close}
       />
     </>
   );

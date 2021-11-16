@@ -3,14 +3,15 @@
 
 import styled from '@emotion/styled';
 import React, { FC } from 'react';
-import { Container, Divider, Loader, Message, Tab, TabProps } from 'semantic-ui-react';
+import { Button, Container, Divider, Grid, Loader, Message, Tab, TabProps } from 'semantic-ui-react';
 import PraiseCard from '~/components/domains/Praise/PraiseCard';
 import ScrollLoader from '~/components/functional/ScrollLoader';
 import { Team } from '~/domains/team';
+import PraiseInput from '~/components/domains/Praise/PraiseInput';
 import DefaultLayout from '~/layouts/default';
 import { EnhancedPraise, TabState, usePraisePage, useScroll, useTab } from './hooks/usePraisePage';
 import { usePinedTeams } from './hooks/useTeamPin';
-import PraiseInput from './PraiseInput';
+import { useMessage } from './hooks/useMessage';
 
 interface PraisePaneProps {
   loading: boolean;
@@ -40,7 +41,7 @@ const PraisePane: FC<PraisePaneProps> = ({ loading, praises }) => {
     <Tab.Pane as="div">
       <PraiseCard>
         {praises.map((item) => (
-          <PraiseCard.Card key={item.id} {...item} />
+          <PraiseCard.Card key={item.id} praise={item} />
         ))}
       </PraiseCard>
       <ScrollLoaderContainer>
@@ -67,6 +68,7 @@ const getTabIndex = (tab: TabState, pinedTeams: Team[]) => {
 
 const TopPage: FC = () => {
   const { currentTab, loading, praises, refetchTimeline } = usePraisePage();
+  const { ref, sending, handleChangeMessage, handleClickSend } = useMessage(refetchTimeline);
   const { pinedTeams } = usePinedTeams();
   const { handleChangeTab } = useTab();
   const activeTabIndex = getTabIndex(currentTab, pinedTeams);
@@ -125,7 +127,18 @@ const TopPage: FC = () => {
   return (
     <DefaultLayout>
       <Container>
-        <PraiseInput refetchTimeline={refetchTimeline} />
+        <Grid>
+          <Grid.Row>
+            <Grid.Column width={14}>
+              <PraiseInput ref={ref} handleChangeMessage={handleChangeMessage} />
+            </Grid.Column>
+            <Grid.Column width={2}>
+              <Button fluid={true} primary={true} disabled={sending} loading={sending} onClick={handleClickSend}>
+                送信
+              </Button>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
         <Divider />
         <Tab
           activeIndex={activeTabIndex}

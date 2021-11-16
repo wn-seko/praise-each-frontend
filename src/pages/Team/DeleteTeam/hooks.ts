@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { useAsyncFn } from 'react-use';
 import { deleteTeam as deleteTeamApi } from '~/requests/teams';
@@ -17,18 +16,4 @@ export const useTeam = (teamId: string, closeModal: () => void) => {
   };
 
   return { loading: state.loading, handleConfirm };
-};
-
-export const useConfirmModal = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-
-  const openModal = () => {
-    setIsOpen(true);
-  };
-
-  return { isOpen, closeModal, openModal };
 };

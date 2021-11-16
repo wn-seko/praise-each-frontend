@@ -10,17 +10,16 @@ interface Option {
 const convertOption = (option: Option | string, index: number) =>
   typeof option === 'string' ? { key: String(index), value: option, text: option } : option;
 
-export const useDropdown = (options: (string | Option)[], onSelected?: (option: Option) => void) => {
-  const [hover, setHover] = useState(false);
+export const useDropdown = (active: boolean, options: (string | Option)[], onSelected?: (option: Option) => void) => {
   const [selected, setSelected] = useState(-1);
   const sanitizedOptions = options.map(convertOption);
 
-  const handleMouseEnter = () => {
-    setHover(true);
+  const createHandleMouseEnter = (index: number) => () => {
+    setSelected(index);
   };
 
-  const handleMouseLeave = () => {
-    setHover(false);
+  const createHandleMouseLeave = (index: number) => () => {
+    setSelected(index);
   };
 
   const handleClick = (option: Option) => () => {
@@ -33,23 +32,35 @@ export const useDropdown = (options: (string | Option)[], onSelected?: (option: 
     const handleKeydown = (event: KeyboardEvent) => {
       event.stopPropagation();
 
+      if (!active) {
+        return true;
+      }
+
       if (event.key === 'ArrowDown') {
+        event.preventDefault();
         setSelected((prev) => Math.min(prev + 1, sanitizedOptions.length - 1));
+        return false;
       }
       if (event.key === 'ArrowUp') {
+        event.preventDefault();
         setSelected((prev) => Math.max(prev - 1, 0));
+        return false;
       }
       if (event.key === 'Enter' && onSelected) {
+        event.preventDefault();
         onSelected(sanitizedOptions[selected]);
+        return false;
       }
+
+      return true;
     };
 
-    document.onkeydown = handleKeydown;
+    document.addEventListener('keydown', handleKeydown);
 
     return () => {
-      document.onkeydown = null;
+      document.removeEventListener('keydown', handleKeydown);
     };
   }, [selected]);
 
-  return { selected, options: sanitizedOptions, hover, handleMouseEnter, handleMouseLeave, handleClick };
+  return { selected, options: sanitizedOptions, createHandleMouseEnter, createHandleMouseLeave, handleClick };
 };

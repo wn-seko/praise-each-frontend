@@ -16,10 +16,6 @@ const Item = styled.div`
   &[data-selected='true'] {
     background: rgba(34, 36, 38, 0.07);
   }
-
-  &:hover {
-    background: rgba(34, 36, 38, 0.07);
-  }
 `;
 
 const Layout = styled.div`
@@ -36,25 +32,31 @@ interface Option {
 }
 
 interface DropdownProps {
+  active: boolean;
   options: (string | Option)[];
   onSelected?: (option: Option) => void;
 }
 
-const Dropdown: FC<DropdownProps> = ({ options: optionsProps, onSelected }) => {
-  const { selected, options, hover, handleMouseEnter, handleMouseLeave, handleClick } = useDropdown(
+const Dropdown: FC<DropdownProps> = ({ active, options: optionsProps, onSelected }) => {
+  const { selected, options, handleClick, createHandleMouseEnter, createHandleMouseLeave } = useDropdown(
+    active,
     optionsProps,
     onSelected,
   );
+
+  if (!active) {
+    return null;
+  }
 
   return (
     <Container>
       {options.map((option, index) => (
         <Item
           key={option.key}
-          data-selected={!hover && index === selected}
+          data-selected={index === selected}
           onClick={handleClick(option)}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          onMouseEnter={createHandleMouseEnter(index)}
+          onMouseLeave={createHandleMouseLeave(index)}
         >
           <Layout>
             {option.icon && <Avatar src={option.icon} size="tiny" />}

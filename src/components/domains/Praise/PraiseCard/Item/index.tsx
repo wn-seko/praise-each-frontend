@@ -1,17 +1,27 @@
 import styled from '@emotion/styled';
 import React, { FC } from 'react';
-import { Card } from 'semantic-ui-react';
+import { Card, Icon } from 'semantic-ui-react';
 import { parseMessage, Praise } from '~/domains/praise';
 import Avatar from '~/components/ui/Avatar';
 import Reaction from '~/components/domains/Praise/Reaction';
+import PraiseEditor from '../../PraiseEditor';
+import DeletePraise from '../../DeletePraise';
 
-interface PraiseCardProps extends Omit<Praise, 'createdAt'> {
+interface PraiseCard extends Omit<Praise, 'createdAt' | 'updatedAt'> {
   upVoted: boolean;
   liked: boolean;
   isMine: boolean;
+  isEdit: boolean;
+  createdAt: string;
+  updatedAt: string;
   onClickUpVote?: () => void;
   onClickLike: () => void;
-  createdAt: string;
+  onUpdate: (praise: Praise) => void;
+  onDelete: () => void;
+}
+
+interface PraiseCardProps {
+  praise: PraiseCard;
 }
 
 const CardHeader = styled(Card.Header)`
@@ -37,38 +47,47 @@ const ReactionBlock = styled.div`
   }
 `;
 
-const PraiseCard: FC<PraiseCardProps> = ({
-  from,
-  to,
-  message,
-  createdAt,
-  upVotes,
-  likes,
-  upVoted,
-  liked,
-  isMine,
-  onClickLike,
-  onClickUpVote,
-}) => {
-  const parsedMessage = parseMessage(message).parsed;
+const FloatButtonContainer = styled.div`
+  position: absolute;
+  top: 7px;
+  right: 5px;
+
+  > * {
+    margin-left: 5px !important;
+    cursor: pointer;
+  }
+`;
+
+const PraiseCard: FC<PraiseCardProps> = ({ praise }) => {
+  const parsedMessage = parseMessage(praise.message).parsed;
 
   return (
     <Card fluid={true}>
+      {praise.isMine && (
+        <FloatButtonContainer>
+          <PraiseEditor praise={praise}>
+            <Icon name="pencil" />
+          </PraiseEditor>
+          <DeletePraise praiseId={praise.id} onDelete={praise.onDelete}>
+            <Icon name="trash alternate outline" />
+          </DeletePraise>
+        </FloatButtonContainer>
+      )}
       <Card.Content>
         <CardHeader>
           <TagBlock>
-            <Avatar src={from.icon} size="mini" />
-            <NameLabel>{from.name}</NameLabel>
+            <Avatar src={praise.from.icon} size="mini" />
+            <NameLabel>{praise.from.name}</NameLabel>
           </TagBlock>
           <TagBlock>
             <ArrowLabel> → </ArrowLabel>
           </TagBlock>
           <TagBlock>
-            <Avatar src={to.icon} size="mini" />
-            <NameLabel>{to.name}</NameLabel>
+            <Avatar src={praise.to.icon} size="mini" />
+            <NameLabel>{praise.to.name}</NameLabel>
           </TagBlock>
         </CardHeader>
-        <Card.Meta>{createdAt}</Card.Meta>
+        <Card.Meta>{`${praise.createdAt}${praise.isEdit ? '（編集済み）' : ''}`}</Card.Meta>
         <Card.Description>
           {parsedMessage.map((word, index) =>
             word.type === 'tag' ? <a key={index}>{` ${word.text}`}</a> : ` ${word.text}`,
@@ -81,11 +100,18 @@ const PraiseCard: FC<PraiseCardProps> = ({
             title="賛同"
             theme="blue"
             icon="thumbs up outline"
-            active={upVoted}
-            users={upVotes}
-            onClick={!isMine ? onClickUpVote : undefined}
+            active={praise.upVoted}
+            users={praise.upVotes}
+            onClick={!praise.isMine ? praise.onClickUpVote : undefined}
           />
-          <Reaction title="いいね" theme="pink" icon="heart" active={liked} users={likes} onClick={onClickLike} />
+          <Reaction
+            title="いいね"
+            theme="pink"
+            icon="heart"
+            active={praise.liked}
+            users={praise.likes}
+            onClick={praise.onClickLike}
+          />
         </ReactionBlock>
       </Card.Content>
     </Card>

@@ -12,6 +12,8 @@ interface PraiseCard extends Omit<Praise, 'createdAt' | 'updatedAt'> {
   liked: boolean;
   isMine: boolean;
   isEdit: boolean;
+  isSend: boolean;
+  isReceived: boolean;
   createdAt: string;
   updatedAt: string;
   onClickUpVote?: () => void;
@@ -63,7 +65,7 @@ const PraiseCard: FC<PraiseCardProps> = ({ praise }) => {
 
   return (
     <Card fluid={true}>
-      {praise.isMine && (
+      {praise.isSend && (
         <FloatButtonContainer>
           <PraiseEditor praise={praise}>
             <Icon name="pencil" />

@@ -33,6 +33,8 @@ export interface EnhancedPraise extends Omit<Praise, 'createdAt' | 'updatedAt'> 
   upVoted: boolean;
   isMine: boolean;
   isEdit: boolean;
+  isSend: boolean;
+  isReceived: boolean;
   createdAt: string;
   updatedAt: string;
   onClickLike: () => void;
@@ -149,6 +151,8 @@ const formatPraise = (
   upVoted: includesUser(userId, praise.upVotes),
   liked: includesUser(userId, praise.likes),
   isMine: includesUser(userId, [praise.from, praise.to]),
+  isSend: userId === praise.from.id,
+  isReceived: userId === praise.to.id,
   createdAt: praise.createdAt.format('YYYY/MM/DD HH:mm'),
   updatedAt: praise.updatedAt.format('YYYY/MM/DD HH:mm'),
   isEdit: !praise.createdAt.isSame(praise.updatedAt),

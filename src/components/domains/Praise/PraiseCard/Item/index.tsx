@@ -6,6 +6,7 @@ import Avatar from '~/components/ui/Avatar';
 import Reaction from '~/components/domains/Praise/Reaction';
 import PraiseEditor from '../../PraiseEditor';
 import DeletePraise from '../../DeletePraise';
+import EmojiPicker from '~/components/ui/EmojiPicker';
 
 interface PraiseCard extends Omit<Praise, 'createdAt' | 'updatedAt'> {
   upVoted: boolean;
@@ -16,8 +17,9 @@ interface PraiseCard extends Omit<Praise, 'createdAt' | 'updatedAt'> {
   isReceived: boolean;
   createdAt: string;
   updatedAt: string;
-  onClickUpVote?: () => void;
+  onClickUpVote: () => void;
   onClickLike: () => void;
+  onClickStamp: (name: string) => void;
   onUpdate: (praise: Praise) => void;
   onDelete: () => void;
 }
@@ -62,6 +64,7 @@ const FloatButtonContainer = styled.div`
 
 const PraiseCard: FC<PraiseCardProps> = ({ praise }) => {
   const parsedMessage = parseMessage(praise.message).parsed;
+  const createClickStampHandler = (name: string) => () => praise.onClickStamp(name);
 
   return (
     <Card fluid={true}>
@@ -98,22 +101,18 @@ const PraiseCard: FC<PraiseCardProps> = ({ praise }) => {
       </Card.Content>
       <Card.Content extra={true}>
         <ReactionBlock>
-          <Reaction
-            title="賛同"
-            theme="blue"
-            icon="thumbs up outline"
-            active={praise.upVoted}
-            users={praise.upVotes}
-            onClick={!praise.isMine ? praise.onClickUpVote : undefined}
-          />
-          <Reaction
-            title="いいね"
-            theme="pink"
-            icon="heart"
-            active={praise.liked}
-            users={praise.likes}
-            onClick={praise.onClickLike}
-          />
+          <Reaction title="賛同" users={praise.upVotes}>
+            <Reaction.UpVote active={praise.upVoted} onClick={praise.isMine ? undefined : praise.onClickUpVote} />
+          </Reaction>
+          <Reaction title="いいね" users={praise.likes}>
+            <Reaction.Like active={praise.liked} onClick={praise.onClickLike} />
+          </Reaction>
+          {praise.stamps.map((stamp) => (
+            <Reaction key={stamp.stampId} title={`:${stamp.stampId}:`} users={stamp.users}>
+              <Reaction.Stamp stampId={stamp.stampId} active={false} onClick={createClickStampHandler(stamp.stampId)} />
+            </Reaction>
+          ))}
+          <EmojiPicker onClick={praise.onClickStamp} />
         </ReactionBlock>
       </Card.Content>
     </Card>

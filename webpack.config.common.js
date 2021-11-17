@@ -100,6 +100,7 @@ module.exports = {
         { from: 'node_modules/semantic-ui-css/themes/default/assets/', to: 'assets/themes/default/assets/' },
         { from: 'node_modules/react-dropdown/style.css', to: 'assets/react-dropdown.css' },
         { from: 'node_modules/react-toastify/dist/ReactToastify.css', to: 'assets/react-toastify.css' },
+        { from: 'node_modules/emoji-mart/css/emoji-mart.css', to: 'assets/emoji-mart.css' },
       ],
     }),
     new HtmlWebpackTagsPlugin({
@@ -108,6 +109,7 @@ module.exports = {
         'assets/semantic.min.css',
         'assets/react-dropdown.css',
         'assets/react-toastify.css',
+        'assets/emoji-mart.css',
       ],
       append: true,
     }),

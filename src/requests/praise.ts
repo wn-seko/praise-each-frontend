@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { Praise } from '~/domains/praise';
+import { Praise, Stamp } from '~/domains/praise';
 import { User } from '~/domains/user';
 import { Failure, Result, Success } from '~/utils/result';
 import api from './api';
@@ -11,6 +11,7 @@ interface PraiseResponse {
   message: string;
   tags: string[];
   upVotes: User[];
+  stamps: Stamp[];
   likes: User[];
   createdAt: string;
   updatedAt: string;
@@ -91,5 +92,17 @@ export const postPraiseLike = (praiseId: string): Promise<Result<Praise, {}>> =>
 export const deletePraiseLike = (praiseId: string): Promise<Result<Praise, {}>> =>
   api
     .delete<unknown, PraiseResponse>(`/praises/${praiseId}/likes`)
+    .then((response) => new Success<Praise, {}>(responseToPraise(response)))
+    .catch(() => new Failure<Praise, {}>({}));
+
+export const postPraiseStamp = (praiseId: string, stamp: string): Promise<Result<Praise, {}>> =>
+  api
+    .post<unknown, PraiseResponse>(`/praises/${praiseId}/stamps/${stamp}`)
+    .then((response) => new Success<Praise, {}>(responseToPraise(response)))
+    .catch(() => new Failure<Praise, {}>({}));
+
+export const deletePraiseStamp = (praiseId: string, stamp: string): Promise<Result<Praise, {}>> =>
+  api
+    .delete<unknown, PraiseResponse>(`/praises/${praiseId}/stamps/${stamp}`)
     .then((response) => new Success<Praise, {}>(responseToPraise(response)))
     .catch(() => new Failure<Praise, {}>({}));

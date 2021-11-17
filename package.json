@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/wn-seko/praise-each-frontend#readme",
   "devDependencies": {
+    "@types/emoji-mart": "^3.0.8",
     "@types/jwt-decode": "^2.2.1",
     "@types/lodash-es": "^4.17.3",
     "@types/react-color": "^3.0.5",
@@ -71,6 +72,7 @@
     "axios": "^0.19.2",
     "dayjs": "^1.10.4",
     "dotenv": "^10.0.0",
+    "emoji-mart": "^3.0.1",
     "jwt-decode": "^3.1.2",
     "lodash-es": "^4.17.15",
     "normalize.css": "^8.0.1",

@@ -33,7 +33,7 @@ export interface TabState {
 export interface EnhancedPraise extends Omit<Praise, 'createdAt' | 'updatedAt'> {
   liked: boolean;
   upVoted: boolean;
-  stamps: Stamp[];
+  stamps: Array<Stamp & { stamped: boolean }>;
   isMine: boolean;
   isEdit: boolean;
   isSend: boolean;
@@ -174,6 +174,7 @@ const formatPraise = (
   ...praise,
   upVoted: includesUser(userId, praise.upVotes),
   liked: includesUser(userId, praise.likes),
+  stamps: praise.stamps.map((stamp) => ({ ...stamp, stamped: includesUser(userId, stamp.users) })),
   isMine: includesUser(userId, [praise.from, praise.to]),
   isSend: userId === praise.from.id,
   isReceived: userId === praise.to.id,

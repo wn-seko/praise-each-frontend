@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React, { FC } from 'react';
 import { Card, Icon } from 'semantic-ui-react';
-import { parseMessage, Praise } from '~/domains/praise';
+import { parseMessage, Praise, Stamp } from '~/domains/praise';
 import Avatar from '~/components/ui/Avatar';
 import Reaction from '~/components/domains/Praise/Reaction';
 import PraiseEditor from '../../PraiseEditor';
@@ -11,6 +11,7 @@ import EmojiPicker from '~/components/ui/EmojiPicker';
 interface PraiseCard extends Omit<Praise, 'createdAt' | 'updatedAt'> {
   upVoted: boolean;
   liked: boolean;
+  stamps: Array<Stamp & { stamped: boolean }>;
   isMine: boolean;
   isEdit: boolean;
   isSend: boolean;
@@ -109,7 +110,11 @@ const PraiseCard: FC<PraiseCardProps> = ({ praise }) => {
           </Reaction>
           {praise.stamps.map((stamp) => (
             <Reaction key={stamp.stampId} title={`:${stamp.stampId}:`} users={stamp.users}>
-              <Reaction.Stamp stampId={stamp.stampId} active={false} onClick={createClickStampHandler(stamp.stampId)} />
+              <Reaction.Stamp
+                stampId={stamp.stampId}
+                active={stamp.stamped}
+                onClick={createClickStampHandler(stamp.stampId)}
+              />
             </Reaction>
           ))}
           <EmojiPicker onClick={praise.onClickStamp} />

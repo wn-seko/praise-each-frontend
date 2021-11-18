@@ -10,15 +10,17 @@ import {
   useRecoilValueLoadable,
   useSetRecoilState,
 } from 'recoil';
-import { Praise } from '~/domains/praise';
+import { Praise, Stamp } from '~/domains/praise';
 import { User } from '~/domains/user';
 import { authUserState, useAuthUser } from '~/recoil/auth';
 import {
   deletePraiseLike as deletePraiseLikeApi,
   deletePraiseUpVote as deletePraiseUpVoteApi,
+  deletePraiseStamp as deletePraiseStampApi,
   fetchPraise as fetchPraiseApi,
   postPraiseLike as postPraiseLikeApi,
   postPraiseUpVote as postPraiseUpVoteApi,
+  postPraiseStamp as postPraiseStampApi,
 } from '~/requests/praise';
 
 export type TabType = 'timeline' | 'team' | 'sent' | 'received' | 'search';
@@ -31,6 +33,7 @@ export interface TabState {
 export interface EnhancedPraise extends Omit<Praise, 'createdAt' | 'updatedAt'> {
   liked: boolean;
   upVoted: boolean;
+  stamps: Array<Stamp & { stamped: boolean }>;
   isMine: boolean;
   isEdit: boolean;
   isSend: boolean;
@@ -39,6 +42,7 @@ export interface EnhancedPraise extends Omit<Praise, 'createdAt' | 'updatedAt'> 
   updatedAt: string;
   onClickLike: () => void;
   onClickUpVote: () => void;
+  onClickStamp: (name: string) => void;
   onUpdate: (praise: Praise) => void;
   onDelete: () => void;
 }
@@ -141,6 +145,26 @@ const createClickLikeHandler =
     }
   };
 
+const createClickStampHandler =
+  (praiseId: string, userId: string, stamps: Stamp[], updatePraise: (praise: Praise) => void) => (stampId: string) => {
+    const stamp = stamps.find((stamp) => stamp.stampId === stampId);
+    const users = stamp?.users || [];
+
+    if (includesUser(userId, users)) {
+      deletePraiseStampApi(praiseId, stampId).then((result) => {
+        if (result.isSuccess()) {
+          updatePraise(result.value);
+        }
+      });
+    } else {
+      postPraiseStampApi(praiseId, stampId).then((result) => {
+        if (result.isSuccess()) {
+          updatePraise(result.value);
+        }
+      });
+    }
+  };
+
 const formatPraise = (
   praise: Praise,
   userId: string,
@@ -150,6 +174,7 @@ const formatPraise = (
   ...praise,
   upVoted: includesUser(userId, praise.upVotes),
   liked: includesUser(userId, praise.likes),
+  stamps: praise.stamps.map((stamp) => ({ ...stamp, stamped: includesUser(userId, stamp.users) })),
   isMine: includesUser(userId, [praise.from, praise.to]),
   isSend: userId === praise.from.id,
   isReceived: userId === praise.to.id,
@@ -158,6 +183,7 @@ const formatPraise = (
   isEdit: !praise.createdAt.isSame(praise.updatedAt),
   onClickUpVote: createClickUpVoteHandler(praise.id, userId, praise.upVotes, updatePraise),
   onClickLike: createClickLikeHandler(praise.id, userId, praise.likes, updatePraise),
+  onClickStamp: createClickStampHandler(praise.id, userId, praise.stamps, updatePraise),
   onUpdate: updatePraise,
   onDelete: () => deletePraise(praise.id),
 });

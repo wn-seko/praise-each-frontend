@@ -9,8 +9,14 @@ export interface Praise {
   tags: string[];
   upVotes: User[];
   likes: User[];
+  stamps: Stamp[];
   createdAt: Dayjs;
   updatedAt: Dayjs;
+}
+
+export interface Stamp {
+  stampId: string;
+  users: User[];
 }
 
 const uniq = (list: string[]) =>

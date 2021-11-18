@@ -3,7 +3,7 @@ import { Emoji } from 'emoji-mart';
 import React, { FC } from 'react';
 import { Icon, Popup } from 'semantic-ui-react';
 
-type Theme = 'blue' | 'pink' | 'grey';
+type Theme = 'blue' | 'pink' | 'green';
 
 interface ContainerProps
   extends React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement> {
@@ -16,7 +16,7 @@ const getColor = (theme: Theme) => {
       return '#2185d0';
     case 'pink':
       return '#e03997';
-    case 'grey':
+    case 'green':
       return '#21ba45';
   }
 };
@@ -112,7 +112,7 @@ const Like: FC<ReactionItemProps> = ({ active = false, count = 0, onClick, onMou
 
 const Stamp: FC<ReactionStampProps> = ({ stampId, active = false, count = 0, onClick, onMouseEnter, onMouseLeave }) => (
   <Container
-    theme="grey"
+    theme="green"
     data-active={active ? 'active' : ''}
     onClick={onClick}
     onMouseEnter={onMouseEnter}

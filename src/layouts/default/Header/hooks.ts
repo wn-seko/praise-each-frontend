@@ -7,14 +7,10 @@ export const useHeader = () => {
   const { user } = useAuthUser();
   const history = useHistory();
 
-  const createClickMenuHandler = (page: string) => () => {
-    history.push(`/${page}`);
-  };
-
   const logout = () => {
     unsetToken();
     history.push('/login');
   };
 
-  return { user: user as User, createClickMenuHandler, logout };
+  return { user: user as User, logout };
 };

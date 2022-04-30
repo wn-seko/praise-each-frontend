@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
 import Card from './Item';
-import { Card as SemanticCard, CardGroupProps } from 'semantic-ui-react';
+import { Flex } from '@chakra-ui/react';
 
 type PraiseCard = {
   Card: typeof Card;
 };
 
-const PraiseCard: FC<CardGroupProps> & PraiseCard = (props) => <SemanticCard.Group {...props} />;
+const PraiseCard: FC & PraiseCard = (props) => <Flex direction="column" gap={8} {...props} />;
 
 PraiseCard.Card = Card;
 

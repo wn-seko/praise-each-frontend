@@ -3,13 +3,27 @@
 
 import styled from '@emotion/styled';
 import React, { FC } from 'react';
-import { Button, Container, Divider, Grid, Loader, Message, Tab, TabProps } from 'semantic-ui-react';
+import {
+  Alert,
+  AlertIcon,
+  Box,
+  Button,
+  Flex,
+  Grid,
+  GridItem,
+  Spinner,
+  Tab,
+  Tabs,
+  TabPanels,
+  TabList,
+  TabPanel,
+  Center,
+} from '@chakra-ui/react';
 import PraiseCard from '~/components/domains/Praise/PraiseCard';
 import ScrollLoader from '~/components/functional/ScrollLoader';
-import { Team } from '~/domains/team';
 import PraiseInput from '~/components/domains/Praise/PraiseInput';
 import DefaultLayout from '~/layouts/default';
-import { EnhancedPraise, TabState, usePraisePage, useScroll, useTab } from './hooks/usePraisePage';
+import { EnhancedPraise, usePraisePage, useScroll, useTab } from './hooks/usePraisePage';
 import { usePinedTeams } from './hooks/useTeamPin';
 import { useMessage } from './hooks/useMessage';
 
@@ -22,23 +36,36 @@ const ScrollLoaderContainer = styled.div`
   margin-top: 20px;
 `;
 
-const SearchPane: FC<PraisePaneProps> = () => {
-  return <Tab.Pane as="div">Coming soon...</Tab.Pane>;
-};
+const SearchContent: FC<PraisePaneProps> = () => (
+  <Alert status="info">
+    <AlertIcon />
+    Coming soon...
+  </Alert>
+);
 
-const PraisePane: FC<PraisePaneProps> = ({ loading, praises }) => {
+const PraiseContent: FC<PraisePaneProps> = ({ loading, praises }) => {
   const { loadOnScroll, onInRange } = useScroll();
 
   if (loading) {
-    return <Loader active={true}>Loading...</Loader>;
+    return (
+      <Center>
+        <Spinner marginRight={4} />
+        Loading...
+      </Center>
+    );
   }
 
   if (praises.length === 0) {
-    return <Message info={true}>まだ何も無いようです</Message>;
+    return (
+      <Alert status="info">
+        <AlertIcon />
+        まだ何もないようです
+      </Alert>
+    );
   }
 
   return (
-    <Tab.Pane as="div">
+    <>
       <PraiseCard>
         {praises.map((item) => (
           <PraiseCard.Card key={item.id} praise={item} />
@@ -47,36 +74,18 @@ const PraisePane: FC<PraisePaneProps> = ({ loading, praises }) => {
       <ScrollLoaderContainer>
         <ScrollLoader loading={loadOnScroll} onInRange={onInRange} />
       </ScrollLoaderContainer>
-    </Tab.Pane>
+    </>
   );
 };
 
-const getTabIndex = (tab: TabState, pinedTeams: Team[]) => {
-  switch (tab.type) {
-    case 'timeline':
-      return 0;
-    case 'received':
-      return 1 + pinedTeams.length;
-    case 'sent':
-      return 2 + pinedTeams.length;
-    case 'search':
-      return 3 + pinedTeams.length;
-    case 'team':
-      return pinedTeams.findIndex((pinedTeam) => pinedTeam.id === tab.id) + 1;
-  }
-};
-
 const TopPage: FC = () => {
-  const { currentTab, loading, praises, refetchTimeline } = usePraisePage();
+  const { loading, praises, refetchTimeline } = usePraisePage();
   const { ref, sending, handleChangeMessage, handleClickSend } = useMessage(refetchTimeline);
   const { pinedTeams } = usePinedTeams();
   const { handleChangeTab } = useTab();
-  const activeTabIndex = getTabIndex(currentTab, pinedTeams);
 
-  const onTabChange = (_: React.MouseEvent<HTMLDivElement>, data: TabProps) => {
-    const activeIndex = Number(data.activeIndex) || 0;
-
-    switch (activeIndex) {
+  const onTabChange = (index: number) => {
+    switch (index) {
       case 0:
         handleChangeTab('timeline');
         break;
@@ -90,69 +99,54 @@ const TopPage: FC = () => {
         handleChangeTab('search');
         break;
       default:
-        handleChangeTab('team', pinedTeams[activeIndex - 1]?.id || '');
+        handleChangeTab('team', pinedTeams[index - 1]?.id || '');
         break;
     }
   };
 
-  const timelinePanes = [
-    {
-      menuItem: 'タイムライン',
-      render: () => <PraisePane loading={loading} praises={praises} />,
-    },
-  ].concat(
-    pinedTeams.map((pinedTeam) => ({
-      menuItem: pinedTeam.name,
-      render: () => <PraisePane loading={loading} praises={praises} />,
-    })),
-  );
-
-  const searchPanes = [
-    {
-      menuItem: '受け取った',
-      render: () => <PraisePane loading={loading} praises={praises} />,
-    },
-    {
-      menuItem: '送った',
-      render: () => <PraisePane loading={loading} praises={praises} />,
-    },
-    {
-      menuItem: '検索',
-      render: () => <SearchPane loading={loading} praises={praises} />,
-    },
-  ];
-
-  const panes = timelinePanes.concat(searchPanes);
-
   return (
     <DefaultLayout>
-      <Container>
-        <Grid>
-          <Grid.Row>
-            <Grid.Column width={14}>
+      <Grid margin="0 auto" placeItems="center" gap={8}>
+        <GridItem w="80%">
+          <Flex alignItems="center" flexShrink={0} flexWrap="nowrap" w="100%" gap={4}>
+            <Box flexGrow={1}>
               <PraiseInput ref={ref} handleChangeMessage={handleChangeMessage} />
-            </Grid.Column>
-            <Grid.Column width={2}>
-              <Button fluid={true} primary={true} disabled={sending} loading={sending} onClick={handleClickSend}>
-                送信
-              </Button>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-        <Divider />
-        <Tab
-          activeIndex={activeTabIndex}
-          onTabChange={onTabChange}
-          menu={{ secondary: true, pointing: true }}
-          panes={panes}
-        />
-      </Container>
+            </Box>
+            <Button disabled={sending} onClick={handleClickSend}>
+              送信
+            </Button>
+          </Flex>
+        </GridItem>
+        <GridItem w="80%">
+          <Tabs isLazy={true} onChange={onTabChange}>
+            <TabList>
+              <Tab>タイムライン</Tab>
+              {pinedTeams.map((pinedTeam) => (
+                <Tab key={pinedTeam.id}>{pinedTeam.name}</Tab>
+              ))}
+              <Tab>受け取った</Tab>
+              <Tab>送った</Tab>
+              <Tab>検索</Tab>
+            </TabList>
+            <TabPanels>
+              {[...Array(pinedTeams.length + 3)].map((_, index) => (
+                <TabPanel key={index}>
+                  <PraiseContent loading={loading} praises={praises} />
+                </TabPanel>
+              ))}
+              <TabPanel>
+                <SearchContent loading={loading} praises={praises} />
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </GridItem>
+      </Grid>
     </DefaultLayout>
   );
 };
 
 export default () => (
-  <React.Suspense fallback={<Loader active={true}>Loading...</Loader>}>
+  <React.Suspense fallback={<Spinner>Loading...</Spinner>}>
     <TopPage />
   </React.Suspense>
 );

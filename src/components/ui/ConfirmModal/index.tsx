@@ -1,5 +1,14 @@
 import React, { FC } from 'react';
-import { Modal, Button } from 'semantic-ui-react';
+import {
+  Button,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalFooter,
+  ModalBody,
+  ModalOverlay,
+} from '@chakra-ui/react';
 
 interface ConfirmModalProps {
   isOpen: boolean;
@@ -25,15 +34,21 @@ const ConfirmModal: FC<ConfirmModalProps> = ({
   const buttonTypeAttribute = buttonType ? { [buttonType]: true } : {};
 
   return (
-    <Modal size="small" closeOnDimmerClick={false} onClose={handleClose} open={isOpen}>
-      <Modal.Header>{title}</Modal.Header>
-      <Modal.Content>{message}</Modal.Content>
-      <Modal.Actions>
-        <Button onClick={handleClose}>キャンセル</Button>
-        <Button loading={loading} onClick={handleConfirm} {...buttonTypeAttribute}>
-          {buttonText}
-        </Button>
-      </Modal.Actions>
+    <Modal size="md" isCentered={true} closeOnOverlayClick={false} onClose={handleClose} isOpen={isOpen}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>{title}</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>{message}</ModalBody>
+        <ModalFooter>
+          <Button onClick={handleClose} mr={4}>
+            キャンセル
+          </Button>
+          <Button colorScheme="red" disabled={loading} onClick={handleConfirm} {...buttonTypeAttribute}>
+            {buttonText}
+          </Button>
+        </ModalFooter>
+      </ModalContent>
     </Modal>
   );
 };

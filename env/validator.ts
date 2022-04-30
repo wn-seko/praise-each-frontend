@@ -1,4 +1,7 @@
-const makeValidator = (validate, convert) => {
+const makeValidator = (
+  validate: (rawValue: string) => boolean,
+  convert?: (rawValue: string) => unknown | undefined,
+) => {
   return (key) => {
     // eslint-disable-next-line node/no-process-env
     const rawValue = process.env[key];
@@ -13,23 +16,16 @@ const makeValidator = (validate, convert) => {
   };
 };
 
-const toNodeEnv = makeValidator((v) => v === 'development' || v === 'production' || v === 'test');
+export const toNodeEnv = makeValidator((v) => v === 'development' || v === 'production' || v === 'test');
 
-const toString = makeValidator((v) => typeof v === 'string');
+export const toString = makeValidator((v) => typeof v === 'string');
 
-const toStringOrUndefined = makeValidator(
+export const toStringOrUndefined = makeValidator(
   (v) => typeof v === 'string' || typeof v === 'undefined',
   (v) => (typeof v === 'string' ? v : undefined),
 );
 
-const toNumberOrUndefined = makeValidator(
+export const toNumberOrUndefined = makeValidator(
   (v) => typeof v === 'undefined' || !isNaN(Number(v)),
   (v) => (typeof v === 'undefined' ? undefined : Number(v)),
 );
-
-module.exports = {
-  toNodeEnv,
-  toString,
-  toStringOrUndefined,
-  toNumberOrUndefined,
-};

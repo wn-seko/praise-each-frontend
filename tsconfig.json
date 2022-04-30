@@ -16,13 +16,13 @@
     "forceConsistentCasingInFileNames": true,
     "declaration": true,
     "composite": true,
-    "module": "es6",
+    "module": "esnext",
     "moduleResolution": "node",
-    "target": "es2019",
+    "target": "esnext",
     "jsx": "react",
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
-  "include": ["./src/**/*", "env/validator.js", "env/env.js"],
+  "include": ["./src/**/*", "env/validator.ts", "env/env.js"],
   "exclude": ["node_modules", "build", "scripts"]
 }

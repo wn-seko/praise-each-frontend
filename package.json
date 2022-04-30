@@ -53,12 +53,14 @@
     "vite-react-jsx": "^1.1.2"
   },
   "dependencies": {
-    "@emotion/react": "^11.4.1",
-    "@emotion/styled": "^11.3.0",
+    "@chakra-ui/react": "^1.8.8",
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
     "axios": "^0.19.2",
     "dayjs": "^1.10.4",
     "dotenv": "^10.0.0",
     "emoji-mart": "^3.0.1",
+    "framer-motion": "^6.3.3",
     "jwt-decode": "^3.1.2",
     "lodash-es": "^4.17.15",
     "normalize.css": "^8.0.1",

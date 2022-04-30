@@ -1,45 +1,38 @@
-import styled from '@emotion/styled';
 import React, { FC } from 'react';
-import { Form, Grid, Header, Segment } from 'semantic-ui-react';
+import { Center, Flex, Spacer, Heading, Skeleton } from '@chakra-ui/react';
 import { GithubButton, GoogleButton } from '~/components/ui/Button';
-import LoginLayout from '~/layouts/login';
 import { useLogin } from './hooks';
-
-const MarginedSegment = styled(Segment)`
-  min-height: 5em;
-
-  > * {
-    margin-bottom: 1em !important;
-  }
-`;
 
 const LoginPage: FC = () => {
   const { loading, urls } = useLogin();
 
   return (
-    <LoginLayout>
-      <Grid textAlign="center" style={{ height: '100vh' }} verticalAlign="middle">
-        <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as="h2" textAlign="center">
-            Praise Each
-          </Header>
-          <Form size="large">
-            <MarginedSegment loading={loading}>
+    <Center w="100vw" h="100vh">
+      <Flex direction="column" align="center" justify="center" gap="1rem">
+        <Heading>Praise Each</Heading>
+        <Spacer h="1rem" />
+        <Flex direction="column" gap="1rem">
+          {loading ? (
+            <>
+              <Skeleton w="200px" h="40px" />
+            </>
+          ) : (
+            <>
               {urls.github && (
-                <GithubButton as="a" fluid size="large" href={urls.github}>
+                <GithubButton w="100%" as="a" href={urls.github}>
                   GitHub アカウントでログイン
                 </GithubButton>
               )}
               {urls.google && (
-                <GoogleButton as="a" fluid size="large" href={urls.google}>
+                <GoogleButton w="100%" as="a" href={urls.google}>
                   Google アカウントでログイン
                 </GoogleButton>
               )}
-            </MarginedSegment>
-          </Form>
-        </Grid.Column>
-      </Grid>
-    </LoginLayout>
+            </>
+          )}
+        </Flex>
+      </Flex>
+    </Center>
   );
 };
 

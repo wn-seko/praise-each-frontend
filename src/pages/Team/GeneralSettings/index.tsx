@@ -5,7 +5,6 @@ import { Avatar, Alert, AlertIcon, Button, Flex } from '@chakra-ui/react';
 import { Team } from '~/domains/team';
 import TeamEditor from '~/components/domains/Team/TeamEditor';
 import { useUpdateTeam } from './hooks';
-import { BothContainer } from '~/components/ui/Container';
 
 interface GeneralSettingsProps {
   team: Team;
@@ -18,7 +17,7 @@ const GeneralSettings: FC<GeneralSettingsProps> = ({ team }) => {
 
   const SegmentHeader = useMemo(
     () => (
-      <BothContainer>
+      <Flex alignItems="center" justifyContent="space-between">
         <span>設定</span>
         <TeamEditor
           team={team}
@@ -28,7 +27,7 @@ const GeneralSettings: FC<GeneralSettingsProps> = ({ team }) => {
           saveButtonText="保存"
           onSave={handleSave}
         />
-      </BothContainer>
+      </Flex>
     ),
     [team],
   );

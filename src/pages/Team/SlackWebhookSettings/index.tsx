@@ -1,7 +1,6 @@
 import React, { FC, useMemo } from 'react';
 import { Alert, AlertIcon, Button, Box, Flex, Spinner } from '@chakra-ui/react';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
-import { BothContainer } from '~/components/ui/Container';
 import Segment from '~/components/ui/Segment';
 import SlackWebhookEditor from '../SlackWebhookEditor';
 import {
@@ -23,7 +22,7 @@ const SlackWebhookSettings: FC<SlackWebhookSettingsProps> = ({ teamId }) => {
 
   const SegmentHeader = useMemo(
     () => (
-      <BothContainer>
+      <Flex alignItems="center" justifyContent="space-between">
         <span>Slack WebHooks</span>
         <SlackWebhookEditor
           title="追加"
@@ -35,7 +34,7 @@ const SlackWebhookSettings: FC<SlackWebhookSettingsProps> = ({ teamId }) => {
         >
           <Button>追加</Button>
         </SlackWebhookEditor>
-      </BothContainer>
+      </Flex>
     ),
     [teamId, creating, refetch, handleAdd],
   );
@@ -45,7 +44,7 @@ const SlackWebhookSettings: FC<SlackWebhookSettingsProps> = ({ teamId }) => {
       {teamSlackWebhooks.length > 0 ? (
         <Flex direction="column" gap={4}>
           {teamSlackWebhooks.map((teamSlackWebhook) => (
-            <BothContainer key={teamSlackWebhook.id}>
+            <Flex key={teamSlackWebhook.id} alignItems="center" justifyContent="space-between">
               <Box>
                 <Box>{teamSlackWebhook.name}</Box>
                 <Box color="gray.400" fontWeight="semibold" fontSize="sm">
@@ -70,7 +69,7 @@ const SlackWebhookSettings: FC<SlackWebhookSettingsProps> = ({ teamId }) => {
                   <FaTrashAlt cursor="pointer" size={20} onClick={createHandleDelete(teamSlackWebhook.id)} />
                 )}
               </Flex>
-            </BothContainer>
+            </Flex>
           ))}
         </Flex>
       ) : (

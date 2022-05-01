@@ -45,11 +45,11 @@ const Header: FC = () => {
       <Flex h={16} alignItems="center" justifyContent="space-between">
         <Box>Praise Each</Box>
         <HStack as="nav" spacing={8} divider={<StackDivider borderColor="gray.200" />}>
-          <NavLink link="top">タイムライン</NavLink>
-          <NavLink link="users">ユーザー</NavLink>
-          <NavLink link="teams">チーム</NavLink>
-          <NavLink link="tags">タグ</NavLink>
-          <NavLink link="statistics">統計</NavLink>
+          <NavLink link="/top">タイムライン</NavLink>
+          <NavLink link="/users">ユーザー</NavLink>
+          <NavLink link="/teams">チーム</NavLink>
+          <NavLink link="/tags">タグ</NavLink>
+          <NavLink link="/statistics">統計</NavLink>
         </HStack>
         <Menu>
           <MenuButton as={Button} rounded="full" variant="link" cursor="pointer" minW={0}>

@@ -1,22 +1,10 @@
-import styled from '@emotion/styled';
 import React, { FC } from 'react';
-import { Container, Header } from 'semantic-ui-react';
-import Box from '~/components/ui/Box';
+import { Center, Flex, Heading } from '@chakra-ui/react';
+import UiBox from '~/components/ui/Box';
 import { useTeam } from './hooks';
 import DeleteTeam from '../DeleteTeam';
-import ExternalConnectionSettings from '../ExternalConnectionSettings';
+import SlackWebhookSettings from '../SlackWebhookSettings';
 import GeneralSettings from '../GeneralSettings';
-
-const HeaderContainer = styled.div`
-  margin: 1em 0;
-  display: inline-flex;
-  align-items: center;
-
-  > * {
-    margin-top: 0 !important;
-    margin-right: 0.5em;
-  }
-`;
 
 interface OverviewProps {
   teamId: string;
@@ -27,15 +15,17 @@ const Overview: FC<OverviewProps> = ({ teamId }) => {
 
   return (
     team && (
-      <Container>
-        <HeaderContainer>
-          <Box size={20} color={team.color} />
-          <Header as="h2">{team.name}</Header>
-        </HeaderContainer>
-        <GeneralSettings team={team} />
-        <ExternalConnectionSettings teamId={team.id} />
-        <DeleteTeam teamId={team.id} />
-      </Container>
+      <Center>
+        <Flex width="80%" direction="column" gap={8}>
+          <Flex alignItems="center" gap={4}>
+            <UiBox size={20} color={team.color} />
+            <Heading as="h2">{team.name}</Heading>
+          </Flex>
+          <GeneralSettings team={team} />
+          <SlackWebhookSettings teamId={team.id} />
+          <DeleteTeam teamId={team.id} />
+        </Flex>
+      </Center>
     )
   );
 };

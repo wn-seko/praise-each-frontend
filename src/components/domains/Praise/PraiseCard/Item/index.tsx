@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { FaPencilAlt, FaTrashAlt, FaArrowRight } from 'react-icons/fa';
+import { FaEdit, FaTrashAlt, FaArrowRight } from 'react-icons/fa';
 import { Avatar, Box, Flex } from '@chakra-ui/react';
 import { parseMessage, Praise, Stamp } from '~/domains/praise';
 import Reaction from '~/components/domains/Praise/Reaction';
@@ -38,7 +38,7 @@ const PraiseCard: FC<PraiseCardProps> = ({ praise }) => {
         <Flex lineHeight={1} position="absolute" right={2} top={2} gap={4}>
           <PraiseEditor praise={praise}>
             <Box cursor="pointer">
-              <FaPencilAlt size={14} />
+              <FaEdit size={14} />
             </Box>
           </PraiseEditor>
           <DeletePraise praiseId={praise.id} onDelete={praise.onDelete}>

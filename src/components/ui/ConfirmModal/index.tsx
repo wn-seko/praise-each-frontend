@@ -31,7 +31,15 @@ const ConfirmModal: FC<ConfirmModalProps> = ({
   handleClose,
   handleConfirm,
 }) => {
-  const buttonTypeAttribute = buttonType ? { [buttonType]: true } : {};
+  let colorScheme = '';
+
+  if (buttonType === 'positive') {
+    colorScheme = 'green';
+  } else if (buttonType === 'negative') {
+    colorScheme = 'red';
+  } else {
+    colorScheme = 'grey';
+  }
 
   return (
     <Modal size="md" isCentered={true} closeOnOverlayClick={false} onClose={handleClose} isOpen={isOpen}>
@@ -44,7 +52,7 @@ const ConfirmModal: FC<ConfirmModalProps> = ({
           <Button onClick={handleClose} mr={4}>
             キャンセル
           </Button>
-          <Button colorScheme="red" disabled={loading} onClick={handleConfirm} {...buttonTypeAttribute}>
+          <Button colorScheme={colorScheme} disabled={loading} onClick={handleConfirm}>
             {buttonText}
           </Button>
         </ModalFooter>

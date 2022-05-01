@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from 'react';
 import { ColoredLabel } from '~/components/ui/ColoredLabel';
 import { Button, Header, List, Message, Segment } from 'semantic-ui-react';
-import SegmentContainer from '~/components/ui/SegmentContainer';
+import SegmentContainer from '~/components/ui/Segment';
 import { Team } from '~/domains/team';
 import Avatar from '~/components/ui/Avatar';
 import TeamEditor from '~/components/domains/Team/TeamEditor';

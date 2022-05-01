@@ -1,31 +1,10 @@
-import styled from '@emotion/styled';
 import React, { FC } from 'react';
-import { Button, Header, Icon, Input, Segment } from 'semantic-ui-react';
+import { Button, Flex, Input } from '@chakra-ui/react';
+import { FaEdit } from 'react-icons/fa';
 import { GithubButton, GoogleButton } from '~/components/ui/Button';
-import SegmentContainer from '~/components/ui/SegmentContainer';
 import { User } from '~/domains/user';
 import { useField, useOAuthUpdateIconLinks } from './hooks';
-
-const MarginedSegment = styled.div`
-  width: 20em;
-  min-height: 5em;
-
-  > * {
-    margin-bottom: 1em !important;
-  }
-`;
-
-const InlineContainer = styled.div`
-  display: inline;
-
-  > * {
-    margin-right: 1em;
-  }
-
-  > i {
-    cursor: pointer;
-  }
-`;
+import Segment from '~/components/ui/Segment';
 
 interface GeneralSettingsProps {
   user: User;
@@ -40,39 +19,35 @@ const GeneralSettings: FC<GeneralSettingsProps> = ({ user }) => {
   };
 
   return (
-    <SegmentContainer title="全般">
-      <Segment.Group>
-        <Segment>
-          <Header as="h4">名前</Header>
-          {isEditName ? (
-            <InlineContainer>
-              <Input value={nameInputValue} onChange={handleChangeName} />
-              <Button primary={true} onClick={handleSaveName}>
-                保存
-              </Button>
-            </InlineContainer>
-          ) : (
-            <InlineContainer>
-              <span>{user.name}</span>
-              <Icon name="edit" onClick={edit} />
-            </InlineContainer>
-          )}
-          <Header as="h4">アイコン</Header>
-          <MarginedSegment>
-            {updateIconUrls.github && (
-              <GithubButton as="a" fluid size="mini" href={updateIconUrls.github}>
-                GitHub アカウントのアイコンを使用
-              </GithubButton>
-            )}
-            {updateIconUrls.google && (
-              <GoogleButton as="a" fluid size="mini" href={updateIconUrls.google}>
-                Google アカウントのアイコンを使用
-              </GoogleButton>
-            )}
-          </MarginedSegment>
-        </Segment>
-      </Segment.Group>
-    </SegmentContainer>
+    <Segment title="全般">
+      <Segment.Item title="名前">
+        {isEditName ? (
+          <Flex direction="row" gap={4}>
+            <Input value={nameInputValue} onChange={handleChangeName} />
+            <Button colorScheme="green" onClick={handleSaveName}>
+              保存
+            </Button>
+          </Flex>
+        ) : (
+          <Flex alignItems="center" lineHeight={1} direction="row" gap={4}>
+            <span>{user.name}</span>
+            <FaEdit cursor="pointer" onClick={edit} />
+          </Flex>
+        )}
+      </Segment.Item>
+      <Segment.Item title="アイコン">
+        {updateIconUrls.github && (
+          <GithubButton width={320} as="a" size="md" href={updateIconUrls.github}>
+            GitHub アカウントのアイコンを使用する
+          </GithubButton>
+        )}
+        {updateIconUrls.google && (
+          <GoogleButton width={320} as="a" size="md" href={updateIconUrls.google}>
+            Google アカウントのアイコンを使用する
+          </GoogleButton>
+        )}
+      </Segment.Item>
+    </Segment>
   );
 };
 

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import React, { FC } from 'react';
 import { Header, Segment, Message, Button, List } from 'semantic-ui-react';
 import { BothContainer } from '~/components/ui/Container';
-import SegmentContainer from '~/components/ui/SegmentContainer';
+import SegmentContainer from '~/components/ui/Segment';
 import SlackWebhookEditor from '../SlackWebhookEditor';
 import {
   useAddTeamSlackWebhook,

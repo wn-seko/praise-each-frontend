@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Segment, Button } from 'semantic-ui-react';
 import ConfirmModal from '~/components/ui/ConfirmModal';
-import SegmentContainer from '~/components/ui/SegmentContainer';
+import SegmentContainer from '~/components/ui/Segment';
 import { useModal } from '~/hooks/useModal';
 import { useTeam } from './hooks';
 

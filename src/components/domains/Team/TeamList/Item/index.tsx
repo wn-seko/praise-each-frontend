@@ -16,7 +16,9 @@ const TeamItem: FC<TeamItemProps> = ({ team, href }) => {
         <Flex alignItems="center" gap={2}>
           <BoxIcon size={15} color={team.color} />
           <Link to={href}>
-            <LinkStyle fontSize="1.2rem">{team.name}</LinkStyle>
+            <LinkStyle as="span" fontSize="1.2rem">
+              {team.name}
+            </LinkStyle>
           </Link>
         </Flex>
         <Flex alignItems="center" gap={2}>

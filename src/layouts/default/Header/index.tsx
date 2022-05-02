@@ -24,6 +24,7 @@ interface NavLinkProps {
 const NavLink: FC<NavLinkProps> = ({ link, children }) => (
   <Link to={link}>
     <StyledLink
+      as="span"
       px={2}
       py={1}
       rounded="md"
@@ -57,7 +58,7 @@ const Header: FC = () => {
           </MenuButton>
           <MenuList>
             <Link to="/mypage/settings">
-              <MenuItem as="a">ユーザー設定</MenuItem>
+              <MenuItem as="span">ユーザー設定</MenuItem>
             </Link>
             <MenuItem onClick={toggleColorMode}>{colorMode === 'dark' ? 'ライトモード' : 'ダークモード'}</MenuItem>
             <MenuDivider />

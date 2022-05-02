@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react';
 import { Tag } from '~/domains/tag';
 import { User } from '~/domains/user';

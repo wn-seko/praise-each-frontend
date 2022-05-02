@@ -44,8 +44,16 @@ const Header: FC = () => {
   return (
     <Box bg={getThemeColor('primary')} px={4}>
       <Flex h={16} alignItems="center" justifyContent="space-between">
-        <Box fontWeight="bold">Praise Each</Box>
-        <HStack as="nav" fontWeight="bold" spacing={8} divider={<StackDivider borderColor="gray.200" />}>
+        <Box fontWeight="bold" color={getThemeColor('primaryText')}>
+          Praise Each
+        </Box>
+        <HStack
+          as="nav"
+          fontWeight="bold"
+          spacing={8}
+          color={getThemeColor('primaryText')}
+          divider={<StackDivider borderColor={getThemeColor('primaryText')} />}
+        >
           <NavLink link="/top">タイムライン</NavLink>
           <NavLink link="/users">ユーザー</NavLink>
           <NavLink link="/teams">チーム</NavLink>

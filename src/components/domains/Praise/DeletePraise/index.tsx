@@ -3,12 +3,12 @@ import ConfirmModal from '~/components/ui/ConfirmModal';
 import { useModal } from '~/hooks/useModal';
 import { usePraise } from './hooks';
 
-interface DeleteTeamProps {
+interface DeletePraiseProps {
   praiseId: string;
   onDelete: () => void;
 }
 
-const DeleteTeam: FC<DeleteTeamProps> = ({ praiseId, onDelete, children }) => {
+const DeletePraise: FC<DeletePraiseProps> = ({ praiseId, onDelete, children }) => {
   const { isOpen, open, close } = useModal();
   const { loading, handleConfirm } = usePraise(praiseId, close, onDelete);
   const onClickTrigger = () => {
@@ -32,4 +32,4 @@ const DeleteTeam: FC<DeleteTeamProps> = ({ praiseId, onDelete, children }) => {
   );
 };
 
-export default DeleteTeam;
+export default DeletePraise;

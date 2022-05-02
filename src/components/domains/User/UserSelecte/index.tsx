@@ -1,19 +1,8 @@
-import styled from '@emotion/styled';
 import React, { FC } from 'react';
-import { Form, Icon, Input, List } from 'semantic-ui-react';
-import Avatar from '~/components/ui/Avatar';
-import { BothContainer } from '~/components/ui/Container';
+import { Avatar, Flex, Input } from '@chakra-ui/react';
+import { FaCheck } from 'react-icons/fa';
 import { User } from '~/domains/user';
 import { useUserList } from './hooks';
-
-const PositionRightIcon = styled(Icon)`
-  position: absolute;
-  right: 1em;
-`;
-
-const MarginedAvatar = styled(Avatar)`
-  margin-left: 1em !important;
-`;
 
 interface UserSelectProps {
   users: User[];
@@ -41,24 +30,20 @@ const UserSelect: FC<UserSelectProps> = ({ users: selectedUsers, addUser, remove
   };
 
   return (
-    <Form>
+    <Flex direction="column">
       <Input onChange={handleChangeInput} />
-      <List divided={true}>
+      <Flex padding="0 5px" mt={1} direction="column">
         {selectedUsers.concat(userList).map((user) => (
-          <List.Item key={user.id} onClick={createHandleClickItem(user)}>
-            <MarginedAvatar size="mini" src={user.icon} />
-            <List.Content verticalAlign="middle">
-              <List.Header>
-                <BothContainer>
-                  <span>{user.name}</span>
-                  {isSelected(user) && <PositionRightIcon color="green" name="check" />}
-                </BothContainer>
-              </List.Header>
-            </List.Content>
-          </List.Item>
+          <Flex key={user.id} justifyContent="space-between">
+            <Flex cursor="pointer" alignItems="center" onClick={createHandleClickItem(user)} gap={2}>
+              <Avatar size="2xs" mr={1} src={user.icon} />
+              <span>{user.name}</span>
+            </Flex>
+            {isSelected(user) && <FaCheck color="green" name="check" />}
+          </Flex>
         ))}
-      </List>
-    </Form>
+      </Flex>
+    </Flex>
   );
 };
 

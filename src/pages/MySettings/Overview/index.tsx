@@ -1,37 +1,26 @@
-import styled from '@emotion/styled';
 import React, { FC } from 'react';
-import { Container, Header } from 'semantic-ui-react';
-import Avatar from '~/components/ui/Avatar';
+import { Avatar, Center, Flex, Heading } from '@chakra-ui/react';
 import AccountSettings from '../AccountSettings';
 import GeneralSettings from '../GeneralSettings';
 import TeamPinSettings from '../TeamPinSettings';
 import { useUser } from './hooks';
-
-const HeaderContainer = styled.div`
-  margin: 1em 0;
-  display: inline-flex;
-  align-items: center;
-
-  > * {
-    margin-top: 0 !important;
-    margin-right: 1em !important;
-  }
-`;
 
 const Overview: FC = () => {
   const { user } = useUser();
 
   return (
     user && (
-      <Container>
-        <HeaderContainer>
-          <Avatar src={user?.icon} size="medium" />
-          <Header as="h2">{user.name}</Header>
-        </HeaderContainer>
-        <GeneralSettings user={user} />
-        <TeamPinSettings />
-        <AccountSettings />
-      </Container>
+      <Center>
+        <Flex width="80%" direction="column" gap={8}>
+          <Flex gap={4}>
+            <Avatar src={user?.icon} size="md" />
+            <Heading as="h2">{user.name}</Heading>
+          </Flex>
+          <GeneralSettings user={user} />
+          <TeamPinSettings />
+          <AccountSettings />
+        </Flex>
+      </Center>
     )
   );
 };

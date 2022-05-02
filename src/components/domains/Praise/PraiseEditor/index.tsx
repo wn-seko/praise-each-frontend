@@ -1,5 +1,17 @@
 import React, { FC } from 'react';
-import { Button, Form, Modal } from 'semantic-ui-react';
+import {
+  Avatar,
+  Button,
+  Flex,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalFooter,
+  ModalBody,
+  ModalOverlay,
+} from '@chakra-ui/react';
+import { FaArrowRight } from 'react-icons/fa';
 import { Praise } from '~/domains/praise';
 import { useModal } from '~/hooks/useModal';
 import PraiseInput from '../PraiseInput';
@@ -20,22 +32,42 @@ const PraiseEditor: FC<PraiseEditor> = ({ children, praise }) => {
   const { saving, setMessage, handleSave } = useField(praise.id, praise.message, praise.onUpdate, close);
 
   return (
-    <Modal size="small" onClose={close} onOpen={open} open={isOpen} trigger={children}>
-      <Modal.Header>{`${praise.from.name} → ${praise.to.name}`}</Modal.Header>
-      <Modal.Content>
-        <Form>
-          <Form.Field>
+    <>
+      <span onClick={open}>{children}</span>
+      <Modal size="xl" isCentered={true} closeOnOverlayClick={false} isOpen={isOpen} onClose={close}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <Flex direction="row" alignItems="center" gap={4}>
+              <div>
+                <Avatar mr={2} size="sm" src={praise.from.icon} />
+                {praise.from.name}
+              </div>
+              <div>
+                <FaArrowRight size={16} />
+              </div>
+              <div>
+                <Avatar mr={2} size="sm" src={praise.to.icon} />
+                {praise.to.name}
+              </div>
+            </Flex>
+          </ModalHeader>
+          {/* <ModalHeader>{`${praise.from.name} → ${praise.to.name}`}</ModalHeader> */}
+          <ModalCloseButton />
+          <ModalBody>
             {isOpen && <PraiseInput defaultMessage={praise.message} handleChangeMessage={setMessage} />}
-          </Form.Field>
-        </Form>
-      </Modal.Content>
-      <Modal.Actions>
-        <Button onClick={close}>キャンセル</Button>
-        <Button loading={saving} onClick={handleSave} positive={true}>
-          保存
-        </Button>
-      </Modal.Actions>
-    </Modal>
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={close} mr={4}>
+              キャンセル
+            </Button>
+            <Button disabled={saving} onClick={handleSave} colorScheme="green">
+              保存
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 

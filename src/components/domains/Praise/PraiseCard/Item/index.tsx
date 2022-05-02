@@ -1,12 +1,12 @@
-import styled from '@emotion/styled';
 import React, { FC } from 'react';
-import { Card, Icon } from 'semantic-ui-react';
+import { FaEdit, FaTrashAlt, FaArrowRight } from 'react-icons/fa';
+import { Avatar, Box, Flex } from '@chakra-ui/react';
 import { parseMessage, Praise, Stamp } from '~/domains/praise';
-import Avatar from '~/components/ui/Avatar';
 import Reaction from '~/components/domains/Praise/Reaction';
 import PraiseEditor from '../../PraiseEditor';
 import DeletePraise from '../../DeletePraise';
 import EmojiPicker from '~/components/ui/EmojiPicker';
+import { getThemeColor } from '~/layouts/theme';
 
 interface PraiseCard extends Omit<Praise, 'createdAt' | 'updatedAt'> {
   upVoted: boolean;
@@ -29,88 +29,67 @@ interface PraiseCardProps {
   praise: PraiseCard;
 }
 
-const CardHeader = styled(Card.Header)`
-  display: inline-flex !important;
-`;
-
-const NameLabel = styled.span`
-  margin: 0 4px;
-  vertical-align: middle;
-`;
-
-const ArrowLabel = styled.span`
-  vertical-align: middle;
-`;
-
-const TagBlock = styled.div`
-  margin-right: 12px;
-`;
-
-const ReactionBlock = styled.div`
-  > * {
-    margin-right: 1em;
-  }
-`;
-
-const FloatButtonContainer = styled.div`
-  position: absolute;
-  top: 7px;
-  right: 5px;
-
-  > * {
-    margin-left: 5px !important;
-    cursor: pointer;
-  }
-`;
-
 const PraiseCard: FC<PraiseCardProps> = ({ praise }) => {
   const parsedMessage = parseMessage(praise.message).parsed;
   const createClickStampHandler = (name: string) => () => praise.onClickStamp(name);
 
   return (
-    <Card fluid={true}>
+    <Box position="relative" borderWidth="1px" borderRadius="lg" bg={getThemeColor('background')}>
       {praise.isSend && (
-        <FloatButtonContainer>
+        <Flex lineHeight={1} position="absolute" right={4} top={4} gap={4}>
           <PraiseEditor praise={praise}>
-            <Icon name="pencil" />
+            <Box cursor="pointer">
+              <FaEdit size={14} />
+            </Box>
           </PraiseEditor>
           <DeletePraise praiseId={praise.id} onDelete={praise.onDelete}>
-            <Icon name="trash alternate outline" />
+            <Box cursor="pointer">
+              <FaTrashAlt size={14} />
+            </Box>
           </DeletePraise>
-        </FloatButtonContainer>
+        </Flex>
       )}
-      <Card.Content>
-        <CardHeader>
-          <TagBlock>
-            <Avatar src={praise.from.icon} size="mini" />
-            <NameLabel>{praise.from.name}</NameLabel>
-          </TagBlock>
-          <TagBlock>
-            <ArrowLabel> → </ArrowLabel>
-          </TagBlock>
-          <TagBlock>
-            <Avatar src={praise.to.icon} size="mini" />
-            <NameLabel>{praise.to.name}</NameLabel>
-          </TagBlock>
-        </CardHeader>
-        <Card.Meta>{`${praise.createdAt}${praise.isEdit ? '（編集済み）' : ''}`}</Card.Meta>
-        <Card.Description>
+
+      <Flex padding="4" direction="column" gap={2}>
+        <Flex fontWeight="bold" lineHeight={1} direction="row" alignItems="center" gap={4}>
+          <Flex alignItems="center">
+            <Avatar mr={2} size="sm" src={praise.from.icon} />
+            {praise.from.name}
+          </Flex>
+          <Flex alignItems="center">
+            <FaArrowRight size={16} />
+          </Flex>
+          <Flex alignItems="center">
+            <Avatar mr={2} size="sm" src={praise.to.icon} />
+            {praise.to.name}
+          </Flex>
+        </Flex>
+
+        <Box color="gray.400" fontWeight="semibold" letterSpacing="wide" fontSize="sm" ml={1}>
+          {`${praise.createdAt}${praise.isEdit ? '（編集済み）' : ''}`}
+        </Box>
+
+        <Box>
           {parsedMessage.map((word, index) =>
             word.type === 'tag' ? <a key={index}>{` ${word.text}`}</a> : ` ${word.text}`,
           )}
-        </Card.Description>
-      </Card.Content>
-      <Card.Content extra={true}>
-        <ReactionBlock>
+        </Box>
+
+        <Flex display="flex" mt="2" alignItems="center" gap={4}>
           <Reaction title="賛同" users={praise.upVotes}>
-            <Reaction.UpVote active={praise.upVoted} onClick={praise.isMine ? undefined : praise.onClickUpVote} />
+            <Reaction.UpVote
+              count={praise.upVotes.length}
+              active={praise.upVoted}
+              onClick={praise.isMine ? undefined : praise.onClickUpVote}
+            />
           </Reaction>
           <Reaction title="いいね" users={praise.likes}>
-            <Reaction.Like active={praise.liked} onClick={praise.onClickLike} />
+            <Reaction.Like count={praise.likes.length} active={praise.liked} onClick={praise.onClickLike} />
           </Reaction>
           {praise.stamps.map((stamp) => (
             <Reaction key={stamp.stampId} title={`:${stamp.stampId}:`} users={stamp.users}>
               <Reaction.Stamp
+                count={stamp.users.length}
                 stampId={stamp.stampId}
                 active={stamp.stamped}
                 onClick={createClickStampHandler(stamp.stampId)}
@@ -118,9 +97,9 @@ const PraiseCard: FC<PraiseCardProps> = ({ praise }) => {
             </Reaction>
           ))}
           <EmojiPicker onClick={praise.onClickStamp} />
-        </ReactionBlock>
-      </Card.Content>
-    </Card>
+        </Flex>
+      </Flex>
+    </Box>
   );
 };
 

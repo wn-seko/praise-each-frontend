@@ -1,29 +1,29 @@
 import React, { FC } from 'react';
-import { List } from 'semantic-ui-react';
-import Avatar from '~/components/ui/Avatar';
+import { Avatar, Flex, GridItem, Link as LinkStyle } from '@chakra-ui/react';
 import { ColoredLabel } from '~/components/ui/ColoredLabel';
 import { User } from '~/domains/user';
+import { getThemeColor } from '~/layouts/theme';
 
 interface UserItemProps {
   user: User;
 }
 
-const UserItem: FC<UserItemProps> = ({ user }) => {
-  return (
-    <List.Item key={user.id}>
-      <Avatar size="medium" src={user.icon} />
-      <List.Content>
-        <List.Header as="a">{user.name}</List.Header>
-        <List.Description>
-          {user.teams.map((team) => (
-            <ColoredLabel key={team.id} color={team.color} size="tiny">
-              {team.name}
-            </ColoredLabel>
-          ))}
-        </List.Description>
-      </List.Content>
-    </List.Item>
-  );
-};
+const UserItem: FC<UserItemProps> = ({ user }) => (
+  <GridItem pb={2} borderBottom="1px solid" borderBottomColor={getThemeColor('border')}>
+    <Flex gap={4}>
+      <Flex alignItems="center" gap={2}>
+        <Avatar size="sm" src={user.icon} />
+        <LinkStyle fontSize="1.2rem">{user.name}</LinkStyle>
+      </Flex>
+      <Flex alignItems="center" gap={2}>
+        {user.teams.map((team) => (
+          <ColoredLabel key={team.id} color={team.color}>
+            {team.name}
+          </ColoredLabel>
+        ))}
+      </Flex>
+    </Flex>
+  </GridItem>
+);
 
 export default UserItem;

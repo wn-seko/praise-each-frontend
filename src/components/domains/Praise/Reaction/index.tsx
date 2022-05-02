@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import { Emoji } from 'emoji-mart';
 import React, { FC } from 'react';
-import { Icon, Popup } from 'semantic-ui-react';
+import { FaHeart, FaRegHeart, FaThumbsUp, FaRegThumbsUp } from 'react-icons/fa';
+import { Tooltip } from '@chakra-ui/react';
 
 type Theme = 'blue' | 'pink' | 'green';
 
@@ -22,10 +23,10 @@ const getColor = (theme: Theme) => {
 };
 
 const Container = styled.a`
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  vertical-align: middle;
-  color: rgba(0, 0, 0, 0.4) !important;
+  line-height: 1;
+  cursor: pointer;
 
   &:hover {
     color: ${(props: ContainerProps) => getColor(props.theme)} !important;
@@ -40,14 +41,8 @@ const Container = styled.a`
   }
 
   > .count {
-    margin-left: 5px;
+    margin-left: 4px;
   }
-`;
-
-const ResizedIcon = styled(Icon)`
-  font-size: 16px !important;
-  height: 16px !important;
-  width: 16px !important;
 `;
 
 const EmojiContainer = styled.span`
@@ -84,66 +79,76 @@ type Reaction = {
   Stamp: typeof Stamp;
 };
 
-const UpVote: FC<ReactionItemProps> = ({ active = false, count = 0, onClick, onMouseEnter, onMouseLeave }) => (
-  <Container
-    theme="blue"
-    data-active={active ? 'active' : ''}
-    onClick={onClick}
-    onMouseEnter={onMouseEnter}
-    onMouseLeave={onMouseLeave}
-  >
-    <ResizedIcon name="thumbs up outline" />
-    <span className="count">{count}</span>
-  </Container>
-);
+const UpVote = React.forwardRef<HTMLAnchorElement, ReactionItemProps>(function UpVoteInner(
+  { active = false, count = 0, onClick, onMouseEnter, onMouseLeave },
+  ref,
+) {
+  return (
+    <Container
+      theme="blue"
+      data-active={active ? 'active' : ''}
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      ref={ref}
+    >
+      {active ? <FaThumbsUp size={16} /> : <FaRegThumbsUp size={16} />}
+      <span className="count">{count}</span>
+    </Container>
+  );
+});
 
-const Like: FC<ReactionItemProps> = ({ active = false, count = 0, onClick, onMouseEnter, onMouseLeave }) => (
-  <Container
-    theme="pink"
-    data-active={active ? 'active' : ''}
-    onClick={onClick}
-    onMouseEnter={onMouseEnter}
-    onMouseLeave={onMouseLeave}
-  >
-    <ResizedIcon name="heart" />
-    <span className="count">{count}</span>
-  </Container>
-);
+const Like = React.forwardRef<HTMLAnchorElement, ReactionItemProps>(function UpVoteInner(
+  { active = false, count = 0, onClick, onMouseEnter, onMouseLeave },
+  ref,
+) {
+  return (
+    <Container
+      theme="pink"
+      data-active={active ? 'active' : ''}
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      ref={ref}
+    >
+      {active ? <FaHeart size={16} /> : <FaRegHeart size={16} />}
+      <span className="count">{count}</span>
+    </Container>
+  );
+});
 
-const Stamp: FC<ReactionStampProps> = ({ stampId, active = false, count = 0, onClick, onMouseEnter, onMouseLeave }) => (
-  <Container
-    theme="green"
-    data-active={active ? 'active' : ''}
-    onClick={onClick}
-    onMouseEnter={onMouseEnter}
-    onMouseLeave={onMouseLeave}
-  >
-    <EmojiContainer>
-      <Emoji size={18} emoji={stampId} />
-    </EmojiContainer>
-    <span className="count">{count}</span>
-  </Container>
-);
+const Stamp = React.forwardRef<HTMLAnchorElement, ReactionStampProps>(function StampInner(
+  { stampId, active = false, count = 0, onClick, onMouseEnter, onMouseLeave },
+  ref,
+) {
+  return (
+    <Container
+      theme="green"
+      data-active={active ? 'active' : ''}
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      ref={ref}
+    >
+      <EmojiContainer>
+        <Emoji size={18} emoji={stampId} />
+      </EmojiContainer>
+      <span className="count">{count}</span>
+    </Container>
+  );
+});
 
 const Reaction: FC<ReactionProps> & Reaction = ({ title, users, children }) => {
-  const onlyChildren = React.Children.only(children);
-
-  if (!React.isValidElement(onlyChildren)) {
-    return null;
-  }
-
-  const enhancedChildren = React.cloneElement(onlyChildren, { count: users.length });
-
-  return (
-    <Popup on="hover" trigger={enhancedChildren} inverted={true}>
-      <Popup.Header>{title}</Popup.Header>
-      <Popup.Content>
-        {users.map((user, index) => (
-          <span key={user.id}>{`${user.name}${index < users.length - 1 ? '、' : ''}`}</span>
-        ))}
-      </Popup.Content>
-    </Popup>
+  const Content = () => (
+    <div>
+      <p>{title}</p>
+      {users.map((user, index) => (
+        <span key={user.id}>{`${user.name}${index < users.length - 1 ? '、' : ''}`}</span>
+      ))}
+    </div>
   );
+
+  return <Tooltip label={<Content />}>{children}</Tooltip>;
 };
 
 Reaction.UpVote = UpVote;

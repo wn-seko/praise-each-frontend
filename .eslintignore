@@ -1,5 +1,7 @@
 /node_modules/
 /.next/
-/out/
+/dist/
+/build/
+/articles/
 /package-lock.json
 !/.eslintrc.js

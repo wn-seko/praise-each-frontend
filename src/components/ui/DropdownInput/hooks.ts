@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { InputOnChangeData } from 'semantic-ui-react';
 
 interface DropdownItem {
   key: string;
@@ -36,19 +35,19 @@ export const useDropdownInput = (
   hashtagList: DropdownItem[],
   onChange?: (text: string) => void,
   onChangeWord?: (word: string) => void,
-  defaultRef?: React.RefObject<HTMLElement>,
+  defaultRef?: React.RefObject<HTMLInputElement>,
 ) => {
   const [input, setInput] = useState({ prev: defaultInput, current: defaultInput });
   const [inputWord, setInputWord] = useState('');
   const [dropdown, setDropdown] = useState<DropdownItem[]>([]);
   const [activeDocument, setActiveDocument] = useState<Element | null>(null);
 
-  const handleChangeInput = (_: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
-    setInput({ prev: input.current, current: data.value });
+  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInput({ prev: input.current, current: event.currentTarget.value });
   };
 
-  const ref = defaultRef || useRef<HTMLDivElement>(null);
-  const inputElement = ref.current ? ref.current.querySelector('input') : null;
+  const ref = defaultRef || useRef<HTMLInputElement>(null);
+  const inputElement = ref.current ?? null;
   const active = inputElement === activeDocument;
 
   const handleSelectedWord = (item: DropdownItem) => {
@@ -100,11 +99,7 @@ export const useDropdownInput = (
 
   useEffect(() => {
     if (ref.current) {
-      const inputElement = ref.current.querySelector('input');
-
-      if (inputElement) {
-        inputElement.value = defaultInput;
-      }
+      ref.current.value = defaultInput;
     }
   }, [defaultInput, ref.current]);
 

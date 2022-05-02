@@ -1,29 +1,21 @@
-import styled from '@emotion/styled';
-import React, { FC } from 'react';
-import { Button, ButtonProps, Icon } from 'semantic-ui-react';
+import React from 'react';
+import { Button, ButtonProps, ComponentWithAs, Flex } from '@chakra-ui/react';
+import { FaGithub, FaGoogle } from 'react-icons/fa';
 
-const GithubButtonBase = styled(Button)`
-  color: #fff !important;
-  background-color: #212428 !important;
-`;
-
-const GoogleButtonBase = styled(Button)`
-  color: #fff !important;
-  background-color: #dd4b39 !important;
-`;
-
-const ButtonText = styled.span`
-  vertical-align: middle;
-`;
-
-export const GithubButton: FC<ButtonProps> = ({ children, ...rest }) => (
-  <GithubButtonBase {...rest}>
-    <Icon className="button" name="github" size="large" /> <ButtonText>{children}</ButtonText>
-  </GithubButtonBase>
+export const GithubButton: ComponentWithAs<'button', ButtonProps> = ({ children, ...rest }) => (
+  <Button color="white" backgroundColor="#212428" size="lg" {...rest}>
+    <Flex alignItems="center" gap={2}>
+      <FaGithub size={24} />
+      {children}
+    </Flex>
+  </Button>
 );
 
-export const GoogleButton: FC<ButtonProps> = ({ children, ...rest }) => (
-  <GoogleButtonBase {...rest}>
-    <Icon className="button" name="google" size="large" /> <ButtonText>{children}</ButtonText>
-  </GoogleButtonBase>
+export const GoogleButton: ComponentWithAs<'button', ButtonProps> = ({ children, ...rest }) => (
+  <Button color="white" backgroundColor="#dd4b39" size="lg" {...rest}>
+    <Flex alignItems="center" gap={2}>
+      <FaGoogle size={24} />
+      {children}
+    </Flex>
+  </Button>
 );

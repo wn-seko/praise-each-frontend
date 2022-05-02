@@ -1,12 +1,9 @@
 import React, { FC } from 'react';
-import styled from '@emotion/styled';
-import { Label, LabelProps } from 'semantic-ui-react';
+import { Tag, TagLabel, TagProps, ComponentWithAs } from '@chakra-ui/react';
 
-type ColoredLabelProps =
-  | Omit<LabelProps, 'color'>
-  | {
-      color?: string;
-    };
+type ColoredLabelProps = Omit<ComponentWithAs<'span', TagProps>, 'color'> & {
+  color: string;
+};
 
 const getTextColor = (color: string) => {
   const r = Number.parseInt(color.slice(1, 3), 16);
@@ -15,11 +12,8 @@ const getTextColor = (color: string) => {
   return (r + g + b) / 3 > 128 ? '#444' : '#eee';
 };
 
-export const StyledLabel = styled(Label)`
-  background-color: ${(props: ColoredLabelProps) => props.color} !important;
-  color: ${(props: ColoredLabelProps) => getTextColor(props.color)} !important;
-`;
-
-export const ColoredLabel: FC<ColoredLabelProps> = ({ color, ...rest }) => {
-  return <StyledLabel color={color} {...rest} />;
-};
+export const ColoredLabel: FC<ColoredLabelProps> = ({ color, children, ...rest }) => (
+  <Tag variant="solid" size="sm" backgroundColor={color} color={getTextColor(color)} {...rest}>
+    <TagLabel fontWeight="bold">{children}</TagLabel>
+  </Tag>
+);

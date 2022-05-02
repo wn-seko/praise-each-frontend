@@ -1,70 +1,66 @@
-import styled from '@emotion/styled';
 import React, { FC } from 'react';
-import { Container, Grid, Message, Pagination, PaginationProps } from 'semantic-ui-react';
-import TagList from '~/components/domains/Tag/TagList';
+import { Alert, AlertIcon, Box, Center, Flex, Grid, GridItem } from '@chakra-ui/react';
+import { FaTrashAlt } from 'react-icons/fa';
+import Pagination from '~/components/ui/Pagination';
 import DefaultLayout from '~/layouts/default';
-import { chunk } from '~/utils/chunk';
 import CreateTag from './CreateTag';
 import { useTags } from './hooks';
-
-const ButtonContainer = styled.div`
-  width: 100%;
-  text-align: right;
-  margin-bottom: 1.5em;
-`;
-
-const PaginationContainer = styled.div`
-  text-align: center;
-  margin-top: 3em;
-`;
-
-const TagsContainer = styled.div`
-  min-height: 20em;
-`;
+import Loader from '~/components/ui/Loader';
+import { getThemeColor } from '~/layouts/theme';
 
 const TagsPage: FC = () => {
   const { loading, tags, pagination, handlePageChange, refetch } = useTags();
-  const tagsChunk = chunk(tags, 4);
 
-  const onPageChange = (_: React.MouseEvent<HTMLAnchorElement, MouseEvent>, data: PaginationProps) => {
-    handlePageChange(Number(data.activePage));
-  };
+  if (loading) {
+    return (
+      <DefaultLayout>
+        <Loader page={true}>Loading...</Loader>
+      </DefaultLayout>
+    );
+  }
 
   return (
-    <DefaultLayout loading={loading}>
-      <Container>
-        <ButtonContainer>
-          <CreateTag refresh={refetch} />
-        </ButtonContainer>
-        {tags.length > 0 ? (
-          <>
-            <TagsContainer>
-              <Grid>
-                <Grid.Row>
-                  {tagsChunk.map((tags, index) => (
-                    <Grid.Column width={4} key={`tagChunk_${index}`}>
-                      <TagList>
-                        {tags.map((tag) => (
-                          <TagList.Item key={tag.id} tag={tag} onClickDelete={tag.onDelete} />
-                        ))}
-                      </TagList>
-                    </Grid.Column>
+    <DefaultLayout>
+      <Center>
+        <Flex width="80%" direction="column" gap={8}>
+          <Box textAlign="right">
+            <CreateTag refresh={refetch} />
+          </Box>
+          {tags.length > 0 ? (
+            <Flex direction="column" gap={3} minHeight="40em">
+              <Box minHeight="30em">
+                <Grid templateColumns="repeat(4, 1fr)" gap={6}>
+                  {tags.map((tag) => (
+                    <GridItem key={tag.id}>
+                      <Flex
+                        direction="row"
+                        borderBottom="1px solid"
+                        borderBottomColor={getThemeColor('border')}
+                        justifyContent="space-between"
+                      >
+                        <Box>{tag.name}</Box>
+                        <FaTrashAlt size={16} cursor="pointer" onClick={tag.onDelete} />
+                      </Flex>
+                    </GridItem>
                   ))}
-                </Grid.Row>
-              </Grid>
-            </TagsContainer>
-            <PaginationContainer>
-              <Pagination
-                activePage={pagination.currentPage}
-                totalPages={pagination.pages}
-                onPageChange={onPageChange}
-              />
-            </PaginationContainer>
-          </>
-        ) : (
-          <Message info={true} content="まだタグが登録されていません" />
-        )}
-      </Container>
+                </Grid>
+              </Box>
+              <Flex justifyContent="center">
+                <Pagination
+                  activePage={pagination.currentPage}
+                  totalPages={pagination.pages}
+                  onPageChange={handlePageChange}
+                />
+              </Flex>
+            </Flex>
+          ) : (
+            <Alert status="info">
+              <AlertIcon />
+              まだタグが登録されていません
+            </Alert>
+          )}
+        </Flex>
+      </Center>
     </DefaultLayout>
   );
 };

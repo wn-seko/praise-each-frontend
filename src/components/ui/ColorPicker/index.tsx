@@ -1,15 +1,25 @@
 import styled from '@emotion/styled';
 import React, { FC } from 'react';
 import { TwitterPicker, TwitterPickerProps } from 'react-color';
+import { getThemeColor } from '~/layouts/theme';
+import { getChakraColorVariableName } from '~/utils/chakra';
 
-const StyledContainer = styled.div`
+const StyledContainer = styled.div<{ backgroundColor: string; borderColor: string }>`
   > div > div:nth-child(1),
   > div > div:nth-child(2) {
     display: none;
   }
 
+  > div {
+    box-shadow: none !important;
+    border: solid 1px var(${(props) => props.borderColor}) !important;
+    background-color: var(${(props) => props.backgroundColor}) !important;
+  }
+
   input {
-    height: 11px !important;
+    height: 30px !important;
+    background-color: var(${(props) => props.backgroundColor}) !important;
+    color: #888888 !important;
   }
 `;
 
@@ -36,7 +46,10 @@ const ColorPicker: FC<TwitterPickerProps> = (props) => {
   ];
 
   return (
-    <StyledContainer>
+    <StyledContainer
+      borderColor={getChakraColorVariableName(getThemeColor('border'))}
+      backgroundColor={getChakraColorVariableName(getThemeColor('background'))}
+    >
       <TwitterPicker colors={defaultColors} {...props} />
     </StyledContainer>
   );

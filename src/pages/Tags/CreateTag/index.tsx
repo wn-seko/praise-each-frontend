@@ -1,5 +1,16 @@
 import React, { ChangeEvent, FC } from 'react';
-import { Button, Form, Input, Modal } from 'semantic-ui-react';
+import {
+  Box,
+  Button,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+} from '@chakra-ui/react';
 import { useModal, useField, useCreateTag } from './hooks';
 
 interface CreateTagProps {
@@ -20,29 +31,32 @@ const CreateTag: FC<CreateTagProps> = ({ refresh }) => {
   };
 
   return (
-    <Modal
-      size="small"
-      onClose={close}
-      onOpen={open}
-      open={isOpen}
-      trigger={<Button primary={true}>タグを追加</Button>}
-    >
-      <Modal.Header>タグを追加</Modal.Header>
-      <Modal.Content>
-        <Form>
-          <Form.Field>
-            <label>タグ名</label>
-            <Input defaultValue={name} onChange={handleChangeName} />
-          </Form.Field>
-        </Form>
-      </Modal.Content>
-      <Modal.Actions>
-        <Button onClick={close}>キャンセル</Button>
-        <Button loading={creating} onClick={onSave} positive={true}>
-          追加
-        </Button>
-      </Modal.Actions>
-    </Modal>
+    <>
+      <Button colorScheme="green" onClick={open}>
+        タグを追加
+      </Button>
+      <Modal size="md" onClose={close} isOpen={isOpen} isCentered={true}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>タグを追加</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Box>
+              <label>タグ名</label>
+              <Input defaultValue={name} onChange={handleChangeName} />
+            </Box>
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={close} mr={4}>
+              キャンセル
+            </Button>
+            <Button disabled={creating} onClick={onSave} colorScheme="green">
+              追加
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 

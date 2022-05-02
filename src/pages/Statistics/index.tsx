@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
-import { Container } from 'semantic-ui-react';
+import { Center } from '@chakra-ui/react';
 import DefaultLayout from '~/layouts/default';
 
 const StatisticsPage: FC = () => {
   return (
     <DefaultLayout>
-      <Container>Coming soon...</Container>
+      <Center>Coming soon...</Center>
     </DefaultLayout>
   );
 };

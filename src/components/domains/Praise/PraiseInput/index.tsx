@@ -8,7 +8,7 @@ interface PraiseInputProps {
   handleChangeMessage: (message: string) => void;
 }
 
-const PraiseInput = forwardRef<HTMLElement, PraiseInputProps>(function PraiseInputInner(
+const PraiseInput = forwardRef<HTMLInputElement, PraiseInputProps>(function PraiseInputInner(
   { defaultMessage, handleChangeMessage },
   ref,
 ) {

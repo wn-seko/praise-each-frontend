@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React, { FC, useEffect } from 'react';
-import { Loader } from 'semantic-ui-react';
+import { Spinner } from '@chakra-ui/react';
 
 const StyledScrollLoader = styled.div`
   width: 100%;
@@ -40,9 +40,13 @@ const ScrollLoader: FC<ScrollLoaderProps> = ({ loading, onInRange }) => {
     };
   }, [ref]);
 
+  if (!loading) {
+    return null;
+  }
+
   return (
     <StyledScrollLoader ref={ref}>
-      <Loader size="small" active={loading} inline={true} />
+      <Spinner size="md" />
     </StyledScrollLoader>
   );
 };

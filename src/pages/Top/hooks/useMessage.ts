@@ -7,14 +7,13 @@ import { searchUser } from '~/requests/user';
 export const useMessage = (refetchTimeline: () => void) => {
   const [sending, setSending] = useState(false);
   const [message, setMessage] = useState('');
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLInputElement>(null);
 
   const clearMessage = useCallback(() => {
     setMessage('');
 
     if (ref.current) {
-      const input = ref.current.querySelector('input') as HTMLInputElement;
-      input.value = '';
+      ref.current.value = '';
     }
   }, []);
 
@@ -49,9 +48,7 @@ export const useMessage = (refetchTimeline: () => void) => {
 
   const handleKeydown = useCallback(
     (event: KeyboardEvent) => {
-      const inputElement = ref.current ? ref.current.querySelector('input') : null;
-
-      if (inputElement === document.activeElement) {
+      if (ref.current === document.activeElement) {
         event.stopPropagation();
 
         if (event.metaKey && event.key === 'Enter') {

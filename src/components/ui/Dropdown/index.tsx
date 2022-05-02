@@ -1,26 +1,21 @@
 import React, { FC } from 'react';
 import styled from '@emotion/styled';
+import { Avatar, Box, Flex } from '@chakra-ui/react';
 import { useDropdown } from './hooks';
-import Avatar from '~/components/ui/Avatar';
+import { getThemeColor } from '~/layouts/theme';
+import { getChakraColorVariableName } from '~/utils/chakra';
 
-const Container = styled.div`
-  width: 100%;
-  border-radius: 4px;
-`;
+interface ItemProps {
+  borderColor: string;
+}
 
-const Item = styled.div`
-  background: #fff;
-  border: solid 1px rgba(34, 36, 38, 0.15);
+const Item = styled.div<ItemProps>`
+  border: solid 1px var(${(props) => props.borderColor});
   padding: 0.5rem;
+  cursor: pointer;
 
   &[data-selected='true'] {
-    background: rgba(34, 36, 38, 0.07);
-  }
-`;
-
-const Layout = styled.div`
-  > * {
-    margin-right: 0.5em !important;
+    background: var(${(props) => props.borderColor});
   }
 `;
 
@@ -49,22 +44,23 @@ const Dropdown: FC<DropdownProps> = ({ active, options: optionsProps, onSelected
   }
 
   return (
-    <Container>
+    <Box width="100%" borderRadius={4}>
       {options.map((option, index) => (
         <Item
           key={option.key}
+          borderColor={getChakraColorVariableName(getThemeColor('border'))}
           data-selected={index === selected}
           onClick={handleClick(option)}
           onMouseEnter={createHandleMouseEnter(index)}
           onMouseLeave={createHandleMouseLeave(index)}
         >
-          <Layout>
-            {option.icon && <Avatar src={option.icon} size="tiny" />}
+          <Flex gap={2}>
+            {option.icon && <Avatar src={option.icon} size="xs" />}
             <span>{option.text}</span>
-          </Layout>
+          </Flex>
         </Item>
       ))}
-    </Container>
+    </Box>
   );
 };
 

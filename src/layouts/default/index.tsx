@@ -1,25 +1,23 @@
 import styled from '@emotion/styled';
 import React, { FC } from 'react';
-import { Loader } from 'semantic-ui-react';
+import { Box } from '@chakra-ui/react';
+import { getThemeColor } from '../theme';
+
 import Notification from '~/components/domains/Notification';
 import Header from './Header';
 
 const PageContainer = styled.div`
-  margin-top: 80px;
+  margin-top: 30px;
   padding-bottom: 50px;
 `;
 
-interface DefaultLayoutProps {
-  loading?: boolean;
-}
-
-const DefaultLayout: FC<DefaultLayoutProps> = ({ loading, children }) => {
+const DefaultLayout: FC = ({ children }) => {
   return (
-    <div className="layout default">
+    <Box className="layout default" backgroundColor={getThemeColor('globalBackground')}>
       <Header />
-      <PageContainer className="page">{loading ? <Loader active={true}>Loading...</Loader> : children}</PageContainer>
+      <PageContainer className="page">{children}</PageContainer>
       <Notification />
-    </div>
+    </Box>
   );
 };
 

@@ -3,7 +3,8 @@ import { Picker, EmojiData } from 'emoji-mart';
 import { useModal } from '~/hooks/useModal';
 import { useEmojiPicker } from './hooks';
 import styled from '@emotion/styled';
-import { Icon } from 'semantic-ui-react';
+import { FaRegSmile } from 'react-icons/fa';
+import { Box } from '@chakra-ui/react';
 
 interface PickerContainerProps {
   close: () => void;
@@ -11,20 +12,13 @@ interface PickerContainerProps {
 }
 
 const Container = styled.a`
-  display: inline-flex;
   align-items: center;
-  vertical-align: middle;
-  color: rgba(0, 0, 0, 0.4) !important;
+  line-height: 1;
+  cursor: pointer;
 
   > i {
     margin: 0 !important;
   }
-`;
-
-const ResizedIcon = styled(Icon)`
-  font-size: 16px !important;
-  height: 16px !important;
-  width: 16px !important;
 `;
 
 const PickerContainer: FC<PickerContainerProps> = ({ close, onClick }) => {
@@ -37,9 +31,9 @@ const PickerContainer: FC<PickerContainerProps> = ({ close, onClick }) => {
   };
 
   return (
-    <div ref={ref}>
+    <Box ref={ref} zIndex={100}>
       <Picker sheetSize={16} onClick={handleClick} style={{ position: 'absolute', zIndex: 1000 }} />
-    </div>
+    </Box>
   );
 };
 
@@ -53,7 +47,7 @@ const EmojiPicker: FC<EmojiPickerProps> = ({ onClick }) => {
   return (
     <>
       <Container>
-        <ResizedIcon name="plus" onClick={toggle} />
+        <FaRegSmile size={18} onClick={toggle} />
       </Container>
       {isOpen && <PickerContainer close={close} onClick={onClick} />}
     </>

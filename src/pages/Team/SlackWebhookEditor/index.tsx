@@ -1,9 +1,21 @@
 import React, { ChangeEvent, FC } from 'react';
-import { Button, Form, Input, Modal } from 'semantic-ui-react';
+import {
+  Button,
+  Flex,
+  Input,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalFooter,
+  ModalBody,
+  ModalOverlay,
+} from '@chakra-ui/react';
 import { TeamSlackWebhook } from '~/domains/slackWebhook';
-import { useModal, useField } from './hooks';
+import { useField, useModal } from './hooks';
 
 interface SlackWebhookEditorProps {
+  children: JSX.Element;
   title: string;
   saveButtonText: string;
   teamId: string;
@@ -41,31 +53,40 @@ const SlackWebhookEditor: FC<SlackWebhookEditorProps> = ({
   };
 
   return (
-    <Modal size="small" onClose={close} onOpen={open} open={isOpen} trigger={children}>
-      <Modal.Header>{title}</Modal.Header>
-      <Modal.Content>
-        <Form>
-          <Form.Field>
-            <label>名前</label>
-            <Input defaultValue={name} onChange={handleChangeName} />
-          </Form.Field>
-          <Form.Field>
-            <label>説明</label>
-            <Input defaultValue={description} onChange={handleChangeDescription} />
-          </Form.Field>
-          <Form.Field>
-            <label>URL</label>
-            <Input defaultValue={url} onChange={handleChangeUrl} />
-          </Form.Field>
-        </Form>
-      </Modal.Content>
-      <Modal.Actions>
-        <Button onClick={close}>キャンセル</Button>
-        <Button loading={saving} onClick={handleSave} positive={true}>
-          {saveButtonText}
-        </Button>
-      </Modal.Actions>
-    </Modal>
+    <>
+      {React.cloneElement(children, { onClick: open })}
+      <Modal size="md" onClose={close} isOpen={isOpen} onCloseComplete={close} isCentered={true}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>{title}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Flex direction="column" gap={4}>
+              <Flex direction="column" gap={2}>
+                <label>名前</label>
+                <Input defaultValue={name} onChange={handleChangeName} />
+              </Flex>
+              <Flex direction="column" gap={2}>
+                <label>説明</label>
+                <Input defaultValue={description} onChange={handleChangeDescription} />
+              </Flex>
+              <Flex direction="column" gap={2}>
+                <label>URL</label>
+                <Input defaultValue={url} onChange={handleChangeUrl} />
+              </Flex>
+            </Flex>
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={close} mr={4}>
+              キャンセル
+            </Button>
+            <Button disabled={saving} onClick={handleSave} colorScheme="green">
+              {saveButtonText}
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 

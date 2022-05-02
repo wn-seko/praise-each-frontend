@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { Input, Ref } from 'semantic-ui-react';
+import { Input } from '@chakra-ui/react';
 import Dropdown from '~/components/ui/Dropdown';
 import { useDropdownInput } from './hooks';
 
@@ -19,24 +19,28 @@ interface DropdownInputProps {
   onChangeWord?: (word: string) => void;
 }
 
-const DropdownInput = forwardRef<HTMLElement, DropdownInputProps>(function DropdownItemInner(
+const DropdownInput = forwardRef<HTMLInputElement, DropdownInputProps>(function DropdownItemInner(
   { defaultInput = '', placeholder = '', addressList = [], hashtagList = [], onChange, onChangeWord },
-  outerRef,
+  ref,
 ) {
-  const { ref, active, dropdown, handleChangeInput, handleSelectedWord } = useDropdownInput(
+  const {
+    ref: altRef,
+    active,
+    dropdown,
+    handleChangeInput,
+    handleSelectedWord,
+  } = useDropdownInput(
     defaultInput,
     addressList,
     hashtagList,
     onChange,
     onChangeWord,
-    outerRef as React.RefObject<HTMLElement>,
+    ref as React.RefObject<HTMLInputElement>,
   );
 
   return (
     <>
-      <Ref innerRef={ref}>
-        <Input fluid={true} placeholder={placeholder} onChange={handleChangeInput} />
-      </Ref>
+      <Input ref={altRef} placeholder={placeholder} onChange={handleChangeInput} />
       {dropdown.length > 0 && <Dropdown active={active} options={dropdown} onSelected={handleSelectedWord} />}
     </>
   );

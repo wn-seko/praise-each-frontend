@@ -1,9 +1,9 @@
+/* eslint-disable node/no-process-env */
 const makeValidator = (
-  validate: (rawValue: string) => boolean,
-  convert?: (rawValue: string) => unknown | undefined,
+  validate: (rawValue: string | undefined) => boolean,
+  convert?: (rawValue: string | undefined) => unknown | undefined,
 ) => {
-  return (key) => {
-    // eslint-disable-next-line node/no-process-env
+  return (key: string) => {
     const rawValue = process.env[key];
     if (!validate(rawValue)) {
       throw new Error(`環境変数 ${key} が不正です。(値: ${rawValue})`);

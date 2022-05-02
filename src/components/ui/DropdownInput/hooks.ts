@@ -99,11 +99,7 @@ export const useDropdownInput = (
 
   useEffect(() => {
     if (ref.current) {
-      const inputElement = ref.current.querySelector('input');
-
-      if (inputElement) {
-        inputElement.value = defaultInput;
-      }
+      ref.current.value = defaultInput;
     }
   }, [defaultInput, ref.current]);
 

@@ -32,7 +32,7 @@ const SlackWebhookSettings: FC<SlackWebhookSettingsProps> = ({ teamId }) => {
           refresh={refetch}
           onSave={handleAdd}
         >
-          <Button>追加</Button>
+          <Button colorScheme="green">追加</Button>
         </SlackWebhookEditor>
       </Flex>
     ),

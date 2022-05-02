@@ -112,7 +112,7 @@ const TopPage: FC = () => {
             <Box flexGrow={1}>
               <PraiseInput ref={ref} handleChangeMessage={handleChangeMessage} />
             </Box>
-            <Button disabled={sending} onClick={handleClickSend}>
+            <Button disabled={sending} onClick={handleClickSend} colorScheme="green">
               送信
             </Button>
           </Flex>

@@ -3,7 +3,7 @@ import { Picker, EmojiData } from 'emoji-mart';
 import { useModal } from '~/hooks/useModal';
 import { useEmojiPicker } from './hooks';
 import styled from '@emotion/styled';
-import { MdOutlineAddReaction } from 'react-icons/md';
+import { FaRegSmile } from 'react-icons/fa';
 import { Box } from '@chakra-ui/react';
 
 interface PickerContainerProps {
@@ -14,7 +14,6 @@ interface PickerContainerProps {
 const Container = styled.a`
   align-items: center;
   line-height: 1;
-  color: rgba(0, 0, 0, 0.4) !important;
   cursor: pointer;
 
   > i {
@@ -48,7 +47,7 @@ const EmojiPicker: FC<EmojiPickerProps> = ({ onClick }) => {
   return (
     <>
       <Container>
-        <MdOutlineAddReaction size={18} onClick={toggle} />
+        <FaRegSmile size={18} onClick={toggle} />
       </Container>
       {isOpen && <PickerContainer close={close} onClick={onClick} />}
     </>

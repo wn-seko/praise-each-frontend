@@ -6,6 +6,7 @@ import Reaction from '~/components/domains/Praise/Reaction';
 import PraiseEditor from '../../PraiseEditor';
 import DeletePraise from '../../DeletePraise';
 import EmojiPicker from '~/components/ui/EmojiPicker';
+import { getThemeColor } from '~/layouts/theme';
 
 interface PraiseCard extends Omit<Praise, 'createdAt' | 'updatedAt'> {
   upVoted: boolean;
@@ -33,7 +34,7 @@ const PraiseCard: FC<PraiseCardProps> = ({ praise }) => {
   const createClickStampHandler = (name: string) => () => praise.onClickStamp(name);
 
   return (
-    <Box position="relative" borderWidth="1px" borderRadius="lg">
+    <Box position="relative" borderWidth="1px" borderRadius="lg" bg={getThemeColor('background')}>
       {praise.isSend && (
         <Flex lineHeight={1} position="absolute" right={2} top={2} gap={4}>
           <PraiseEditor praise={praise}>
@@ -51,17 +52,17 @@ const PraiseCard: FC<PraiseCardProps> = ({ praise }) => {
 
       <Flex padding="6" direction="column" gap={2}>
         <Flex fontWeight="bold" lineHeight={1} direction="row" alignItems="center" gap={4}>
-          <div>
+          <Flex alignItems="center">
             <Avatar mr={2} size="sm" src={praise.from.icon} />
             {praise.from.name}
-          </div>
-          <div>
+          </Flex>
+          <Flex alignItems="center">
             <FaArrowRight size={16} />
-          </div>
-          <div>
+          </Flex>
+          <Flex alignItems="center">
             <Avatar mr={2} size="sm" src={praise.to.icon} />
             {praise.to.name}
-          </div>
+          </Flex>
         </Flex>
 
         <Box color="gray.400" fontWeight="semibold" letterSpacing="wide" fontSize="sm" ml={1}>

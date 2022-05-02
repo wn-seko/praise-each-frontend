@@ -5,6 +5,8 @@ import { FaTrashAlt } from 'react-icons/fa';
 import DefaultLayout from '~/layouts/default';
 import CreateTag from './CreateTag';
 import { useTags } from './hooks';
+import Loader from '~/components/ui/Loader';
+import { getThemeColor } from '~/layouts/theme';
 
 const TagsPage: FC = () => {
   const { loading, tags, pagination, handlePageChange, refetch } = useTags();
@@ -13,8 +15,16 @@ const TagsPage: FC = () => {
     handlePageChange(Number(data.activePage));
   };
 
+  if (loading) {
+    return (
+      <DefaultLayout>
+        <Loader page={true}>Loading...</Loader>
+      </DefaultLayout>
+    );
+  }
+
   return (
-    <DefaultLayout loading={loading}>
+    <DefaultLayout>
       <Center>
         <Flex width="80%" direction="column" gap={8}>
           <Box textAlign="right">
@@ -28,7 +38,7 @@ const TagsPage: FC = () => {
                     <Flex
                       direction="row"
                       borderBottom="1px solid"
-                      borderBottomColor="gray.300"
+                      borderBottomColor={getThemeColor('border')}
                       justifyContent="space-between"
                     >
                       <Box>{tag.name}</Box>

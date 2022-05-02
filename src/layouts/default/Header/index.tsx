@@ -13,9 +13,9 @@ import {
   MenuItem,
   MenuList,
   StackDivider,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import { useHeader } from './hooks';
+import { getThemeColor } from '~/layouts/theme';
 
 interface NavLinkProps {
   link: string;
@@ -29,7 +29,7 @@ const NavLink: FC<NavLinkProps> = ({ link, children }) => (
       rounded="md"
       _hover={{
         textDecoration: 'none',
-        bg: useColorModeValue('gray.200', 'gray.700'),
+        bg: getThemeColor('primaryText'),
       }}
     >
       {children}
@@ -38,13 +38,13 @@ const NavLink: FC<NavLinkProps> = ({ link, children }) => (
 );
 
 const Header: FC = () => {
-  const { user, logout } = useHeader();
+  const { user, colorMode, logout, toggleColorMode } = useHeader();
 
   return (
-    <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+    <Box bg={getThemeColor('primary')} px={4}>
       <Flex h={16} alignItems="center" justifyContent="space-between">
-        <Box>Praise Each</Box>
-        <HStack as="nav" spacing={8} divider={<StackDivider borderColor="gray.200" />}>
+        <Box fontWeight="bold">Praise Each</Box>
+        <HStack as="nav" fontWeight="bold" spacing={8} divider={<StackDivider borderColor="gray.200" />}>
           <NavLink link="/top">タイムライン</NavLink>
           <NavLink link="/users">ユーザー</NavLink>
           <NavLink link="/teams">チーム</NavLink>
@@ -56,9 +56,10 @@ const Header: FC = () => {
             <Avatar size="md" src={user.icon} />
           </MenuButton>
           <MenuList>
-            <Link to="mypage/settings">
+            <Link to="/mypage/settings">
               <MenuItem as="a">ユーザー設定</MenuItem>
             </Link>
+            <MenuItem onClick={toggleColorMode}>{colorMode === 'dark' ? 'ライトモード' : 'ダークモード'}</MenuItem>
             <MenuDivider />
             <MenuItem onClick={logout}>ログアウト</MenuItem>
           </MenuList>

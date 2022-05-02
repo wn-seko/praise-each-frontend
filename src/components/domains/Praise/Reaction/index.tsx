@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Emoji } from 'emoji-mart';
 import React, { FC } from 'react';
-import { FaHeart, FaThumbsUp } from 'react-icons/fa';
+import { FaHeart, FaRegHeart, FaThumbsUp, FaRegThumbsUp } from 'react-icons/fa';
 import { Tooltip } from '@chakra-ui/react';
 
 type Theme = 'blue' | 'pink' | 'green';
@@ -26,7 +26,6 @@ const Container = styled.a`
   display: flex;
   align-items: center;
   line-height: 1;
-  color: rgba(0, 0, 0, 0.4) !important;
   cursor: pointer;
 
   &:hover {
@@ -93,7 +92,7 @@ const UpVote = React.forwardRef<HTMLAnchorElement, ReactionItemProps>(function U
       onMouseLeave={onMouseLeave}
       ref={ref}
     >
-      <FaThumbsUp size={16} />
+      {active ? <FaThumbsUp size={16} /> : <FaRegThumbsUp size={16} />}
       <span className="count">{count}</span>
     </Container>
   );
@@ -112,7 +111,7 @@ const Like = React.forwardRef<HTMLAnchorElement, ReactionItemProps>(function UpV
       onMouseLeave={onMouseLeave}
       ref={ref}
     >
-      <FaHeart size={16} />
+      {active ? <FaHeart size={16} /> : <FaRegHeart size={16} />}
       <span className="count">{count}</span>
     </Container>
   );

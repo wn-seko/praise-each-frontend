@@ -1,4 +1,5 @@
 import { useHistory } from 'react-router';
+import { useColorMode } from '@chakra-ui/react';
 import { User } from '~/domains/user';
 import { useAuthUser, useAuthToken } from '~/recoil/auth';
 
@@ -12,5 +13,7 @@ export const useHeader = () => {
     history.push('/login');
   };
 
-  return { user: user as User, logout };
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  return { user: user as User, colorMode, logout, toggleColorMode };
 };

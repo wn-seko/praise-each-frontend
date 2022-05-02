@@ -26,6 +26,7 @@ import DefaultLayout from '~/layouts/default';
 import { EnhancedPraise, usePraisePage, useScroll, useTab } from './hooks/usePraisePage';
 import { usePinedTeams } from './hooks/useTeamPin';
 import { useMessage } from './hooks/useMessage';
+import Loader from '~/components/ui/Loader';
 
 interface PraisePaneProps {
   loading: boolean;
@@ -146,7 +147,7 @@ const TopPage: FC = () => {
 };
 
 export default () => (
-  <React.Suspense fallback={<Spinner>Loading...</Spinner>}>
+  <React.Suspense fallback={<Loader page={true}>Loading...</Loader>}>
     <TopPage />
   </React.Suspense>
 );

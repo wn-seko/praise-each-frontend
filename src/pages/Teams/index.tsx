@@ -1,8 +1,9 @@
 import React, { FC, Suspense } from 'react';
-import { Center, Flex, Spinner } from '@chakra-ui/react';
+import { Center, Flex } from '@chakra-ui/react';
 import DefaultLayout from '~/layouts/default';
 import TeamList from './TeamList';
 import CreateTeam from './CreateTeam';
+import Loader from '~/components/ui/Loader';
 
 const TeamsPage: FC = () => (
   <DefaultLayout>
@@ -11,7 +12,7 @@ const TeamsPage: FC = () => (
         <Flex justifyContent="end">
           <CreateTeam />
         </Flex>
-        <Suspense fallback={<Spinner />}>
+        <Suspense fallback={<Loader page={true}>Loading...</Loader>}>
           <TeamList />
         </Suspense>
       </Flex>

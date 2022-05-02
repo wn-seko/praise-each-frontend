@@ -1,12 +1,9 @@
 import React, { FC } from 'react';
-import { LabelProps } from 'semantic-ui-react';
-import { Tag, TagLabel } from '@chakra-ui/react';
+import { Tag, TagLabel, TagProps, ComponentWithAs } from '@chakra-ui/react';
 
-type ColoredLabelProps =
-  | Omit<LabelProps, 'color'>
-  | {
-      color?: string;
-    };
+type ColoredLabelProps = Omit<ComponentWithAs<'span', TagProps>, 'color'> & {
+  color: string;
+};
 
 const getTextColor = (color: string) => {
   const r = Number.parseInt(color.slice(1, 3), 16);

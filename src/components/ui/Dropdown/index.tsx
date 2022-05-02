@@ -1,12 +1,7 @@
 import React, { FC } from 'react';
 import styled from '@emotion/styled';
 import { useDropdown } from './hooks';
-import Avatar from '~/components/ui/Avatar';
-
-const Container = styled.div`
-  width: 100%;
-  border-radius: 4px;
-`;
+import { Avatar, Box, Flex } from '@chakra-ui/react';
 
 const Item = styled.div`
   background: #fff;
@@ -15,12 +10,6 @@ const Item = styled.div`
 
   &[data-selected='true'] {
     background: rgba(34, 36, 38, 0.07);
-  }
-`;
-
-const Layout = styled.div`
-  > * {
-    margin-right: 0.5em !important;
   }
 `;
 
@@ -49,7 +38,7 @@ const Dropdown: FC<DropdownProps> = ({ active, options: optionsProps, onSelected
   }
 
   return (
-    <Container>
+    <Box width="100%" borderRadius={4}>
       {options.map((option, index) => (
         <Item
           key={option.key}
@@ -58,13 +47,13 @@ const Dropdown: FC<DropdownProps> = ({ active, options: optionsProps, onSelected
           onMouseEnter={createHandleMouseEnter(index)}
           onMouseLeave={createHandleMouseLeave(index)}
         >
-          <Layout>
-            {option.icon && <Avatar src={option.icon} size="tiny" />}
+          <Flex gap={2}>
+            {option.icon && <Avatar src={option.icon} size="xs" />}
             <span>{option.text}</span>
-          </Layout>
+          </Flex>
         </Item>
       ))}
-    </Container>
+    </Box>
   );
 };
 

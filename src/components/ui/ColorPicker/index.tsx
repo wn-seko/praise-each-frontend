@@ -9,7 +9,7 @@ const StyledContainer = styled.div`
   }
 
   input {
-    height: 11px !important;
+    height: 30px !important;
   }
 `;
 

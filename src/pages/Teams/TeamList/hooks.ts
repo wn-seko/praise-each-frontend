@@ -1,5 +1,4 @@
 import { useRecoilValue } from 'recoil';
-import { useHistory } from 'react-router';
 import { Team } from '~/domains/team';
 import { Pagination } from '~/utils/pagination';
 import { createRefreshTeams, teamsState } from '../hooks';
@@ -14,14 +13,4 @@ export const useTeams = () => {
   }, []);
 
   return { teams: list, pagination };
-};
-
-export const useRouting = () => {
-  const history = useHistory();
-
-  const redirect = (teamId: string) => {
-    history.push(`/teams/${teamId}`);
-  };
-
-  return { redirect };
 };

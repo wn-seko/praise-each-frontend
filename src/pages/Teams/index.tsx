@@ -1,25 +1,21 @@
-import styled from '@emotion/styled';
 import React, { FC, Suspense } from 'react';
-import { Container, Loader } from 'semantic-ui-react';
+import { Center, Flex, Spinner } from '@chakra-ui/react';
 import DefaultLayout from '~/layouts/default';
 import TeamList from './TeamList';
 import CreateTeam from './CreateTeam';
 
-const RightPositionContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
-
 const TeamsPage: FC = () => (
   <DefaultLayout>
-    <Container>
-      <RightPositionContainer>
-        <CreateTeam />
-      </RightPositionContainer>
-      <Suspense fallback={<Loader active={true}>Loading...</Loader>}>
-        <TeamList />
-      </Suspense>
-    </Container>
+    <Center>
+      <Flex direction="column" width="80%" gap={8}>
+        <Flex justifyContent="end">
+          <CreateTeam />
+        </Flex>
+        <Suspense fallback={<Spinner />}>
+          <TeamList />
+        </Suspense>
+      </Flex>
+    </Center>
   </DefaultLayout>
 );
 

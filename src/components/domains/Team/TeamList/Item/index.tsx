@@ -1,53 +1,31 @@
-import styled from '@emotion/styled';
 import React, { FC } from 'react';
-import { Icon, List } from 'semantic-ui-react';
+import { Avatar, Flex, GridItem, Link as LinkStyle } from '@chakra-ui/react';
 import { Team } from '~/domains/team';
-import Box from '~/components/ui/Box';
+import BoxIcon from '~/components/ui/Box';
+import { Link } from 'react-router-dom';
 
 interface TeamItemProps {
   team: Team;
-  onClick?: () => void;
+  href: string;
 }
 
-const HeaderContainer = styled.div`
-  display: inline-flex;
-  align-items: center;
-
-  > * {
-    margin-right: 0.5em;
-  }
-`;
-
-const DescriptionContainer = styled.div`
-  font-size: 14px;
-  font-weight: normal;
-  display: inline-flex;
-  align-items: center;
-  margin: 0.5em 0.5em 0.2em;
-
-  > * {
-    margin-right: 0.5em !important;
-  }
-`;
-
-const TeamItem: FC<TeamItemProps> = ({ team, onClick }) => {
+const TeamItem: FC<TeamItemProps> = ({ team, href }) => {
   return (
-    <List.Item key={team.id}>
-      <List.Content verticalAlign="middle">
-        <List.Header as="a" onClick={onClick}>
-          <HeaderContainer>
-            <Box size={15} color={team.color} />
-            <span>{team.name}</span>
-          </HeaderContainer>
-        </List.Header>
-        <List.Description>
-          <DescriptionContainer>
-            <Icon name="users" size="large" />
-            <span>{`${team.users.length} ユーザー`}</span>
-          </DescriptionContainer>
-        </List.Description>
-      </List.Content>
-    </List.Item>
+    <GridItem pb={2} borderBottom="1px solid" borderBottomColor="gray.300">
+      <Flex alignItems="center" gap={4}>
+        <Flex alignItems="center" gap={2}>
+          <BoxIcon size={15} color={team.color} />
+          <Link to={href}>
+            <LinkStyle fontSize="1.2rem">{team.name}</LinkStyle>
+          </Link>
+        </Flex>
+        <Flex alignItems="center" gap={2}>
+          {team.users.map((user) => (
+            <Avatar key={user.id} size="xs" src={user.icon} />
+          ))}
+        </Flex>
+      </Flex>
+    </GridItem>
   );
 };
 

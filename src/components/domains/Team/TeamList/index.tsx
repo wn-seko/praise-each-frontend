@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
 import Item from './Item';
-import { List } from 'semantic-ui-react';
+import { Grid } from '@chakra-ui/react';
 
 type TeamList = {
   Item: typeof Item;
 };
 
-const TeamList: FC & TeamList = (props) => <List divided={true} relaxed={true} size="huge" {...props} />;
+const TeamList: FC & TeamList = (props) => <Grid templateColumns="repeat(2, 1fr)" gap={4} {...props} />;
 
 TeamList.Item = Item;
 

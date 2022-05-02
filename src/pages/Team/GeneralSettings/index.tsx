@@ -13,20 +13,13 @@ interface GeneralSettingsProps {
 const GeneralSettings: FC<GeneralSettingsProps> = ({ team }) => {
   const { updating, handleSave } = useUpdateTeam(team.id);
 
-  const EditButton = useMemo(() => <Button>編集</Button>, []);
-
   const SegmentHeader = useMemo(
     () => (
       <Flex alignItems="center" justifyContent="space-between">
         <span>設定</span>
-        <TeamEditor
-          team={team}
-          loading={updating}
-          title={team.name}
-          trigger={EditButton}
-          saveButtonText="保存"
-          onSave={handleSave}
-        />
+        <TeamEditor team={team} loading={updating} title={team.name} saveButtonText="保存" onSave={handleSave}>
+          <Button>編集</Button>
+        </TeamEditor>
       </Flex>
     ),
     [team],

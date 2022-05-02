@@ -36,7 +36,7 @@ const PraiseCard: FC<PraiseCardProps> = ({ praise }) => {
   return (
     <Box position="relative" borderWidth="1px" borderRadius="lg" bg={getThemeColor('background')}>
       {praise.isSend && (
-        <Flex lineHeight={1} position="absolute" right={2} top={2} gap={4}>
+        <Flex lineHeight={1} position="absolute" right={4} top={4} gap={4}>
           <PraiseEditor praise={praise}>
             <Box cursor="pointer">
               <FaEdit size={14} />
@@ -50,7 +50,7 @@ const PraiseCard: FC<PraiseCardProps> = ({ praise }) => {
         </Flex>
       )}
 
-      <Flex padding="6" direction="column" gap={2}>
+      <Flex padding="4" direction="column" gap={2}>
         <Flex fontWeight="bold" lineHeight={1} direction="row" alignItems="center" gap={4}>
           <Flex alignItems="center">
             <Avatar mr={2} size="sm" src={praise.from.icon} />

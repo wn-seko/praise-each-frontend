@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
-import Card from './Item';
 import { Flex } from '@chakra-ui/react';
+import React, { FC } from 'react';
+
+import Card from './Item';
 
 type PraiseCard = {
   Card: typeof Card;

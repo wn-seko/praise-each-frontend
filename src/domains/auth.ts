@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import JwtDecode from 'jwt-decode';
+
 import { User } from './user';
 
 interface AuthUser extends User {

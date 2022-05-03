@@ -1,10 +1,12 @@
-import React, { FC } from 'react';
 import { Center, Flex, Heading } from '@chakra-ui/react';
+import React, { FC } from 'react';
+
 import UiBox from '~/components/ui/Box';
-import { useTeam } from './hooks';
+
 import DeleteTeam from '../DeleteTeam';
-import SlackWebhookSettings from '../SlackWebhookSettings';
 import GeneralSettings from '../GeneralSettings';
+import SlackWebhookSettings from '../SlackWebhookSettings';
+import { useTeam } from './hooks';
 
 interface OverviewProps {
   teamId: string;

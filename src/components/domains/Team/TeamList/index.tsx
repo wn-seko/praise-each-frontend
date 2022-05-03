@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
-import Item from './Item';
 import { Grid } from '@chakra-ui/react';
+import React, { FC } from 'react';
+
+import Item from './Item';
 
 type TeamList = {
   Item: typeof Item;

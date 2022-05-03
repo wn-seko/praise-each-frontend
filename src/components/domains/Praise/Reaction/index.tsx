@@ -1,8 +1,8 @@
+import { Tooltip } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import { Emoji } from 'emoji-mart';
 import React, { FC } from 'react';
 import { FaHeart, FaRegHeart, FaThumbsUp, FaRegThumbsUp } from 'react-icons/fa';
-import { Tooltip } from '@chakra-ui/react';
 
 type Theme = 'blue' | 'pink' | 'green';
 

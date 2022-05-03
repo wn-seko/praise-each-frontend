@@ -1,4 +1,5 @@
 import { useAsyncFn } from 'react-use';
+
 import { deletePraise as deletePraiseApi } from '~/requests/praise';
 
 export const usePraise = (praiseId: string, closeModal: () => void, onDelete: () => void) => {

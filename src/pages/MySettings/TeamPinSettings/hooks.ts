@@ -1,10 +1,11 @@
-import { fetchMyTeams } from '~/requests/teams';
-import { fetchTeamPins, postTeamPin, deleteTeamPin } from '~/requests/teamPin';
+import { useEffect } from 'react';
 import { atom, DefaultValue, selector, useRecoilState, useSetRecoilState } from 'recoil';
+
 import { Team } from '~/domains/team';
 import { TeamPin } from '~/domains/teamPin';
 import { authUserState } from '~/recoil/auth';
-import { useEffect } from 'react';
+import { fetchTeamPins, postTeamPin, deleteTeamPin } from '~/requests/teamPin';
+import { fetchMyTeams } from '~/requests/teams';
 
 interface TeamWithPin extends Team {
   pined: boolean;

@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
 import { Alert, AlertIcon, Flex } from '@chakra-ui/react';
+import React, { FC } from 'react';
 
 const NotFoundPage: FC = () => (
   <Flex justifyContent="center">

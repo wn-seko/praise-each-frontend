@@ -1,12 +1,14 @@
-import React, { FC } from 'react';
 import { Alert, AlertIcon, Box, Center, Flex, Grid, GridItem } from '@chakra-ui/react';
+import React, { FC } from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
+
+import Loader from '~/components/ui/Loader';
 import Pagination from '~/components/ui/Pagination';
 import DefaultLayout from '~/layouts/default';
+import { getThemeColor } from '~/layouts/theme';
+
 import CreateTag from './CreateTag';
 import { useTags } from './hooks';
-import Loader from '~/components/ui/Loader';
-import { getThemeColor } from '~/layouts/theme';
 
 const TagsPage: FC = () => {
   const { loading, tags, pagination, handlePageChange, refetch } = useTags();

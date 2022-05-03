@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
+
 import ConfirmModal from '~/components/ui/ConfirmModal';
 import { useModal } from '~/hooks/useModal';
+
 import { usePraise } from './hooks';
 
 interface DeletePraiseProps {

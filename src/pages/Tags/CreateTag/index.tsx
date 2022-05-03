@@ -1,4 +1,3 @@
-import React, { ChangeEvent, FC } from 'react';
 import {
   Box,
   Button,
@@ -11,6 +10,8 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
+import React, { ChangeEvent, FC } from 'react';
+
 import { useModal, useField, useCreateTag } from './hooks';
 
 interface CreateTagProps {

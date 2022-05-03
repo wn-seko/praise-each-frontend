@@ -1,7 +1,9 @@
 import React, { FC } from 'react';
+
 import { GithubButton, GoogleButton } from '~/components/ui/Button';
-import { useOAuthLinkageLinks } from './hooks';
 import Segment from '~/components/ui/Segment';
+
+import { useOAuthLinkageLinks } from './hooks';
 
 const AccountSettings: FC = () => {
   const { linkageUrls } = useOAuthLinkageLinks();

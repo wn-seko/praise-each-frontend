@@ -1,6 +1,3 @@
-import React, { ChangeEvent, FC } from 'react';
-import { ColorResult } from 'react-color';
-
 import {
   Box,
   Button,
@@ -14,10 +11,13 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
+import React, { ChangeEvent, FC } from 'react';
+import { ColorResult } from 'react-color';
 
 import ColorPicker from '~/components/ui/ColorPicker';
 import { Team } from '~/domains/team';
 import { User } from '~/domains/user';
+
 import UserSelect from '../../User/UserSelecte';
 import { useField, useModal, useUserSelect } from './hooks';
 

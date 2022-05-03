@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAsyncFn } from 'react-use';
+
 import { deleteTeam as deleteTeamApi } from '~/requests/teams';
 
 export const useTeam = (teamId: string, closeModal: () => void) => {

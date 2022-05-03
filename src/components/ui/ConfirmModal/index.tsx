@@ -1,4 +1,3 @@
-import React, { FC } from 'react';
 import {
   Button,
   Modal,
@@ -9,6 +8,7 @@ import {
   ModalBody,
   ModalOverlay,
 } from '@chakra-ui/react';
+import React, { FC } from 'react';
 
 interface ConfirmModalProps {
   isOpen: boolean;

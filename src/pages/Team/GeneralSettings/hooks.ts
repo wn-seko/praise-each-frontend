@@ -1,8 +1,10 @@
 import { toast } from 'react-toastify';
 import { useAsyncFn } from 'react-use';
 import { useSetRecoilState } from 'recoil';
+
 import { User } from '~/domains/user';
 import { putTeam as putTeamApi, updateTeamUser } from '~/requests/teams';
+
 import { teamState } from '../hooks';
 
 export const useUpdateTeam = (teamId: string) => {

@@ -1,8 +1,9 @@
-import React, { FC } from 'react';
 import { Avatar, Flex, GridItem, Link as LinkStyle } from '@chakra-ui/react';
-import { Team } from '~/domains/team';
-import BoxIcon from '~/components/ui/Box';
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
+
+import BoxIcon from '~/components/ui/Box';
+import { Team } from '~/domains/team';
 
 interface TeamItemProps {
   team: Team;

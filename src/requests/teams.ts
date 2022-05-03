@@ -2,6 +2,7 @@ import { Team } from '~/domains/team';
 import { User } from '~/domains/user';
 import { Pagination } from '~/utils/pagination';
 import { Failure, Result, Success } from '~/utils/result';
+
 import api from './api';
 
 interface SearchTeamParams {

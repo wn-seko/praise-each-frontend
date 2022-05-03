@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
 import { Flex, Spinner } from '@chakra-ui/react';
+import React, { FC } from 'react';
 
 interface LoaderProps {
   page?: boolean;

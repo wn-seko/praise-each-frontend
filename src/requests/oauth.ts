@@ -1,5 +1,6 @@
 import { OAuthType } from '~/domains/oauth';
 import { Failure, Result, Success } from '~/utils/result';
+
 import api from './api';
 
 interface LoginUrlResponse {

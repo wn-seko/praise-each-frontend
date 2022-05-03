@@ -1,10 +1,12 @@
-import React, { FC } from 'react';
 import { Button, Flex, Input } from '@chakra-ui/react';
+import React, { FC } from 'react';
 import { FaEdit } from 'react-icons/fa';
+
 import { GithubButton, GoogleButton } from '~/components/ui/Button';
-import { User } from '~/domains/user';
-import { useField, useOAuthUpdateIconLinks } from './hooks';
 import Segment from '~/components/ui/Segment';
+import { User } from '~/domains/user';
+
+import { useField, useOAuthUpdateIconLinks } from './hooks';
 
 interface GeneralSettingsProps {
   user: User;

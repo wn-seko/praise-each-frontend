@@ -1,5 +1,6 @@
-import React, { FC } from 'react';
 import { Avatar, Center, Flex, Heading } from '@chakra-ui/react';
+import React, { FC } from 'react';
+
 import AccountSettings from '../AccountSettings';
 import GeneralSettings from '../GeneralSettings';
 import TeamPinSettings from '../TeamPinSettings';

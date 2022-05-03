@@ -1,12 +1,14 @@
+import { Avatar, Box, Flex } from '@chakra-ui/react';
 import React, { FC } from 'react';
 import { FaEdit, FaTrashAlt, FaArrowRight } from 'react-icons/fa';
-import { Avatar, Box, Flex } from '@chakra-ui/react';
-import { parseMessage, Praise, Stamp } from '~/domains/praise';
+
 import Reaction from '~/components/domains/Praise/Reaction';
-import PraiseEditor from '../../PraiseEditor';
-import DeletePraise from '../../DeletePraise';
 import EmojiPicker from '~/components/ui/EmojiPicker';
+import { parseMessage, Praise, Stamp } from '~/domains/praise';
 import { getThemeColor } from '~/layouts/theme';
+
+import DeletePraise from '../../DeletePraise';
+import PraiseEditor from '../../PraiseEditor';
 
 interface PraiseCard extends Omit<Praise, 'createdAt' | 'updatedAt'> {
   upVoted: boolean;

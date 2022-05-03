@@ -1,7 +1,9 @@
-import React, { FC } from 'react';
 import { Avatar, Flex, Input } from '@chakra-ui/react';
+import React, { FC } from 'react';
 import { FaCheck } from 'react-icons/fa';
+
 import { User } from '~/domains/user';
+
 import { useUserList } from './hooks';
 
 interface UserSelectProps {

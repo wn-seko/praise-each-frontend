@@ -1,9 +1,11 @@
-import React, { FC, Suspense } from 'react';
 import { Center, Flex } from '@chakra-ui/react';
-import DefaultLayout from '~/layouts/default';
-import TeamList from './TeamList';
-import CreateTeam from './CreateTeam';
+import React, { FC, Suspense } from 'react';
+
 import Loader from '~/components/ui/Loader';
+import DefaultLayout from '~/layouts/default';
+
+import CreateTeam from './CreateTeam';
+import TeamList from './TeamList';
 
 const TeamsPage: FC = () => (
   <DefaultLayout>

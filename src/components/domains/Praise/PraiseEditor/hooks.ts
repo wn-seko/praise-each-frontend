@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+
 import { extractTags, Praise } from '~/domains/praise';
 import { putPraise } from '~/requests/praise';
 

@@ -1,9 +1,11 @@
-import React, { FC } from 'react';
 import { Box, Center } from '@chakra-ui/react';
+import React, { FC } from 'react';
+
 import UserList from '~/components/domains/User/UserList';
-import DefaultLayout from '~/layouts/default';
-import { useUsers } from './hooks';
 import Loader from '~/components/ui/Loader';
+import DefaultLayout from '~/layouts/default';
+
+import { useUsers } from './hooks';
 
 const UsersPage: FC = () => {
   const { loading, users } = useUsers();

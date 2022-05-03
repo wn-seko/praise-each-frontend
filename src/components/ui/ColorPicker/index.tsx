@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import React, { FC } from 'react';
 import { TwitterPicker, TwitterPickerProps } from 'react-color';
+
 import { getThemeColor } from '~/layouts/theme';
 import { getChakraColorVariableName } from '~/utils/chakra';
 

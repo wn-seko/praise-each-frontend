@@ -1,5 +1,6 @@
 import { TeamSlackWebhook } from '~/domains/slackWebhook';
 import { Failure, Result, Success } from '~/utils/result';
+
 import api from './api';
 
 interface TeamSlackWebhookResponse {

@@ -1,7 +1,9 @@
 import React, { FC, Suspense } from 'react';
-import DefaultLayout from '~/layouts/default';
-import Overview from './Overview';
+
 import Loader from '~/components/ui/Loader';
+import DefaultLayout from '~/layouts/default';
+
+import Overview from './Overview';
 
 const MySettings: FC = () => {
   return (

@@ -1,7 +1,9 @@
-import React, { FC, useMemo } from 'react';
 import { Alert, AlertIcon, Button, Box, Flex, Spinner } from '@chakra-ui/react';
+import React, { FC, useMemo } from 'react';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+
 import Segment from '~/components/ui/Segment';
+
 import SlackWebhookEditor from '../SlackWebhookEditor';
 import {
   useAddTeamSlackWebhook,

@@ -1,4 +1,5 @@
 import { atomFamily } from 'recoil';
+
 import { fetchTeam as fetchTeamApi } from '~/requests/teams';
 
 export const teamState = atomFamily({

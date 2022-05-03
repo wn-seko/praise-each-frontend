@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+
 import Notification from '~/components/domains/Notification';
 
 const LoginLayout: FC = ({ children }) => (

@@ -1,6 +1,7 @@
 import { Tag } from '~/domains/tag';
 import { Pagination } from '~/utils/pagination';
 import { Failure, Result, Success } from '~/utils/result';
+
 import api from './api';
 
 export const postTag = (name: string): Promise<Result<Tag, {}>> =>

@@ -9,7 +9,7 @@ const TeamsPage: FC = () => (
   <DefaultLayout>
     <Center>
       <Flex direction="column" width="80%" gap={8}>
-        <Flex justifyContent="end">
+        <Flex justifyContent="flex-end">
           <CreateTeam />
         </Flex>
         <Suspense fallback={<Loader page={true}>Loading...</Loader>}>

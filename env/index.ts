@@ -1,8 +1,9 @@
 import dotenv from 'dotenv';
 
-import { toNodeEnv, toString } from './validator';
+import { toNodeEnv, toString, toNumberOrUndefined } from './validator';
 
 const envValidators = {
+  ANALYZE: toNumberOrUndefined,
   NODE_ENV: toNodeEnv,
   API_HOST: toString,
 };

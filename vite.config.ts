@@ -22,11 +22,10 @@ export default defineConfig(({ mode }) => ({
     API_HOST: `"${getEnv(mode).API_HOST}"`,
   },
   build: {
-    outDir: __dirname,
-    assetsDir: 'dist',
+    outDir: resolve(__dirname, 'build'),
     rollupOptions: {
       plugins: [
-        mode === 'analyze' &&
+        getEnv(mode).ANALYZE === 1 &&
           visualizer({
             open: true,
             filename: 'articles/stats.html',

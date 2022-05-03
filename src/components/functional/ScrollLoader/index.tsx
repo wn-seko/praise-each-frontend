@@ -40,15 +40,7 @@ const ScrollLoader: FC<ScrollLoaderProps> = ({ loading, onInRange }) => {
     };
   }, [ref]);
 
-  if (!loading) {
-    return null;
-  }
-
-  return (
-    <StyledScrollLoader ref={ref}>
-      <Spinner size="md" />
-    </StyledScrollLoader>
-  );
+  return <StyledScrollLoader ref={ref}>{loading && <Spinner size="md" />}</StyledScrollLoader>;
 };
 
 export default ScrollLoader;

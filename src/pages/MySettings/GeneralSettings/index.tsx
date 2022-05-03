@@ -39,12 +39,12 @@ const GeneralSettings: FC<GeneralSettingsProps> = ({ user }) => {
       </Segment.Item>
       <Segment.Item title="アイコン">
         {updateIconUrls.github && (
-          <GithubButton width={320} as="a" size="md" href={updateIconUrls.github}>
+          <GithubButton width={360} as="a" size="md" href={updateIconUrls.github}>
             GitHub アカウントのアイコンを使用する
           </GithubButton>
         )}
         {updateIconUrls.google && (
-          <GoogleButton width={320} as="a" size="md" href={updateIconUrls.google}>
+          <GoogleButton width={360} as="a" size="md" href={updateIconUrls.google}>
             Google アカウントのアイコンを使用する
           </GoogleButton>
         )}

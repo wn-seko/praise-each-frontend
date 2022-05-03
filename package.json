@@ -6,10 +6,10 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development vite serve --host 0.0.0.0 --port 8080",
     "build": "yarn clean && cross-env NODE_ENV=production vite build",
-    "build:analyze": "yarn build --mode analyze",
+    "build:analyze": "cross-env ANALYZE=1 yarn build",
     "eslint": "eslint --ext .js,.json,.ts,.tsx --ignore-path .eslintignore .",
     "typecheck": "tsc --project tsconfig.json --noEmit --skipLibCheck",
-    "clean": "rimraf dist"
+    "clean": "rimraf build articles"
   },
   "repository": {
     "type": "git",

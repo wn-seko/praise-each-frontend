@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosRequestHeaders } from 'axios';
 import { getActiveToken } from '~/domains/auth';
 
 const client = axios.create({
@@ -12,7 +12,7 @@ const client = axios.create({
 client.interceptors.request.use((request) => {
   const token = getActiveToken();
   const authorizationHeader = token ? { Authorization: `Bearer ${token}` } : {};
-  request.headers = { ...request.headers, ...authorizationHeader };
+  request.headers = { ...request.headers, ...authorizationHeader } as AxiosRequestHeaders;
   return request;
 });
 

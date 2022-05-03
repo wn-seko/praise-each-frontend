@@ -54,7 +54,7 @@ const Header: FC = () => {
           color={getThemeColor('primaryText')}
           divider={<StackDivider borderColor={getThemeColor('primaryText')} />}
         >
-          <NavLink link="/top">タイムライン</NavLink>
+          <NavLink link="/">タイムライン</NavLink>
           <NavLink link="/users">ユーザー</NavLink>
           <NavLink link="/teams">チーム</NavLink>
           <NavLink link="/tags">タグ</NavLink>

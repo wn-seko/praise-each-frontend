@@ -1,6 +1,6 @@
 /* eslint-disable node/no-unsupported-features/node-builtins */
 import { toast } from 'react-toastify';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { oauthLinkage, oauthLogin, oauthUpdateIcon } from '~/requests/oauth';
 import { useAuthToken } from '~/recoil/auth';
 import { OAuthType } from '~/domains/oauth';
@@ -8,11 +8,11 @@ import { OAuthType } from '~/domains/oauth';
 const useLogin = (type: OAuthType) => {
   const urlSearchParams = new URLSearchParams(location.search);
   const code = urlSearchParams.get('code') || '';
-  const history = useHistory();
+  const navigate = useNavigate();
   const { setToken } = useAuthToken();
 
   if (!code) {
-    history.push('/login');
+    navigate('/login');
     toast.error('ログインに失敗しました');
     return;
   }
@@ -20,9 +20,9 @@ const useLogin = (type: OAuthType) => {
   oauthLogin(type, code).then((result) => {
     if (result.isSuccess()) {
       setToken(result.value.token);
-      history.push('/');
+      navigate('/');
     } else {
-      history.push('/login');
+      navigate('/login');
       toast.error('ログインに失敗しました');
     }
   });
@@ -33,17 +33,17 @@ const useLogin = (type: OAuthType) => {
 const useUpdateIcon = (type: OAuthType) => {
   const urlSearchParams = new URLSearchParams(location.search);
   const code = urlSearchParams.get('code') || '';
-  const history = useHistory();
+  const navigate = useNavigate();
   const { setToken } = useAuthToken();
 
   if (!code) {
-    history.push('/mypage/settings');
+    navigate('/mypage/settings');
     toast.error('認証に失敗しました');
     return;
   }
 
   oauthUpdateIcon(type, code).then((result) => {
-    history.push('/mypage/settings');
+    navigate('/mypage/settings');
 
     if (result.isSuccess()) {
       setToken(result.value.token);
@@ -59,16 +59,16 @@ const useUpdateIcon = (type: OAuthType) => {
 const useLinkage = (type: OAuthType) => {
   const urlSearchParams = new URLSearchParams(location.search);
   const code = urlSearchParams.get('code') || '';
-  const history = useHistory();
+  const navigate = useNavigate();
 
   if (!code) {
-    history.push('/mypage/settings');
+    navigate('/mypage/settings');
     toast.error('認証に失敗しました');
     return;
   }
 
   oauthLinkage(type, code).then((result) => {
-    history.push('/mypage/settings');
+    navigate('/mypage/settings');
 
     if (result.isSuccess()) {
       toast.success('アカウントを連携しました');

@@ -1,17 +1,17 @@
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { useAsyncFn } from 'react-use';
 import { deleteTeam as deleteTeamApi } from '~/requests/teams';
 
 export const useTeam = (teamId: string, closeModal: () => void) => {
   const [state, deleteTeam] = useAsyncFn(deleteTeamApi);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleConfirm = async () => {
     const result = await deleteTeam(teamId);
 
     if (result.isSuccess()) {
       closeModal();
-      history.push('/teams');
+      navigate('/teams');
     }
   };
 

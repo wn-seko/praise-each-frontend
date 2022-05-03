@@ -35,7 +35,7 @@ const GeneralSettings: FC<GeneralSettingsProps> = ({ team }) => {
       </Segment.Item>
       <Segment.Item title="ユーザー">
         {team.users.length > 0 ? (
-          <Flex>
+          <Flex gap={4}>
             {team.users.map((user) => (
               <Flex key={user.id}>
                 <Avatar size="xs" mr={2} src={user.icon} />

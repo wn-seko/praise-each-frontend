@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
 import { Flex } from '@chakra-ui/react';
+import React, { FC } from 'react';
 import { FaAngleRight, FaAngleLeft } from 'react-icons/fa';
 
 interface PaginationProps {

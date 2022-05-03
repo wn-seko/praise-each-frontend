@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { toast } from 'react-toastify';
+
 import { parseMessage } from '~/domains/praise';
 import { postPraise } from '~/requests/praise';
 import { searchUser } from '~/requests/user';

@@ -1,4 +1,5 @@
 import { Dayjs } from 'dayjs';
+
 import { User } from './user';
 
 export interface Praise {

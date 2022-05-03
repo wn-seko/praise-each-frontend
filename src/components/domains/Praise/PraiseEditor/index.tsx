@@ -1,4 +1,3 @@
-import React, { FC } from 'react';
 import {
   Avatar,
   Button,
@@ -11,9 +10,12 @@ import {
   ModalBody,
   ModalOverlay,
 } from '@chakra-ui/react';
+import React, { FC } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
+
 import { Praise } from '~/domains/praise';
 import { useModal } from '~/hooks/useModal';
+
 import PraiseInput from '../PraiseInput';
 import { useField } from './hooks';
 

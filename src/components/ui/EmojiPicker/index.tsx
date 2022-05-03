@@ -1,10 +1,12 @@
-import React, { FC } from 'react';
-import { Picker, EmojiData } from 'emoji-mart';
-import { useModal } from '~/hooks/useModal';
-import { useEmojiPicker } from './hooks';
-import styled from '@emotion/styled';
-import { FaRegSmile } from 'react-icons/fa';
 import { Box } from '@chakra-ui/react';
+import styled from '@emotion/styled';
+import { Picker, EmojiData } from 'emoji-mart';
+import React, { FC } from 'react';
+import { FaRegSmile } from 'react-icons/fa';
+
+import { useModal } from '~/hooks/useModal';
+
+import { useEmojiPicker } from './hooks';
 
 interface PickerContainerProps {
   close: () => void;

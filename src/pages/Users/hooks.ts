@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useAsyncFn } from 'react-use';
+
 import { searchUser as searchUsersApi } from '~/requests/user';
 
 export const useUsers = () => {

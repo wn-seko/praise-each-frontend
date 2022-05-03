@@ -1,8 +1,10 @@
-import React, { FC } from 'react';
 import { Button } from '@chakra-ui/react';
+import React, { FC } from 'react';
+
 import ConfirmModal from '~/components/ui/ConfirmModal';
 import Segment from '~/components/ui/Segment';
 import { useModal } from '~/hooks/useModal';
+
 import { useTeam } from './hooks';
 
 interface DeleteTeamProps {

@@ -1,8 +1,6 @@
 /* TODO: delete eslint-disable */
 /* eslint-disable react/display-name */
 
-import styled from '@emotion/styled';
-import React, { FC } from 'react';
 import {
   Alert,
   AlertIcon,
@@ -19,14 +17,18 @@ import {
   TabPanel,
   Center,
 } from '@chakra-ui/react';
+import styled from '@emotion/styled';
+import React, { FC } from 'react';
+
 import PraiseCard from '~/components/domains/Praise/PraiseCard';
-import ScrollLoader from '~/components/functional/ScrollLoader';
 import PraiseInput from '~/components/domains/Praise/PraiseInput';
+import ScrollLoader from '~/components/functional/ScrollLoader';
+import Loader from '~/components/ui/Loader';
 import DefaultLayout from '~/layouts/default';
+
+import { useMessage } from './hooks/useMessage';
 import { EnhancedPraise, usePraisePage, useScroll, useTab } from './hooks/usePraisePage';
 import { usePinedTeams } from './hooks/useTeamPin';
-import { useMessage } from './hooks/useMessage';
-import Loader from '~/components/ui/Loader';
 
 interface PraisePaneProps {
   loading: boolean;

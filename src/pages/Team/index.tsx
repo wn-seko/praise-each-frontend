@@ -1,8 +1,10 @@
 import React, { FC, Suspense } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import DefaultLayout from '~/layouts/default';
-import Overview from './Overview';
+
 import Loader from '~/components/ui/Loader';
+import DefaultLayout from '~/layouts/default';
+
+import Overview from './Overview';
 
 const TeamPage: FC = () => {
   const { teamId } = useParams();

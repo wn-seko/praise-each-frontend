@@ -1,9 +1,11 @@
+import { Avatar, Alert, AlertIcon, Button, Flex } from '@chakra-ui/react';
 import React, { FC, useMemo } from 'react';
+
+import TeamEditor from '~/components/domains/Team/TeamEditor';
 import { ColoredLabel } from '~/components/ui/ColoredLabel';
 import Segment from '~/components/ui/Segment';
-import { Avatar, Alert, AlertIcon, Button, Flex } from '@chakra-ui/react';
 import { Team } from '~/domains/team';
-import TeamEditor from '~/components/domains/Team/TeamEditor';
+
 import { useUpdateTeam } from './hooks';
 
 interface GeneralSettingsProps {

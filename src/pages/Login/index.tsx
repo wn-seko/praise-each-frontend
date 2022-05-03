@@ -1,8 +1,10 @@
-import React, { FC } from 'react';
 import { Box, Center, Flex, Spacer, Heading, Skeleton } from '@chakra-ui/react';
+import React, { FC } from 'react';
+
 import { GithubButton, GoogleButton } from '~/components/ui/Button';
-import { useLogin } from './hooks';
 import { getThemeColor } from '~/layouts/theme';
+
+import { useLogin } from './hooks';
 
 const LoginPage: FC = () => {
   const { loading, urls } = useLogin();

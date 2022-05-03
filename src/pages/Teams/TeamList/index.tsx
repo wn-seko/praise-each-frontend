@@ -1,6 +1,8 @@
-import React, { FC } from 'react';
 import { Alert, AlertIcon } from '@chakra-ui/react';
+import React, { FC } from 'react';
+
 import TeamListComponent from '~/components/domains/Team/TeamList';
+
 import { useTeams } from './hooks';
 
 const TeamList: FC = () => {

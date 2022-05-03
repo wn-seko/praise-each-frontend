@@ -1,6 +1,8 @@
-import React, { forwardRef } from 'react';
 import { Input } from '@chakra-ui/react';
+import React, { forwardRef } from 'react';
+
 import Dropdown from '~/components/ui/Dropdown';
+
 import { useDropdownInput } from './hooks';
 
 interface DropdownItem {

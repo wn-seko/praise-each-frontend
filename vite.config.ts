@@ -1,7 +1,8 @@
 import { resolve } from 'path';
+
+import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
 import reactJsx from 'vite-react-jsx';
-import { visualizer } from 'rollup-plugin-visualizer';
 
 import { getEnv } from './env';
 

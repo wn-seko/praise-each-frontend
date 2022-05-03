@@ -1,9 +1,10 @@
+import { Box } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import React, { FC } from 'react';
-import { Box } from '@chakra-ui/react';
-import { getThemeColor } from '../theme';
 
 import Notification from '~/components/domains/Notification';
+
+import { getThemeColor } from '../theme';
 import Header from './Header';
 
 const PageContainer = styled.div`

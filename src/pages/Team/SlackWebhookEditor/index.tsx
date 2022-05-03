@@ -1,4 +1,3 @@
-import React, { ChangeEvent, FC } from 'react';
 import {
   Button,
   Flex,
@@ -11,7 +10,10 @@ import {
   ModalBody,
   ModalOverlay,
 } from '@chakra-ui/react';
+import React, { ChangeEvent, FC } from 'react';
+
 import { TeamSlackWebhook } from '~/domains/slackWebhook';
+
 import { useField, useModal } from './hooks';
 
 interface SlackWebhookEditorProps {

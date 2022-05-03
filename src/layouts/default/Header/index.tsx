@@ -1,5 +1,3 @@
-import React, { FC } from 'react';
-import { Link } from 'react-router-dom';
 import {
   Avatar,
   Box,
@@ -14,8 +12,12 @@ import {
   MenuList,
   StackDivider,
 } from '@chakra-ui/react';
-import { useHeader } from './hooks';
+import React, { FC } from 'react';
+import { Link } from 'react-router-dom';
+
 import { getThemeColor } from '~/layouts/theme';
+
+import { useHeader } from './hooks';
 
 interface NavLinkProps {
   link: string;

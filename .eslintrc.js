@@ -15,7 +15,7 @@ const defaultConfig = {
     'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['react'],
+  plugins: ['react', 'eslint-plugin-import'],
   env: {
     browser: true,
     es6: true,
@@ -42,6 +42,15 @@ const defaultConfig = {
       {
         name: 'fetch',
         message: 'deprecated: Use axios',
+      },
+    ],
+    'import/order': [
+      'error',
+      {
+        groups: ['builtin', 'external', 'internal', ['parent', 'sibling'], 'object', 'index'],
+        'newlines-between': 'always',
+        alphabetize: { order: 'asc', caseInsensitive: true },
+        pathGroups: [{ pattern: '~/**', group: 'internal', position: 'before' }],
       },
     ],
   },

@@ -1,8 +1,10 @@
-import React, { FC } from 'react';
 import { Alert, Flex } from '@chakra-ui/react';
+import React, { FC } from 'react';
 import { BsPinFill, BsPin } from 'react-icons/bs';
+
 import Box from '~/components/ui/Box';
 import Segment from '~/components/ui/Segment';
+
 import { useMyTeams } from './hooks';
 
 const TeamPinSettings: FC = () => {

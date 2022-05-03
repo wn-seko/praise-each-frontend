@@ -1,6 +1,8 @@
-import React, { FC } from 'react';
 import { Button } from '@chakra-ui/react';
+import React, { FC } from 'react';
+
 import TeamEditor from '~/components/domains/Team/TeamEditor';
+
 import { useCreateTeam } from './hooks';
 
 const CreateTeam: FC = () => {

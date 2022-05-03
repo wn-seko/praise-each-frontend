@@ -1,7 +1,8 @@
+import { useCallback, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useAsyncFn } from 'react-use';
+
 import { postTag as postTagApi } from '~/requests/tag';
-import { useCallback, useState } from 'react';
 
 export const useModal = () => {
   const [isOpen, setIsOpen] = useState(false);

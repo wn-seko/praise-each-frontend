@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
 import { Tag, TagLabel, TagProps, ComponentWithAs } from '@chakra-ui/react';
+import React, { FC } from 'react';
 
 type ColoredLabelProps = Omit<ComponentWithAs<'span', TagProps>, 'color'> & {
   color: string;

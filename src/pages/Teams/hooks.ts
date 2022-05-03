@@ -1,4 +1,5 @@
 import { atomFamily, useRecoilCallback } from 'recoil';
+
 import { searchTeam as searchTeamsApi } from '~/requests/teams';
 
 const defaultPagination = { currentPage: 1, limit: 20, pages: 1 };

@@ -1,9 +1,10 @@
 /* eslint-disable node/no-unsupported-features/node-builtins */
-import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { oauthLinkage, oauthLogin, oauthUpdateIcon } from '~/requests/oauth';
-import { useAuthToken } from '~/recoil/auth';
+import { toast } from 'react-toastify';
+
 import { OAuthType } from '~/domains/oauth';
+import { useAuthToken } from '~/recoil/auth';
+import { oauthLinkage, oauthLogin, oauthUpdateIcon } from '~/requests/oauth';
 
 const useLogin = (type: OAuthType) => {
   const urlSearchParams = new URLSearchParams(location.search);

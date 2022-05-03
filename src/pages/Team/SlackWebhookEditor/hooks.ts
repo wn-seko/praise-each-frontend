@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+
 import { TeamSlackWebhook } from '~/domains/slackWebhook';
 
 export const useModal = () => {

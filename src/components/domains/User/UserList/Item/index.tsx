@@ -1,5 +1,6 @@
-import React, { FC } from 'react';
 import { Avatar, Flex, GridItem, Link as LinkStyle } from '@chakra-ui/react';
+import React, { FC } from 'react';
+
 import { ColoredLabel } from '~/components/ui/ColoredLabel';
 import { User } from '~/domains/user';
 import { getThemeColor } from '~/layouts/theme';

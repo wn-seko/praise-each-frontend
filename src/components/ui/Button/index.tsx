@@ -1,5 +1,5 @@
-import React from 'react';
 import { Button, ButtonProps, ComponentWithAs, Flex } from '@chakra-ui/react';
+import React from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 
 export const GithubButton: ComponentWithAs<'button', ButtonProps> = ({ children, ...rest }) => (

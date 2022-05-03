@@ -1,17 +1,19 @@
 // tslint:disable:jsx-no-lambda
 import React, { FC } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
 import Auth from '~/components/functional/Auth';
-import TopPage from '~/pages/Top';
-import StatisticsPage from '~/pages/Statistics';
 import LoginPage from '~/pages/Login';
 import OAuthCallbackPage from '~/pages/OauthCallback';
-import UsersPage from '~/pages/Users';
+import StatisticsPage from '~/pages/Statistics';
 import TeamsPage from '~/pages/Teams';
-import TeamPage from './pages/Team';
+import TopPage from '~/pages/Top';
+import UsersPage from '~/pages/Users';
+
 import MySettings from './pages/MySettings';
-import TagsPage from './pages/Tags';
 import NotFoundPage from './pages/NotFound';
+import TagsPage from './pages/Tags';
+import TeamPage from './pages/Team';
 
 const withAuth = (element: React.ReactNode) => (
   <Auth requireLogin={true} to="/login">

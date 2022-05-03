@@ -1,4 +1,5 @@
 import axios, { AxiosRequestHeaders } from 'axios';
+
 import { getActiveToken } from '~/domains/auth';
 
 const client = axios.create({

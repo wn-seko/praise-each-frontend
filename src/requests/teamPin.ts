@@ -1,5 +1,6 @@
 import { TeamPin } from '~/domains/teamPin';
 import { Failure, Result, Success } from '~/utils/result';
+
 import api from './api';
 
 interface TeamPinResponse {

@@ -1,6 +1,6 @@
+import { Spinner } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import React, { FC, useEffect } from 'react';
-import { Spinner } from '@chakra-ui/react';
 
 const StyledScrollLoader = styled.div`
   width: 100%;

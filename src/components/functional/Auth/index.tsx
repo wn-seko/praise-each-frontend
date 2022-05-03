@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { Navigate } from 'react-router-dom';
+
 import { useAuthUser } from '~/recoil/auth';
 
 interface AuthProps {

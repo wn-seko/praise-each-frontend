@@ -1,9 +1,11 @@
-import React, { FC } from 'react';
-import styled from '@emotion/styled';
 import { Avatar, Box, Flex } from '@chakra-ui/react';
-import { useDropdown } from './hooks';
+import styled from '@emotion/styled';
+import React, { FC } from 'react';
+
 import { getThemeColor } from '~/layouts/theme';
 import { getChakraColorVariableName } from '~/utils/chakra';
+
+import { useDropdown } from './hooks';
 
 interface ItemProps {
   borderColor: string;

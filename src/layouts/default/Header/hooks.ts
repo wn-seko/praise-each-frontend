@@ -1,5 +1,6 @@
-import { useNavigate } from 'react-router-dom';
 import { useColorMode } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+
 import { User } from '~/domains/user';
 import { useAuthUser, useAuthToken } from '~/recoil/auth';
 

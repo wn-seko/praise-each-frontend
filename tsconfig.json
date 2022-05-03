@@ -2,7 +2,7 @@
   "compilerOptions": {
     "typeRoots": ["./src/typings", "node_modules/@types"],
     "rootDirs": ["src"],
-    "outDir": "./build/",
+    "outDir": "./articles/",
     "baseUrl": "./src",
     "paths": {
       "~/*": ["./*"]

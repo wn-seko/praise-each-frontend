@@ -70,7 +70,7 @@
     "react-dom": "^16.13.1",
     "react-icons": "^4.3.1",
     "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "^6.3.0",
     "react-toastify": "^8.2.0",
     "react-use": "^17.3.2",
     "recoil": "^0.7.2",

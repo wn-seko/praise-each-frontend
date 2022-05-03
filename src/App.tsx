@@ -1,6 +1,6 @@
 import React from 'react';
 import { RecoilRoot } from 'recoil';
-import Routes from '~/Routes';
+import RouterConfig from '~/RouterConfig';
 import { ChakraProvider } from '@chakra-ui/react';
 import { theme } from '~/layouts/theme';
 
@@ -9,11 +9,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'emoji-mart/css/emoji-mart.css';
 
 const App = () => (
-  <ChakraProvider theme={theme}>
-    <RecoilRoot>
-      <Routes />
-    </RecoilRoot>
-  </ChakraProvider>
+  <React.StrictMode>
+    <ChakraProvider theme={theme}>
+      <RecoilRoot>
+        <RouterConfig />
+      </RecoilRoot>
+    </ChakraProvider>
+  </React.StrictMode>
 );
 
 export default App;

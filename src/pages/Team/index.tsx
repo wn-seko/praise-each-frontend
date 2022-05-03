@@ -1,18 +1,20 @@
 import React, { FC, Suspense } from 'react';
-import { RouteComponentProps } from 'react-router';
+import { Navigate, useParams } from 'react-router-dom';
 import DefaultLayout from '~/layouts/default';
 import Overview from './Overview';
 import Loader from '~/components/ui/Loader';
 
-interface Params {
-  teamId: string;
-}
+const TeamPage: FC = () => {
+  const { teamId } = useParams();
 
-const TeamPage: FC<RouteComponentProps<Params>> = ({ match }) => {
+  if (!teamId) {
+    return <Navigate to="/notfound" />;
+  }
+
   return (
     <DefaultLayout>
       <Suspense fallback={<Loader page={true}>Loading...</Loader>}>
-        <Overview teamId={match.params.teamId} />
+        <Overview teamId={teamId} />
       </Suspense>
     </DefaultLayout>
   );
